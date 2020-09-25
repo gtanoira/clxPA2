@@ -1,0 +1,56 @@
+<div
+  fxLayout="row"
+  fxFlex="100">
+
+  <!-- Cada componente se maneja via TABS MODULE -->
+  <mat-tab-group
+    mat-stretch-tabs
+    backgroundColor="primary"
+    fxFlexFill>
+
+    <!-- Promedio -->
+    <mat-tab *ngIf="ynPromedio">
+      <ng-template mat-tab-label>
+          <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+        &nbsp;Promedio
+      </ng-template>
+      <app-cotizaciones-promedio></app-cotizaciones-promedio>
+    </mat-tab>
+
+    <!-- Diaria -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon svgIcon="daily_currencies"></mat-icon>
+        &nbsp;Diario
+      </ng-template>
+      <app-cotizacion-diaria></app-cotizacion-diaria>
+    </mat-tab>
+
+    <!-- Entre Fechas -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon svgIcon="fromTo"></mat-icon>
+        &nbsp;EntreFechas
+      </ng-template>
+      <app-cotizacion-entre-fechas></app-cotizacion-entre-fechas>
+    </mat-tab>
+
+    <!-- Calculadora -->
+    <mat-tab *ngIf="ynCalculadora">
+      <ng-template mat-tab-label>
+        <mat-icon svgIcon="currency_calculator"></mat-icon>
+        &nbsp;Calculadora
+      </ng-template>
+      <app-cotizaciones-calculadora></app-cotizaciones-calculadora>
+    </mat-tab>
+
+    <!-- Actualizar -->
+    <mat-tab *ngIf="ynActualizar">
+      <ng-template mat-tab-label>
+          <mat-icon style="color: black; height: 20px;" svgIcon="currency_rates"></mat-icon>
+        &nbsp;Actualizar
+      </ng-template>
+      <app-cotizaciones-actualizar></app-cotizaciones-actualizar>
+    </mat-tab>
+  </mat-tab-group>
+</div>

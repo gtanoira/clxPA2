@@ -1,0 +1,26 @@
+<!-- Filtro -->
+<div
+  class="container row header-spacer filtro">
+  <span style="font-weight: bold;">Filtro&nbsp;</span>
+  <div
+    *ngFor="let group of mnuGroups"
+    (click)="onFilter(group.name)"
+    id="groupFilter--{{group.color}}"
+    class="group-btn group-btn--{{group.color}}">
+    {{group.name}}
+  </div>
+</div>
+
+<!-- Botones -->
+<div
+  #grid
+  class="grid">
+  <div
+    *ngFor="let brick of bricks"
+    class="grid-item {{brick.group}} grid-item--{{brick.color}}"
+    (click)="runProgram(brick.pgmUrl)">
+    <div class="brick-alias brick-alias--{{brick.color}}">{{brick.alias}}</div>
+    <div class="brick-group">{{brick.group}}</div>
+    <div class="brick-title">{{brick.title}}</div>
+  </div>
+</div>

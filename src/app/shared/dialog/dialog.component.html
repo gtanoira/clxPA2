@@ -1,0 +1,27 @@
+<h2 class="titulo"
+  [ngClass]="data.dialogType === 'Alert' ? 'alert' : 'normal'"
+  mat-dialog-title>
+  {{data.title}}
+</h2>
+
+<div mat-dialog-content>
+  <h3>{{data.body}}</h3>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    mat-stroked-button
+    (click)="onBtnClick(1)"
+    tabindex="1"
+    cdkFocusInitial>
+    {{data.btn1Text}}
+  </button>
+  &nbsp;
+  <button
+    mat-stroked-button
+    color="warn"
+    (click)="onBtnClick(2)"
+    tabindex="2">
+    {{data.btn2Text}}
+  </button>
+</div>

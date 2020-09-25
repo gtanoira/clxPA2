@@ -1,0 +1,235 @@
+.container {
+  width: 90%;
+  max-width: 1128px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.brick-alias {
+  color: blue;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 28px;
+}
+.brick-alias--blue {
+  color: darkblue!important;
+}
+.brick-alias--red {
+  color: darkred!important;
+}
+.brick-alias--green {
+  color: darkgreen!important;
+}
+.brick-alias--coral {
+  color: #fd5c21!important;
+}
+.brick-alias--violet {
+  color: darkviolet!important;
+}
+
+.brick-title {
+  color: black;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brick-group {
+  color: black;
+  font-family: Roboto,"Helvetica Neue",sans-serif;;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div span {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.grid {
+  /* background: #EEE; */
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-sizer,
+.grid-item {
+  width: 15%;
+}
+
+.grid-item {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)!important;
+  /* border-left: 12px solid #191957; */
+  /* border-radius: 5px 20px 5px 5px; */
+  border-top-right-radius: 1.2em;
+  float: left;
+  height: 110px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.grid-item--blue {
+  /* background: linear-gradient(45deg, transparent 40%, blue); */
+  background: #8180d3;
+  border: 0.7px solid darkblue;
+}
+.grid-item--red {
+  /* background: linear-gradient(45deg, transparent 40%, red); */
+  background: #ff00007a;
+  border: 0.7px solid darkred;
+}
+.grid-item--green {
+  /* background: linear-gradient(45deg, transparent 40%, green); */
+  background: #2ecc2e;
+  border: 0.7px solid darkgreen;
+}
+.grid-item--coral {
+  /* background: linear-gradient(45deg, transparent 40%, coral); */
+  background: darksalmon;
+  border: 0.7px solid #fd5c21;
+}
+.grid-item--violet {
+  /* background: linear-gradient(45deg, transparent 40%, violet);  */
+  background: violet;
+  border: 0.7px solid darkviolet;
+}
+
+.grid-item--width2 { width:  40%; }
+.grid-item--width3 { width:  60%; }
+
+.grid-item--height2 { height: 200px; }
+.grid-item--height3 { height: 260px; }
+.grid-item--height4 { height: 360px; }
+
+/* Barra de Filtro */
+.group-btn {
+  color: black;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 14px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  margin: 0px 1px;
+  text-align: center;
+  width: 100px;
+}
+.group-btn--blue {
+  /* background: linear-gradient(45deg, transparent 40%, blue); */
+  background: #8180d3;
+  border: 1px solid darkblue;
+}
+.group-btn--blue:hover {
+  box-shadow: 0px 0px 10px 2px  blue;
+}
+
+.group-btn--red {
+  /* background: linear-gradient(45deg, transparent 40%, red); */
+  background: #ff00007a;
+  border: 0.7px solid red;
+}
+.group-btn--red:hover {
+  box-shadow: 0px 0px 10px 2px  red;
+}
+
+.group-btn--green {
+  /* background: linear-gradient(45deg, transparent 40%, green); */
+  background: #2ecc2e;
+  border: 0.7px solid darkgreen;
+}
+.group-btn--green:hover {
+  box-shadow: 0px 0px 10px 2px  green;
+}
+
+.group-btn--coral {
+  /* background: linear-gradient(45deg, transparent 40%, coral); */
+  background: darksalmon;
+  border: 0.7px solid #fd5c21;
+}
+.group-btn--coral:hover {
+  box-shadow: 0px 0px 10px 2px  #fd5c21;
+}
+
+.group-btn--violet {
+  /* background: linear-gradient(45deg, transparent 40%, violet); */
+  background: violet;
+  border: 0.7px solid darkviolet;
+}
+.group-btn--violet:hover {
+  box-shadow: 0px 0px 10px 2px  violet;
+}
+
+.group-btn--black {
+  /* background: linear-gradient(45deg, transparent 40%, black); */
+  background: #837878;
+  border: 0.7px solid black;
+}
+.group-btn--black:hover {
+  box-shadow: 0px 0px 10px 2px  black;
+}
+
+/* ****************************************************************
+   RESPONSIVENESS
+*/
+/* MEDIUM */
+@media screen and (max-width: 920px) {
+
+  .brick-title {
+    font-size: 13px;
+  }
+
+  .brick-group {
+    font-size: 13px;
+  }
+
+  .grid-item {
+    height: 120px;
+  }
+}
+
+/* MEDIUM */
+@media screen and (max-width: 700px) {
+
+  .brick-title {
+    font-size: 11px;
+  }
+
+  .brick-group {
+    font-size: 11px;
+    margin-top: 7px;
+  }
+
+  .grid-item {
+    height: 120px;
+  }
+}
+
+/* SMALL */
+@media screen and (max-width: 360px) {
+
+  .brick-title {
+    font-size: 9px;
+  }
+
+  .brick-group {
+    font-size: 8px;
+    margin-top: 5px;
+  }
+
+  .grid-item {
+    height: 110px;
+  }
+}

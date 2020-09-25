@@ -1,0 +1,16 @@
+<div class="maestro_titulos">
+
+  <h2>Maestro de Títulos</h2>
+
+  <ag-grid-angular
+    class="ag-theme-blue maestro_titulos--height"
+    #gridCotizacionesEntreFechas
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [overlayLoadingTemplate]="overlayLoadingTemplate"
+    [loadingOverlayComponent]="loadingOverlayComponent"
+    [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+    [frameworkComponents]="frameworkComponents"
+    (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>

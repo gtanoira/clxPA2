@@ -1,0 +1,25 @@
+{
+  "sapDocsFactura": ["CF", "D1", "D4", "DD", "DJ", "DK", "DR"],
+  "docsName": [
+    { "companyId": "XVE1", "docId": "CC", "name": "Nota de crédito"},
+    { "companyId": "XVE1", "docId": "CF", "name": "Factura de crédito"},
+    { "companyId": "XVE1", "docId": "D4", "name": "Factura"},
+    { "companyId": "XVE1", "docId": "D6", "name": "Nota de crédito"},
+    { "companyId": "XVE1", "docId": "DJ", "name": "Factura"},
+    { "companyId": "XVE1", "docId": "DK", "name": "Nota de crédito"},
+    { "companyId": "XVE1", "docId": "DL", "name": "Nota de crédito"},
+    { "companyId": "XVE1", "docId": "DX", "name": "Recibo"},
+    { "companyId": "XU06", "docId": "D1", "name": "Factura"},
+    { "companyId": "XU06", "docId": "D3", "name": "Nota de crédito"},
+    { "companyId": "XU06", "docId": "DD", "name": "Nota de débito"},
+    { "companyId": "XU06", "docId": "DG", "name": "Nota de crédito"},
+    { "companyId": "XU06", "docId": "DJ", "name": "Nota de débito"},
+    { "companyId": "XU06", "docId": "DR", "name": "Factura"},
+    { "companyId": "XU06", "docId": "DX", "name": "Recibo"},
+    { "companyId": "XU12", "docId": "D1", "name": "Factura/Invoice"},
+    { "companyId": "XU12", "docId": "D3", "name": "Nota de crédito/Credit"},
+    { "companyId": "XU12", "docId": "DG", "name": "Nota de crédito/Credit"},
+    { "companyId": "XU12", "docId": "DR", "name": "Factura/Invoice"},
+    { "companyId": "XU12", "docId": "DX", "name": "Recibo/AR receipt"}
+  ]
+}

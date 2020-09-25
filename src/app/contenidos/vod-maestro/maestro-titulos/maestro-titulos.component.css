@@ -1,0 +1,22 @@
+/**
+ * TYPOGRAPHY
+ */
+
+ /**
+ * LAYOUT
+ */
+h2 {
+  text-align: center;
+}
+
+.maestro_titulos {
+  margin: 0 auto 2em;
+  margin-top: 2em;
+  width: 95vw;
+}
+
+.maestro_titulos--height {
+  height: 600px;
+  max-width: 1204px;
+  margin: 0 auto;
+}

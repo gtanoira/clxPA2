@@ -1,0 +1,126 @@
+<div class="container">
+  <!-- Upload VOD -->
+  <div
+    *ngIf="clientOptions !== undefined"
+    class="container-column"
+    [formGroup]="formData">
+
+    <!-- Título -->
+    <h2>Filtros</h2>
+
+    <!-- Cliente -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Cliente</mat-label>
+      <mat-select
+        formControlName="clienteId"
+        required>
+        <mat-option
+          *ngFor="let data of clientOptions | async"
+          [value]="data.id">
+          {{ data.cliente }}
+        </mat-option>
+      </mat-select>
+      <mat-error>El cliente es obligatorio</mat-error>
+    </mat-form-field>
+
+    <!-- Mes Reporte -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Mes Reporte</mat-label>
+      <input
+        required
+        matInput
+        [matDatepicker]="mesServicio"
+        formControlName="mesServicio">
+      <mat-datepicker-toggle matSuffix [for]="mesServicio"></mat-datepicker-toggle>
+      <mat-datepicker #mesServicio></mat-datepicker>
+      <mat-error>Fecha inválida</mat-error>
+    </mat-form-field>
+
+    <!-- Archivo XLS -->
+    <p class="archivo">Archivo Excel:</p>
+    <input
+      class="maximize"
+      [ngClass]="cssClass"
+      type="file"
+      (change)="onFileSelected($event)"
+      required>
+
+    <!-- Botones -->
+    <div class="buttons-area">
+
+      <!-- Button: Subir reporte-->
+      <div class="btns btn-submit">
+
+        <!-- boton -->
+        <button
+          class="inline-buttons"
+          appHoldable
+          (holdTime)="holdHandler($event)"
+          mat-stretch
+          [disabled]="formData.invalid || !fileUpload || isFetching"
+          mat-raised-button
+          color="primary"
+          title="Subir Reporte a MySql"
+          color=primary>
+          Subir Reporte&nbsp;
+          <mat-icon svgIcon="save"></mat-icon>
+        </button>
+
+        <!-- Progress bar for button -->
+        <mat-progress-bar
+          [color]="color"
+          mode="determinate"
+          [value]="holdableButtonMs">
+        </mat-progress-bar>
+
+        <!-- Spinner -->
+        <div class="spinner" *ngIf="isFetching">
+          <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+        </div>
+      </div>
+
+      <!-- Button: Ver errores -->
+      <div class="btns btn-download" *ngIf="showBtnDownload">
+        <a
+          mat-raised-button
+          color="accent"
+          title="descargar el log de errores"
+          href="{{downloadFile}}"
+          target="_blank"
+          download="actual_vod.log">
+          Ver errores&nbsp;
+          <mat-icon svgIcon="download-file"></mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <!-- Descripción reporte -->
+    <h2>Descripción</h2>
+    <p class="maximize descripcion">
+      {{descripcion | async}}
+    </p>
+
+    <!-- Modal para mostrar resultado del proceso -->
+    <div class="modal" *ngIf="showModal">
+      <h3>Resultado:</h3>
+      <p [innerHTML]="msgProceso"></p>
+      <button
+        class="btn-cerrar"
+        color="primary"
+        mat-fab
+        (click)="closeModal()">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Borrar Lote -->
+  <div class="container-borrar">
+    <app-borrar-lote [area]="area"></app-borrar-lote>
+  </div>
+</div>

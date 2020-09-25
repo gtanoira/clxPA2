@@ -1,0 +1,115 @@
+<div class="container">
+  <!-- Upload VOD Mestro Titulos -->
+  <div
+    class="container-column"
+    [formGroup]="formData">
+
+    <!-- Título -->
+    <h2>Filtros</h2>
+
+    <!-- Año-Mes Validez -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Año-Mes de validez</mat-label>
+      <input
+        required
+        matInput
+        [matDatepicker]="fechaValidez"
+        formControlName="fechaValidez">
+      <mat-datepicker-toggle matSuffix [for]="fechaValidez"></mat-datepicker-toggle>
+      <mat-datepicker #fechaValidez></mat-datepicker>
+      <mat-error>Fecha inválida</mat-error>
+    </mat-form-field>
+
+    <!-- Archivo XLS -->
+    <p class="archivo">Archivo Excel:</p>
+    <input
+      class="maximize"
+      [ngClass]="cssClass"
+      type="file"
+      (change)="onFileSelected($event)"
+      required>
+
+    <!-- Botones -->
+    <div class="buttons-area">
+
+      <!-- Button: Subir reporte-->
+      <div class="btns btn-submit">
+
+        <!-- boton -->
+        <button
+          class="inline-buttons"
+          appHoldable
+          (holdTime)="holdHandler($event)"
+          mat-stretch
+          [disabled]="formData.invalid || !fileUpload || isFetching"
+          mat-raised-button
+          color="primary"
+          title="Agregar los titulos al MySql"
+          color=primary>
+          Subir Reporte&nbsp;
+          <mat-icon svgIcon="save"></mat-icon>
+        </button>
+
+        <!-- Progress bar for button -->
+        <mat-progress-bar
+          [color]="color"
+          mode="determinate"
+          [value]="holdableButtonMs">
+        </mat-progress-bar>
+
+        <!-- Spinner -->
+        <div class="spinner" *ngIf="isFetching">
+          <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+        </div>
+      </div>
+
+      <!-- Button: Ver errores -->
+      <div
+        class="btns btn-download"
+        *ngIf="showBtnDownload"
+      >
+        <a
+          mat-raised-button
+          color="accent"
+          title="descargar el log de errores"
+          href="{{downloadFile}}"
+          target="_blank"
+          download="actual_vod.log">
+          Ver errores&nbsp;
+          <mat-icon svgIcon="download-file"></mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <!-- Descripción reporte -->
+    <h2>Descripción</h2>
+    <p class="maximize descripcion_texto">
+      Este programa actualiza el maestros de títulos VOD desde un archivo excel.<br>
+      Este maestro es utilizado para obtener reportes operativos desde Tableau.
+    </p>
+
+    <!-- Modal para mostrar resultado del proceso -->
+    <div class="modal" *ngIf="showModal">
+      <h3>Resultado:</h3>
+      <p class="descripcion_texto" [innerHTML]="msgProceso"></p>
+      <button
+        class="btn-cerrar"
+        color="primary"
+        mat-fab
+        (click)="closeModal()">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Borrar Lote -->
+  <div class="container-borrar">
+    <app-borrar-lote [area]="area"></app-borrar-lote>
+  </div>
+
+  <!-- Meestro de Titulos -->
+  <app-maestro-titulos></app-maestro-titulos>
+</div>

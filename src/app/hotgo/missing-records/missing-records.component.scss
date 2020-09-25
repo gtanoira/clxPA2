@@ -1,0 +1,237 @@
+/* ************************
+*  GENERAL
+*********************** */
+
+/* ************************
+ *  LAYOUT
+ *********************** */
+.container {
+  width: 90%;
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding-top: 2em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-mobile {
+  width: 360px;
+}
+
+.btn {
+  width: 182px;
+  margin-top: 1em;
+  margin-right: 1em;
+}
+
+.btn-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+  Register
+*/
+.register {
+  $bg-color: #CEE0F5;
+  $border-color: #86A9D3;
+
+  &-section {
+    width: calc(50% - 2em);
+    margin-right: 2em;
+    margin-bottom: 2em;
+  }
+
+  &-body {
+    background-color: $bg-color;
+    padding: 0 1em 1em 1em;
+    border: 2px solid $border-color;
+    border-bottom: 5px solid $border-color;
+    /* margin-top: -2px; */
+  }
+
+  &-description {
+    font-size: 0.8em;
+    font-weight: lighter;
+    color: #444343;
+  }
+
+  &-title {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: $border-color;
+    color: white;
+    border: 2px solid $border-color;
+    border-bottom: 2px solid $border-color;
+    border-top-left-radius: 6%;
+    border-top-right-radius: 6%;
+  }
+
+  &-model-download {
+    margin: auto 0.5em;
+  }
+}
+
+/*
+  Payment_Commit
+*/
+.pyc {
+  $bg-color: #FFCEB6;
+  $border-color: #D07B53;
+
+  &-section {
+    width: calc(50% - 2em);
+    margin-right: 2em;
+    margin-bottom: 2em;
+  }
+
+  &-body {
+    background-color: $bg-color;
+    padding: 0 1em 1em 1em;
+    border: 2px solid $border-color;
+    border-bottom: 5px solid $border-color;
+    /* margin-top: -2px; */
+  }
+
+  &-description {
+    font-size: 0.8em;
+    font-weight: lighter;
+    color: #444343;
+  }
+
+  &-title {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: $border-color;
+    color: white;
+    border: 2px solid $border-color;
+    border-bottom: 2px solid $border-color;
+    border-top-left-radius: 6%;
+    border-top-right-radius: 6%;
+  }
+
+  &-model-download {
+    margin: auto 0.5em;
+    color: $border-color;
+  }
+}
+
+/*
+  Cancel
+*/
+.cancel {
+  $bg-color: #C5E4D2;
+  $border-color: #3D9363;
+
+  &-section {
+    width: calc(50% - 2em);
+    margin-right: 2em;
+    margin-bottom: 2em;
+  }
+
+  &-body {
+    background-color: $bg-color;
+    padding: 0 1em 1em 1em;
+    border: 2px solid $border-color;
+    border-bottom: 5px solid $border-color;
+    /* margin-top: -2px; */
+  }
+
+  &-description {
+    font-size: 0.8em;
+    font-weight: lighter;
+    color: #444343;
+  }
+
+  &-title {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: $border-color;
+    color: white;
+    border: 2px solid $border-color;
+    border-bottom: 2px solid $border-color;
+    border-top-left-radius: 6%;
+    border-top-right-radius: 6%;
+  }
+
+  &-model-download {
+    margin: auto 0.5em;
+    color: $border-color;
+  }
+}
+
+/*
+  file upload
+*/
+.file-upload {
+  margin-left: 0.75em;
+  font-size: 0.75em;
+  font-style: normal;
+  color:black;
+  margin-bottom: 0.5em;
+  padding-left: 2px;
+}
+
+.ok-class {
+  border-left: 2px solid #42a948; /* green */
+}
+
+.notok-class {
+  border-left: 2px solid #a94442; /* red */
+}
+
+@media (max-width: 800px) {
+  .register-section {
+    width: 100%;
+  }
+
+  .pyc-section {
+    width: 100%;
+  }
+
+  .cancel-section {
+    width: 100%;
+  }
+}
+
+/* ************************
+ *  TYPOGRAPHY
+ *********************** */
+.resultado {
+  display: inline-block;
+  font-weight: bold;
+  color: #444;
+  flex: 1 0 100%;
+  text-overflow: ellipsis;
+  margin: auto 0;
+
+  &-ok {
+    color: green;
+  }
+
+  &-notOk {
+    color: red;
+  }
+}
+/*
+  Register
+*/
+.register-title {
+  font-weight: 100;
+}

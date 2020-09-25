@@ -1,0 +1,67 @@
+/* ************************
+*  Typography
+*********************** */
+h3,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  padding: 1em 0;
+}
+
+p {
+  font-style: italic;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+/* ************************
+*  Layout
+*********************** */
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container-column {
+  width: 300px;
+  position: relative;
+}
+
+.container-borrar {
+  margin-left: 2rem;
+}
+
+.maximize {
+  width: 100%;
+}
+
+.buttons-area {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.btns {
+  width: 140px;
+}
+
+.btn-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner {
+  margin: auto auto;
+}
+

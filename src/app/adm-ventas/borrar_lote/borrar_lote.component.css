@@ -1,0 +1,52 @@
+/* ************************
+*  Typography
+*********************** */
+h3,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  padding: 1em 0;
+}
+
+p {
+  font-style: italic;
+}
+
+/* ************************
+*  Layout
+*********************** */
+.container {
+  margin: 0 auto;
+  width: 300px;
+  position: relative;
+}
+
+.maximize {
+  width: 100%;
+}
+
+.buttons-area {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.btns {
+  width: 140px;
+}
+
+.btn-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner {
+  margin: auto auto;
+}
+

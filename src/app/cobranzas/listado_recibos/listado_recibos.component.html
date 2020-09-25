@@ -1,0 +1,166 @@
+<div class="container row">
+
+  <!-- Open Items -->
+  <section
+    class="form-section"
+    [formGroup]="formData">
+
+    <!-- Título -->
+    <h2>Filtros</h2>
+
+    <div class="col">
+
+      <!-- Compañías -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Compañía</mat-label>
+        <mat-select
+          formControlName="companyId"
+          required>
+          <mat-option
+            *ngFor="let company of companyOptions"
+            [value]="company.id">
+            {{ company.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Cliente -->
+      <ng-container *ngIf="clientOptions.length > 0">
+        <mat-form-field
+          class="maximize"
+          appearance="fill">
+          <mat-label>Cliente</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="clientId"
+            [matAutocomplete]="autoClientId"
+          />
+          <mat-autocomplete
+            #autoClientId="matAutocomplete"
+            [displayWith]="displayFn">
+            <mat-option
+              *ngFor="let data of filteredClients | async"
+              [value]="data">
+              {{ data.name +'('+ data.id +')' }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Cobrador -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Cobrador</mat-label>
+        <mat-select
+          formControlName="cobradorId">
+          <mat-option
+            *ngFor="let cobrador of cobradorOptions"
+            [value]="cobrador.id">
+            {{ cobrador.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Tipo de Fecha -->
+      <mat-radio-group
+        aria-labelledby="radio-group"
+        class="tipo_fecha"
+        formControlName="tipoFecha">
+        <mat-radio-button class="radio-item" value="recibo">Fecha recibo</mat-radio-button>
+        <mat-radio-button class="radio-item" value="compensacion">Fecha compensación</mat-radio-button>
+      </mat-radio-group>
+
+      <!-- Fecha Desde -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Fecha {{tipoFecha.value}} desde</mat-label>
+        <input
+          required
+          matInput
+          [matDatepicker]="fechaDesde"
+          formControlName="fechaDesde">
+        <mat-datepicker-toggle matSuffix [for]="fechaDesde"></mat-datepicker-toggle>
+        <mat-datepicker #fechaDesde></mat-datepicker>
+        <mat-error>Fecha inválida</mat-error>
+      </mat-form-field>
+
+      <!-- Fecha Hasta -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Fecha {{tipoFecha.value}} hasta</mat-label>
+        <input
+          required
+          matInput
+          [matDatepicker]="fechaHasta"
+          formControlName="fechaHasta">
+        <mat-datepicker-toggle matSuffix [for]="fechaHasta"></mat-datepicker-toggle>
+        <mat-datepicker #fechaHasta></mat-datepicker>
+        <mat-error>Fecha inválida</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <!-- Botones -->
+    <div class="buttons-area">
+
+      <!-- Button: Obtener reporte-->
+      <div class="btn btn-submit">
+
+        <!-- boton -->
+        <button
+          class="inline-buttons"
+          appHoldable
+          (holdTime)="holdHandler($event)"
+          mat-stretch
+          [disabled]="formData.invalid || isFetching"
+          mat-raised-button
+          color="primary"
+          title="Obtener reporte"
+          color=primary>
+          Reporte&nbsp;
+          <mat-icon svgIcon="save"></mat-icon>
+        </button>
+
+        <!-- Progress bar for button -->
+        <mat-progress-bar
+          [color]="color"
+          mode="determinate"
+          [value]="holdableButtonMs">
+        </mat-progress-bar>
+
+        <!-- Spinner -->
+        <div class="spinner" *ngIf="isFetching">
+          <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+        </div>
+      </div>
+
+      <!-- Exportar Excel -->
+      <div class="btn btn-download">
+        <button
+          [disabled]="formData.invalid || dataToExcel.length <= 0"
+          mat-raised-button
+          title="Exportar a Excel"
+          (click)="exportExcel()">
+          A Excel &nbsp;
+          <mat-icon svgIcon="excel" style="color: black;"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section">
+
+    <!-- Descripción reporte -->
+    <h2>Descripción</h2>
+    <p class="maximize descripcion-text">
+      Este programa genera un reporte con todos los recibos de una compañía en un período determinado, detallando las facturas compensadas si las tuviera
+    </p>
+
+  </section>
+</div>

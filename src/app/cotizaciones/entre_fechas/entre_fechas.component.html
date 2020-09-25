@@ -1,0 +1,150 @@
+<div class="container row row--wrap"
+  [formGroup]="formData">
+
+  <!-- Filtros: monedas y fechas -->
+  <section class="col col-mobile">
+
+    <h3>Elija las monedas</h3>
+
+    <!-- Moneda Desde Hasta -->
+    <div class="row">
+
+      <!-- De Moneda -->
+      <mat-form-field
+        appearance="fill"
+        class="form-ctrl-50">
+        <mat-label>De moneda</mat-label>
+        <mat-select
+          formControlName="deMoneda"
+          placeholder="De moneda"
+          required>
+          <mat-option
+            *ngFor="let currency of currencyOptions"
+            [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- A Moneda -->
+      <mat-form-field
+        appearance="fill"
+        class="form-ctrl-50">
+        <mat-label>A moneda</mat-label>
+        <mat-select
+          formControlName="aMoneda"
+          placeholder="A moneda"
+          required>
+          <mat-option
+            *ngFor="let currency of currencyOptions"
+            [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Rate Type -->
+    <mat-form-field
+      appearance="fill"
+      class="form-ctrl">
+      <mat-label>Tipo</mat-label>
+      <mat-select
+        formControlName="rateType"
+        placeholder="Rate Type"
+        required>
+        <mat-option
+          *ngFor="let rate of rateTypeOptions"
+          [value]="rate.id">
+          {{ rate.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>El tipo de cotización es <strong>obligatorio</strong></mat-error>
+    </mat-form-field>
+
+    <h3>Elija el rango de fechas</h3>
+
+    <!-- Fecha Desde -->
+    <mat-form-field
+      appearance="fill"
+      class="form-ctrl">
+      <mat-label>Fecha desde</mat-label>
+      <input
+        matInput
+        placeholder="elija un dia (DESDE)"
+        [matDatepicker]="fechaDesde"
+        formControlName="fechaDesde"
+        required>
+      <mat-datepicker-toggle matSuffix [for]="fechaDesde"></mat-datepicker-toggle>
+      <mat-datepicker #fechaDesde></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Fecha Hasta -->
+    <mat-form-field
+      appearance="fill"
+      class="form-ctrl">
+      <mat-label>Fecha hasta</mat-label>
+      <input
+        matInput
+        placeholder="elija un dia (HASTA)"
+        [matDatepicker]="fechaHasta"
+        formControlName="fechaHasta"
+        required>
+      <mat-datepicker-toggle matSuffix [for]="fechaHasta"></mat-datepicker-toggle>
+      <mat-datepicker #fechaHasta></mat-datepicker>
+    </mat-form-field>
+  </section>
+
+  <!-- Botones -->
+  <section class="secc-acciones">
+
+    <h3>Acciones</h3>
+
+    <!-- Exportar a Excel -->
+    <div class="btn">
+      <button
+        mat-raised-button
+        [disabled]="isFetching"
+        (click)="exportExcel()">
+        Exportar a Excel&nbsp;
+        <mat-icon svgIcon="excel"></mat-icon>
+      </button>
+    </div>
+
+    <!-- Recalcular -->
+    <div class="btn row">
+      <button
+        mat-raised-button
+        [disabled]="isFetching"
+        color="primary"
+        (click)="getCotizaciones()">
+        Recalcular&nbsp;
+        <mat-icon svgIcon="recycle"></mat-icon>
+      </button>
+      <div>
+        <img *ngIf="isFetching" src="/assets/images/spinner01.svg">
+      </div>
+    </div>
+  </section>
+
+  <!-- Cotizaciones Grid -->
+  <section class="col cotizaciones">
+
+    <h3>Cotizaciones</h3>
+
+    <ag-grid-angular
+      class="ag-theme-blue tabla-ag-grid"
+      #gridCotizacionesEntreFechas
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [overlayLoadingTemplate]="overlayLoadingTemplate"
+      [loadingOverlayComponent]="loadingOverlayComponent"
+      [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+      [rowData]="rowData"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </section>
+
+</div>
+

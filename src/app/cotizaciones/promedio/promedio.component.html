@@ -1,0 +1,99 @@
+<div
+  class="container col">
+
+  <!-- Titulo, Filtros y Botones -->
+  <section
+    class="row row--wrap"
+    [formGroup]="formData">
+
+    <!-- Filtros -->
+    <div class="inner-container">
+
+      <h3>Filtros</h3>
+
+      <!-- De Moneda -->
+      <mat-form-field
+        appearance="fill"
+        class="form-ctrl">
+        <mat-label>De moneda</mat-label>
+        <mat-select
+          formControlName="monedaOrigen"
+          placeholder="Moneda Origen"
+          required>
+          <mat-option
+            *ngFor="let currency of monedaOrigenOptions"
+            [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>La moneda de origen es <strong>obligatoria</strong></mat-error>
+      </mat-form-field>
+
+      <!-- A Moneda -->
+      <mat-form-field
+        appearance="fill"
+        class="form-ctrl">
+        <mat-label>A moneda</mat-label>
+        <mat-select
+          formControlName="monedaDestino"
+          placeholder="Moneda Destino"
+          required>
+          <mat-option
+            *ngFor="let currency of monedaDestinoOptions"
+            [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>La moneda de destino es <strong>obligatoria</strong></mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Botones -->
+    <div class="inner-container col">
+
+      <h3>Acciones</h3>
+
+      <!-- Exportar a Excel -->
+      <div class="btn">
+        <button class="btn"
+          mat-raised-button
+          [disabled]="isFetching"
+          (click)="exportExcel()">
+          <span fxHide.lt-sm>Exportar a excel &nbsp;</span>
+          <mat-icon svgIcon="excel" matTooltip="Exportar a excel"></mat-icon>
+        </button>
+      </div>
+
+      <!-- Botón Recalcular -->
+      <div class="btn row">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="isFetching"
+          (click)="getCotizacionesPromedio()">
+          <span fxHide.lt-sm>Recalcular&nbsp;</span>
+          <mat-icon svgIcon="recycle" matTooltip="Recalcular"></mat-icon>
+        </button>
+        <div>
+          <img *ngIf="isFetching" src="/assets/images/spinner01.svg">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Grid Promedios-->
+  <section class="col">
+    <h3>Cotizaciones</h3>
+    <ag-grid-angular
+      class="ag-theme-blue tabla-ag-grid"
+      #gridCotizacionesPromedios
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [rowData]="rowData"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </section>
+</div>
+

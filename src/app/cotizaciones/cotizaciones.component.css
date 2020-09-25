@@ -1,0 +1,11 @@
+.cotizaciones-main {
+  margin-top: -32px;
+}
+
+h1, h2, h3, h4 {
+  font-family: Roboto,sans-serif;
+}
+
+mat-icon {
+  fill: white;
+}

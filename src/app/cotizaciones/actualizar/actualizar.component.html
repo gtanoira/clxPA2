@@ -1,0 +1,161 @@
+<div class="container row" [formGroup]="formData">
+
+  <!-- Filtros -->
+  <section class="form-section">
+
+    <!-- Título -->
+    <h3>Filtros</h3>
+
+    <div class="col">
+
+      <!-- Fecha a buscar -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Fecha</mat-label>
+        <input
+          matInput
+          placeholder="Fecha"
+          [matDatepicker]="dateSearch"
+          formControlName="dateSearch"
+          required>
+        <mat-datepicker-toggle matSuffix [for]="dateSearch"></mat-datepicker-toggle>
+        <mat-datepicker #dateSearch></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Rate Type -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Tipo</mat-label>
+        <mat-select
+          formControlName="rateType"
+          placeholder="Rate Type"
+          required>
+          <mat-optgroup
+            *ngFor="let rateGroup of rateTypeOptions"
+            [label]="rateGroup.group">
+            <mat-option
+              *ngFor="let rate of rateGroup.values"
+              [value]="rate.id">
+              {{ rate.name }}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <mat-error *ngIf="formData.get('rateType').hasError('required')">
+          EL rate type es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Moneda origen -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>De moneda</mat-label>
+        <mat-select
+          formControlName="currOrigin"
+          placeholder="Moneda Origen"
+          required>
+          <mat-option
+            *ngFor="let currency of currencyOriginOptions"
+            [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('currOrigin').hasError('required')">
+          La moneda de origen es <strong>obligatoria</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Moneda destino -->
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>A moneda</mat-label>
+        <mat-select
+          formControlName="currTarget"
+          placeholder="Moneda Destino"
+          required>
+          <mat-option
+            *ngFor="let currency of currencyTargetOptions"
+            [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('currTarget').hasError('required')">
+          La moneda de destino es <strong>obligatoria</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+  </section>
+
+  <!-- Cotizacion a actualizar -->
+  <section class="form-section">
+
+    <!-- Título -->
+    <h3>Cotización a actualizar</h3>
+
+    <div class="col">
+
+      <!-- Cotizacion -->
+      <mat-form-field class="maximize" appearance="fill">
+        <input
+          matInput
+          [ngClass]="!sameDateAsSap? 'differentDate' : ''"
+          [title]="exchangeTooltip"
+          placeholder="Cotización a actualizar"
+          formControlName="directExchange"
+          appOnlyNumbers
+          required>
+      </mat-form-field>
+
+      <!-- Botones -->
+      <div class="buttons-area">
+
+        <!-- Button: Actualizar cotizacion -->
+        <div class="btn btn-submit">
+
+          <!-- boton -->
+          <button
+            class="inline-buttons"
+            appHoldable
+            (holdTime)="holdHandler($event)"
+            mat-stretch
+            [disabled]="formData.invalid || isFetching"
+            mat-raised-button
+            color="primary"
+            title="Actualizar"
+            color=primary>
+            Reporte&nbsp;
+            <mat-icon svgIcon="save"></mat-icon>
+          </button>
+
+          <!-- Progress bar for button -->
+          <mat-progress-bar
+            [color]="color"
+            mode="determinate"
+            [value]="holdableButtonMs">
+          </mat-progress-bar>
+
+          <!-- Spinner -->
+          <div class="spinner" *ngIf="isFetching">
+            <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Descripcion -->
+  <section class="form-section">
+
+    <!-- Descripción reporte -->
+    <h3>Descripción</h3>
+    <p class="maximize descripcion-text">
+      Este programa actualiza una cotización en 3 sistemas distintos: en SAP, en el MySql de planning y en el MySql de AWS para HotGo
+    </p>
+
+  </section>
+</div>

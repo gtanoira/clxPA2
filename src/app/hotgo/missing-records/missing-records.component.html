@@ -1,0 +1,225 @@
+<div class="container row row--wrap">
+
+  <!-- Missing Registers -->
+  <section class="register-section">
+
+    <div class="register-title">&nbsp;Missing Register&nbsp;</div>
+
+    <div class="register-body">
+      <div class="row">
+        <p class="register-description">
+          Este proceso sube al Datalake registros faltantes del tipo <strong>REGISTER</strong>
+          que por diversos motivos no pudieron subirse a través del proceso normal de actualización
+        </p>
+        <a class="register-model-download" href="/assets/files/register_missing_model.xlsx" download>
+          <mat-icon
+            svgIcon="download-file-cloud"
+            matTooltip="Descargar excel modelo">
+          </mat-icon>
+        </a>
+      </div>
+
+      <!-- Archivo XLS -->
+      <p class="file-upload">Archivo Excel:</p>
+      <input
+        [ngClass]="cssClassRegister"
+        type="file"
+        (change)="uploadRegister($event)"
+        required
+      >
+
+      <!-- Area botones -->
+      <div class="row">
+
+        <!-- Boton Procesar -->
+        <div class="btn btn-col">
+
+          <!-- boton -->
+          <button
+            class="inline-buttons"
+            appHoldable
+            (holdTime)="holdBtnRegister($event)"
+            mat-stretch
+            [disabled]="!fileRegister || isFetchingRegister"
+            mat-raised-button
+            color="primary"
+            title="Subir y procesar los register al Datalake"
+            color=primary>
+            Subir Register&nbsp;
+            <mat-icon svgIcon="save"></mat-icon>
+          </button>
+
+          <!-- Progress bar for button -->
+          <mat-progress-bar
+            [color]="colorBtnRegister"
+            mode="determinate"
+            [value]="holdableBtnRegister">
+          </mat-progress-bar>
+        </div>
+
+        <!-- Spinner y resultado-->
+        <div class="row">
+          <!-- Spinner -->
+          <div class="spinner" *ngIf="isFetchingRegister">
+            <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+          </div>
+          <!-- Resultado -->
+          <div [ngClass]="cssResultadoRegister" *ngIf="!isFetchingRegister && msgProcesoRegister !== ''">
+            {{msgProcesoRegister}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Missing Payment Commits -->
+  <section class="pyc-section">
+
+    <div class="pyc-title">&nbsp;Missing Payment Commits&nbsp;</div>
+
+    <div class="pyc-body">
+      <div class="row">
+        <p class="pyc-description">
+          Este proceso sube al Datalake registros faltantes del tipo <strong>PAYMENT_COMMIT</strong>
+          que por diversos motivos no pudieron subirse a través del proceso normal de actualización
+        </p>
+        <a class="pyc-model-download" href="/assets/files/payment_commit_missing_modelo.xlsx" download>
+          <mat-icon
+            svgIcon="download-file-cloud"
+            matTooltip="Descargar excel modelo">
+          </mat-icon>
+        </a>
+      </div>
+
+      <!-- Archivo XLS -->
+      <p class="file-upload">Archivo Excel:</p>
+      <input
+        [ngClass]="cssClassPyc"
+        type="file"
+        (change)="uploadPyc($event)"
+        required
+      >
+
+      <!-- Area botones -->
+      <div class="row">
+
+        <!-- Boton Procesar -->
+        <div class="btn btn-col">
+
+          <!-- boton -->
+          <button
+            class="inline-buttons"
+            appHoldable
+            (holdTime)="holdBtnPyc($event)"
+            mat-stretch
+            [disabled]="!filePyc || isFetchingPyc"
+            mat-raised-button
+            color="primary"
+            title="Subir y procesar los payment_commits al Datalake"
+            color=primary>
+            Subir Pyc&nbsp;
+            <mat-icon svgIcon="save"></mat-icon>
+          </button>
+
+          <!-- Progress bar for button -->
+          <mat-progress-bar
+            [color]="colorBtnPyc"
+            mode="determinate"
+            [value]="holdableBtnPyc">
+          </mat-progress-bar>
+        </div>
+
+        <!-- Spinner y resultado-->
+        <div class="row">
+          <!-- Spinner -->
+          <div class="spinner" *ngIf="isFetchingPyc">
+            <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+          </div>
+          <!-- Resultado -->
+          <div [ngClass]="cssResultadoPyc" *ngIf="!isFetchingPyc && msgProcesoPyc !== ''">
+            {{msgProcesoPyc}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Missing Cancel -->
+  <section class="cancel-section">
+
+    <div class="cancel-title">&nbsp;Missing Cancel&nbsp;</div>
+
+    <div class="cancel-body">
+      <div class="row">
+        <p class="cancel-description">
+          Este proceso sube al Datalake registros faltantes del tipo <strong>CANCEL</strong>
+          que por diversos motivos no pudieron subirse a través del proceso normal de actualización
+        </p>
+        <a class="cancel-model-download" href="/assets/files/cancel_missing_modelo.xlsx" download>
+          <mat-icon
+            svgIcon="download-file-cloud"
+            matTooltip="Descargar excel modelo">
+          </mat-icon>
+        </a>
+      </div>
+
+      <!-- Archivo XLS -->
+      <p class="file-upload">Archivo Excel:</p>
+      <input
+        [ngClass]="cssClassCancel"
+        type="file"
+        (change)="uploadCancel($event)"
+        required
+      >
+
+      <!-- Area botones -->
+      <div class="row">
+
+        <!-- Boton Procesar -->
+        <div class="btn btn-col">
+
+          <!-- boton -->
+          <button
+            class="inline-buttons"
+            appHoldable
+            (holdTime)="holdBtnCancel($event)"
+            mat-stretch
+            [disabled]="!fileCancel || isFetchingCancel"
+            mat-raised-button
+            color="primary"
+            title="Subir y procesar los payment_commits al Datalake"
+            color=primary>
+            Subir Cancel&nbsp;
+            <mat-icon svgIcon="save"></mat-icon>
+          </button>
+
+          <!-- Progress bar for button -->
+          <mat-progress-bar
+            [color]="colorBtnCancel"
+            mode="determinate"
+            [value]="holdableBtnCancel">
+          </mat-progress-bar>
+        </div>
+
+        <!-- Spinner y resultado-->
+        <div class="row">
+          <!-- Spinner -->
+          <div class="spinner" *ngIf="isFetchingCancel">
+            <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+          </div>
+          <!-- Resultado -->
+          <div [ngClass]="cssResultadoCancel" *ngIf="!isFetchingCancel && msgProcesoCancel !== ''">
+            {{msgProcesoCancel}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</div>
+

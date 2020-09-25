@@ -1,0 +1,14 @@
+/* ****************
+ * LAYOUT
+ ******************/
+.action-btn {
+  height: 18px;
+}
+
+.btn-red {
+  color: red;
+}
+
+.btn-blue {
+  color: darkblue;
+}

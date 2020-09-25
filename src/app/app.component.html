@@ -1,0 +1,118 @@
+<!-- Main Header  -->
+<mat-toolbar class="toolbar" color="primary">
+
+  <div class="header">
+
+    <!-- ALineación izquierda -->
+    <div class="lado-izq">
+
+      <!-- PortalAdmin2 Titulo -->
+      <h2 class="portal-admin2">
+        Portal Admin II -&nbsp;
+      </h2>
+
+      <!-- App Titulo -->
+      <h2 class="app-title">
+        {{currentProgramTitle}}
+      </h2>
+    </div>
+
+    <!-- Lado derecho del header -->
+    <div class="lado-der">
+
+      <!-- HOME -->
+      <a
+        class="mnu-option"
+        mat-button
+        routerLink="/">
+        <span class="mnu-option__name">Home</span>
+        <mat-icon
+          class="mnu-option__btn"
+          color="accent"
+          matTooltip="ET phone Home"
+          matTooltipPosition="above"
+          svgIcon="home_main">
+        </mat-icon>
+      </a>
+
+      <!-- Environment Variables -->
+      <a
+        class="mnu-option"
+        mat-button
+        [matMenuTriggerFor]="menu">
+        <span class="mnu-option__name">Environment</span>
+        <mat-icon
+          class="mnu-option__btn"
+          color="accent"
+          matTooltip="See Environment"
+          matTooltipPosition="above"
+          svgIcon="env_info">
+        </mat-icon>
+      </a>
+      <mat-menu #menu="matMenu">
+        <span mat-menu-item>Portal: {{ toolbarPortal }}</span>
+        <span mat-menu-item>Sap-GW: {{ toolbarSapGw }}</span>
+        <span mat-menu-item>Login: {{ toolbarLogin }}</span>
+        <span mat-menu-item>PortalAdmin: {{ toolbarPortalAdmin }}</span>
+      </mat-menu>
+
+      <!-- User Name -->
+      <a
+        class=" mnu-option"
+        *ngIf="toolbarUser !== ''"
+        mat-button>
+        <span class="mnu-option__name">{{ toolbarUser }}</span>
+        <mat-icon
+          class="mnu-option__btn"
+          color="accent"
+          matTooltip="{{ toolbarUser }}"
+          matTooltipPosition="above"
+          svgIcon="user_toolbar">
+        </mat-icon>
+      </a>
+
+      <!-- Logout -->
+      <a
+        class="mnu-option"
+        mat-button
+        (click)="authenticationService.logout()">
+        <span class="mnu-option__name">Logout</span>
+        <mat-icon
+          class="mnu-option__btn"
+          color="accent"
+          matTooltip="Logout App"
+          matTooltipPosition="above"
+          svgIcon="logout">
+        </mat-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Error Message Line -->
+  <div
+    class="error-line"
+    [ngClass]="errorLineClasses">
+
+    <!-- Icon Close -->
+    <div
+      class="error__close"
+      mat-button
+      (click)="errorMessageService.changeErrorMessage('')"
+      matTooltip="Close">
+      <mat-icon
+        svgIcon="close"
+        style="height: 12px;">
+      </mat-icon>
+    </div>
+
+    <!-- Mensaje -->
+    <div class="error__message">
+      {{ formErrorMessage }}
+    </div>
+  </div>
+
+</mat-toolbar>
+
+<!-- Main Body -->
+<router-outlet></router-outlet>

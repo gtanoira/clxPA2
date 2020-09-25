@@ -1,0 +1,25 @@
+
+  private minimumAge(age: number): ValidatorFn {
+    return (fg: FormGroup): ValidationErrors => {
+      let result: ValidationErrors = null;
+      if (fg.get('year').valid && fg.get('month').valid && fg.get('day').valid) {
+        // carefull, moment months range is from 0 to 11
+        const value: { year: string, month: string, day: string } = fg.value;
+        const date = moment({ year: +value.year, month: (+value.month) - 1, day: +value.day }).startOf('day');
+        if (date.isValid()) {
+          // https://momentjs.com/docs/#/displaying/difference/
+          const now = moment().startOf('day');
+          const yearsDiff = date.diff(now, 'years');
+          if (yearsDiff > -age) {
+            result = {
+              'minimumAge': {
+                'requiredAge': age,
+                'actualAge': yearsDiff
+              }
+            };
+          }
+        }
+      }
+      return result;
+    };
+  }

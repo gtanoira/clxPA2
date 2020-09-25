@@ -1,0 +1,136 @@
+/* ************************
+ *  Layout
+ *********************** */
+.toolbar {
+  position: relative;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.portal-admin2 {
+  display: inline-block;
+}
+
+.app-title {
+  display: inline-block;
+}
+
+.lado-der {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+
+.mnu-option {
+  cursor: pointer;
+  margin-right: 2em;
+  position: relative;
+  /* border: 2px solid yellow; */
+}
+
+.mnu-option__btn {
+  position: absolute;
+  margin-top: 0.25em;
+  margin-left: 4px;
+}
+
+.relative {
+  position: relative;
+  max-width: 100%;
+}
+
+.error-line {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 90%;
+  top: 64px;
+  right: 0;
+  z-index: 1;
+  max-width: calc(100% - 16px);
+  background-color: rgba(153, 0, 0, 0.85);
+  color: white;
+  font-size: medium;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  transform: translateX(110%);
+  transition: transform 500ms cubic-bezier(0.46,-0.51, 0.51, 0.93);
+}
+
+.fm__open {
+  /* Animación para hacer aparecer la linea de error */
+  transform: translateX(0%);
+  transition: transform 500ms cubic-bezier(0.43,-0.54, 0.58, 1.6)
+}
+
+@media (max-width: 900px) {
+  .mnu-option__name {
+    display: none;
+  }
+
+  .mnu-option {
+    margin-right: 1em;
+  }
+
+  .mnu-option__btn {
+    position: relative;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .portal-admin2 {
+    display: none;
+  }
+}
+
+/* ************************
+ *  Typography
+ *********************** */
+.portal-admin2,
+.app-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+
+.app-title {
+  font-style: italic;
+}
+
+.lado-der {
+  font-family: 'Rajdhani', sans-serif;
+  color: rgb(216, 214, 214);
+  font-weight: 400;
+  /* font-size: 0.9rem; */
+}
+
+.mnu-option {
+  text-decoration: none;
+  color: rgb(216, 214, 214);
+}
+
+.logout {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+@media (max-width: 1000px) {
+  .portal-admin2,
+  .app-title {
+    font-size: 1.3rem;
+  }
+}

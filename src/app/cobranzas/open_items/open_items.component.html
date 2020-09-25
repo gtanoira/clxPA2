@@ -1,0 +1,123 @@
+<div class="container">
+
+  <!-- Open Items -->
+  <form
+    *ngIf="clientOptions !== undefined"
+    class="container-column"
+    [formGroup]="formData">
+
+    <!-- Título -->
+    <h3>Filtros</h3>
+
+    <!-- Cliente -->
+    <ng-container *ngIf="clientOptions">
+      <mat-form-field
+        class="maximize"
+        appearance="fill">
+        <mat-label>Cliente</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="clientId"
+          [matAutocomplete]="autoClientId"
+          required
+        />
+        <mat-autocomplete
+          #autoClientId="matAutocomplete"
+          [displayWith]="displayFn">
+          <mat-option
+            *ngFor="let data of filteredClients | async"
+            [value]="data">
+            {{ data.name +'('+ data.id +')' }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>El cliente es obligatorio</mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Compañías -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Compañía</mat-label>
+      <mat-select
+        formControlName="companyId"
+        required>
+        <mat-option
+          *ngFor="let company of companyOptions"
+          [value]="company.id">
+          {{ company.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Fecha Corte -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Fecha corte</mat-label>
+      <input
+        required
+        matInput
+        [matDatepicker]="fechaCorte"
+        formControlName="fechaCorte">
+      <mat-datepicker-toggle matSuffix [for]="fechaCorte"></mat-datepicker-toggle>
+      <mat-datepicker #fechaCorte></mat-datepicker>
+      <mat-error>Fecha inválida</mat-error>
+    </mat-form-field>
+
+    <!-- Botones -->
+    <div class="buttons-area">
+
+      <!-- Button: Obtener reporte-->
+      <div class="btns btn-submit">
+
+        <!-- boton -->
+        <button
+          class="inline-buttons"
+          appHoldable
+          (holdTime)="holdHandler($event)"
+          mat-stretch
+          [disabled]="formData.invalid || isFetching"
+          mat-raised-button
+          color="primary"
+          title="Obtener reporte"
+          color=primary>
+          Reporte&nbsp;
+          <mat-icon svgIcon="save"></mat-icon>
+        </button>
+
+        <!-- Progress bar for button -->
+        <mat-progress-bar
+          [color]="color"
+          mode="determinate"
+          [value]="holdableButtonMs">
+        </mat-progress-bar>
+
+        <!-- Spinner -->
+        <div class="spinner" *ngIf="isFetching">
+          <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+        </div>
+      </div>
+
+      <!-- Exportar Excel -->
+      <div class="btns btn-download">
+        <button
+          [disabled]="formData.invalid || dataToExcel.length <= 0"
+          mat-raised-button
+          title="Exportar a Excel"
+          (click)="exportExcel()">
+          A Excel &nbsp;
+          <mat-icon svgIcon="excel" style="color: black;"></mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Descripción reporte -->
+    <h3>Descripción</h3>
+    <p class="maximize">
+      Este programa genera un reporte con todas las facturas pendientes de cobro (partidas pendientes en SAP) a una fecha determinada
+    </p>
+
+  </form>
+</div>

@@ -1,0 +1,30 @@
+export interface AggingSaldoModel {
+  empresaId: string;
+  clienteId: string;
+  clienteDesc: string;
+  clientePaisId: string;
+  clientePaisDesc: string;
+  tipoNegocio: string;
+  responsable?: string;
+  grupoVendedores?: string;
+  monedaId: string;
+  cash_wh?: string;
+  mesCorte: string;
+  tot360p: number | 0;
+  tot180p: number | 0;
+  tot120p: number | 0;
+  tot090p: number | 0;
+  tot060p: number | 0;
+  tot030p: number | 0;
+  tot000p: number | 0;
+  tot000: number | 0;
+  tot030: number | 0;
+  tot060: number | 0;
+  tot090: number | 0;
+  tot120: number | 0;
+  tot180: number | 0;
+  tot360: number | 0;
+  pagosSinAplicar: number | 0;
+  ncSinAplicar: number | 0;
+  total: number | 0;
+}

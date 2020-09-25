@@ -1,0 +1,20 @@
+/******************
+ * LAYOUT
+ ******************/
+h1 {
+  padding: 0 0.5em;
+}
+
+.titulo {
+  text-align: center;
+}
+
+.alert {
+  background: #f80202cc;
+  color: white;
+}
+
+.normal {
+  background: #0db40de3;
+  color: white;
+}

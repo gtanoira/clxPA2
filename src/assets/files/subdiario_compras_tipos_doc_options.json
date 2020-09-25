@@ -1,0 +1,30 @@
+[
+  {
+    "id": "KA",
+    "name": "KA: DOC.DE PROVEEDORES"
+  },
+  {
+    "id": "KD",
+    "name": "KD: NOTA DE DÉBITO PROVEEDOR"
+  },
+  {
+    "id": "KG",
+    "name": "KG: NOTA DE CRÉDITO PROVEEDOR"
+  },
+  {
+    "id": "KR",
+    "name": "KR: FACTURA PROVEEDOR"
+  },
+  {
+    "id": "KT",
+    "name": "KT: FACTURA SERVICIOS PÚBLICOS"
+  },
+  {
+    "id": "KL",
+    "name": "KL: FACTURA PROVEEDOR SL"
+  },
+  {
+    "id": "KO",
+    "name": "KO: NOTA DE CRÉDITO PROVEEDOR SL"
+  }
+]

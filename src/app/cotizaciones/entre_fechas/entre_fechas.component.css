@@ -1,0 +1,64 @@
+/* ************************
+ *  LAYOUT
+ *********************** */
+ .container {
+  width: 90%;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.row--wrap {
+  flex-wrap: wrap;
+}
+
+.row--center {
+  justify-content: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-mobile {
+  width: 100%;
+  max-width: 360px;
+}
+
+.divider {
+  height: 2rem;
+  width: 0;
+}
+
+.form-ctrl {
+  width: 100%;
+  padding-right: 2em;
+}
+
+.form-ctrl-50 {
+  width: 50%;
+  padding-right: 1em;
+}
+
+.secc-acciones {
+  margin-right: 2em;
+}
+
+.btn {
+  margin-bottom: 1em;
+  /* padding: 0 1em; */
+}
+
+.cotizaciones {
+  width: 352px;
+}
+
+.tabla-ag-grid {
+  height: 452px;
+}
+

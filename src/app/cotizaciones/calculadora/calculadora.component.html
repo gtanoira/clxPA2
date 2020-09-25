@@ -1,0 +1,89 @@
+<div
+  class="container row row--wrap"
+  [formGroup]="formData">
+
+  <!-- Input Fecha y monedas -->
+  <section class="secc-filtros col col-mobile">
+
+    <!-- Fecha a buscar -->
+    <mat-form-field
+      class="form-ctrl"
+      appearance="fill">
+      <mat-label>Fecha a buscar</mat-label>
+      <input
+        matInput
+        placeholder="seleccione una fecha"
+        [matDatepicker]="dateSearch"
+        formControlName="dateSearch"
+        required>
+      <mat-datepicker-toggle matSuffix [for]="dateSearch"></mat-datepicker-toggle>
+      <mat-datepicker #dateSearch></mat-datepicker>
+      <mat-error *ngIf="!dateSearch">La fecha es obligatoria</mat-error>
+    </mat-form-field>
+
+    <h3>Monedas</h3>
+
+    <!-- Moneda origen -->
+    <mat-form-field
+      appearance="fill"
+      class="form-ctrl">
+      <mat-label>De moneda</mat-label>
+      <mat-select
+        formControlName="currOrigin"
+        placeholder="Moneda Origen"
+        required>
+        <mat-option
+          *ngFor="let currency of currencyOptions"
+          [value]="currency.id">
+          {{ currency.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>La moneda de origen es <strong>requerida</strong></mat-error>
+    </mat-form-field>
+
+    <!-- Moneda destino -->
+    <mat-form-field
+      appearance="fill"
+      class="form-ctrl">
+      <mat-label>A moneda</mat-label>
+      <mat-select
+        formControlName="currTarget"
+        placeholder="Moneda Destino"
+        required>
+        <mat-option
+          *ngFor="let currency of currencyOptions"
+          [value]="currency.id">
+          {{ currency.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>La moneda de destino es <strong>requerida</strong></mat-error>
+    </mat-form-field>
+  </section>
+
+
+  <!-- Resultado -->
+  <mat-card class="secc-resultado col col-mobile">
+
+    <mat-card-title>Resultado:</mat-card-title>
+
+    <!-- Cotizacion Directa -->
+    <mat-form-field>
+      <input
+        matInput
+        [ngClass]="!sameDateAsSap? 'differentDate' : ''"
+        placeholder="Cotización Directa"
+        formControlName="directExchange">
+    </mat-form-field>
+
+    <!-- Feha SAP valida -->
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="sapDate"
+        [matDatepicker]="sapD"
+        placeholder="Obtenida en la fecha SAP">
+      <mat-datepicker #sapD></mat-datepicker>
+    </mat-form-field>
+  </mat-card>
+
+</div>

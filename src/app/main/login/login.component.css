@@ -1,0 +1,27 @@
+.container {
+  width: 90%;
+  max-width: 1128px;
+  margin: 0 auto;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: start; */
+  align-items: center;
+}
+
+img {
+  width: 300px;
+  height:auto;
+}
+
+.login-error {
+  color: red;
+  margin: auto;
+}
+
+.maximize {
+  max-width: 340px;
+  width: 100%;
+}

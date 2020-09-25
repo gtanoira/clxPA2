@@ -1,0 +1,191 @@
+<h2 class="titulo">Marketing Expenditures para HotGo</h2>
+<div class="container" [formGroup]="formData">
+  <div class="container-column">
+
+    <!-- Mes Reporte -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Mes-Año</mat-label>
+      <input
+        required
+        matInput
+        [matDatepicker]="mesAnio"
+        formControlName="mesAnio">
+      <mat-datepicker-toggle matSuffix [for]="mesAnio"></mat-datepicker-toggle>
+      <mat-datepicker #mesAnio></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Pais -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>País</mat-label>
+      <mat-select
+        formControlName="pais"
+        required>
+        <mat-option
+          *ngFor="let data of paisOptions | async"
+          [value]="data.id">
+          {{ data.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Canal -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Canal</mat-label>
+      <mat-select
+        formControlName="canal"
+        required>
+        <mat-option
+          *ngFor="let data of canalOptions | async"
+          [value]="data.id">
+          {{ data.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Fuente -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Fuente</mat-label>
+      <mat-select
+        formControlName="fuente"
+        required>
+        <mat-option
+          *ngFor="let data of fuenteOptions | async"
+          [value]="data.id">
+          {{ data.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Medio -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Medio</mat-label>
+      <mat-select
+        formControlName="medio"
+        required>
+        <mat-option
+          *ngFor="let data of medioOptions | async"
+          [value]="data.id">
+          {{ data.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="container-column">
+    <!-- Campaña -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Campaña</mat-label>
+      <input
+        matInput
+        formControlName="campania"
+        placeholder="id de la campaña"
+        required
+      >
+      <mat-error>La campaña es obligatoria</mat-error>
+    </mat-form-field>
+
+    <!-- Moneda Documento -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Moneda Documento (local)</mat-label>
+      <mat-select
+        formControlName="docMonedaId"
+        required>
+        <mat-option
+          *ngFor="let data of monedaOptions | async"
+          [value]="data.id">
+          {{ data.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Importe Documento -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Importe en {{docMonedaId.value}}</mat-label>
+      <input
+        matInput
+        formControlName="docImporte"
+        appOnlyNumbers
+      >
+    </mat-form-field>
+
+    <!-- Importe USD -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Importe en USD</mat-label>
+      <input
+        matInput
+        formControlName="usdImporte"
+        appOnlyNumbers
+      >
+    </mat-form-field>
+
+    <!-- Botones -->
+    <div class="buttons-area">
+
+      <!-- Button: Subir reporte-->
+      <div class="btns btn-submit">
+
+        <!-- boton -->
+        <button
+          class="inline-buttons"
+          appHoldable
+          (holdTime)="holdHandler($event)"
+          mat-stretch
+          [disabled]="formData.invalid"
+          mat-raised-button
+          color="primary"
+          title="Subir Datos a MySql"
+          color=primary>
+          Subir Datos&nbsp;
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+
+        <!-- Progress bar for button -->
+        <mat-progress-bar
+          [color]="color"
+          mode="determinate"
+          [value]="holdableButtonMs">
+        </mat-progress-bar>
+
+        <!-- Spinner -->
+        <div class="spinner" *ngIf="isFetching">
+          <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+        </div>
+      </div>
+   </div>
+
+  </div>
+
+  <div class="table-mkt">
+    <ag-grid-angular
+      class="ag-theme-blue table-mkt--height"
+      #gridCotizacionesEntreFechas
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [overlayLoadingTemplate]="overlayLoadingTemplate"
+      [loadingOverlayComponent]="loadingOverlayComponent"
+      [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

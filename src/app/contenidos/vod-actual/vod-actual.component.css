@@ -1,0 +1,105 @@
+/* ************************
+*  Typography
+*********************** */
+h3,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  padding: 1em 0;
+}
+
+p {
+  font-style: italic;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.ok-class {
+  border-left: 2px solid #42a948; /* green */
+}
+
+.notok-class {
+  border-left: 2px solid #a94442; /* red */
+}
+
+.descripcion {
+  line-height: 1.6em;
+  color: #4b4b4b;
+}
+
+/* ************************
+*  Layout
+*********************** */
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container-column {
+  width: 300px;
+  position: relative;
+}
+
+.container-borrar {
+  margin-left: 2rem;
+}
+
+.maximize {
+  width: 100%;
+}
+
+.buttons-area {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.btns {
+  width: 140px;
+}
+
+.btn-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner {
+  margin: auto auto;
+}
+
+.archivo {
+  margin-left: 12px;
+  font-size: 0.75em;
+  font-style: normal;
+  color: grey;
+  margin-bottom: 0.5em;
+  padding-left: 5px;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  width: 280px;
+  margin: 1em auto;
+  padding: 2em;
+  background-color: bisque;
+  border: 1px solid burlywood;
+  border-radius: 4px;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  z-index: 99;
+}
+
+.btn-cerrar {
+  margin-left: 250px;
+}

@@ -1,0 +1,57 @@
+<div class="container row row--wrap">
+
+  <!-- Datos -->
+  <section
+    class="col col-mobile"
+    [formGroup]="formData">
+
+    <h3>Filtros</h3>
+
+    <!-- Fecha Cotizacion -->
+    <mat-form-field
+      appearance="fill"
+      class="form-ctrl">
+      <mat-label>Fecha Cotización</mat-label>
+      <input
+        matInput
+        placeholder="Seleccione el día de donde escojer las cotizaciones"
+        [matDatepicker]="fechaCotizacion"
+        formControlName="fechaCotizacion"
+        required>
+      <mat-datepicker-toggle matSuffix [for]="fechaCotizacion"></mat-datepicker-toggle>
+      <mat-datepicker #fechaCotizacion></mat-datepicker>
+      <mat-error>Esta fecha es obligatoria</mat-error>
+    </mat-form-field>
+
+    <!-- Exportar a Excel -->
+    <div class="btn">
+      <button
+        mat-raised-button
+        [disabled]="isFetching"
+        (click)="exportExcel()">
+        Exportar a excel &nbsp;
+        <mat-icon svgIcon="excel" matTooltip="Exportar a excel"></mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <!-- Cotizaciones Grid -->
+  <section class="col cotizaciones">
+
+    <h3>Cotizaciones</h3>
+
+    <ag-grid-angular
+      class="ag-theme-blue tabla-height"
+      #gridCotizacionesDiaria
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [overlayLoadingTemplate]="overlayLoadingTemplate"
+      [loadingOverlayComponent]="loadingOverlayComponent"
+      [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </section>
+
+</div>
+

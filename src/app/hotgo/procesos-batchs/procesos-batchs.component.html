@@ -1,0 +1,15 @@
+<div class="procesos-batchs">
+
+  <h2>Procesos Batchs en AWS</h2>
+
+  <ag-grid-angular
+    class="ag-theme-blue procesos-batchs--height"
+    #gridCotizacionesEntreFechas
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [loadingOverlayComponent]="loadingOverlayComponent"
+    [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+    [frameworkComponents]="frameworkComponents"
+    (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>

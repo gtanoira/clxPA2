@@ -1,0 +1,118 @@
+<div class="container">
+
+  <div class="schedule">
+
+    <h3>Procesos Programados</h3>
+
+    <ag-grid-angular
+      class="ag-theme-blue schedule--height"
+      #gridCotizacionesEntreFechas
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [overlayLoadingTemplate]="overlayLoadingTemplate"
+      [loadingOverlayComponent]="loadingOverlayComponent"
+      [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+
+  <div class="evt-column" [formGroup]="eventForm">
+
+    <h3 class="main-title">Modificar Scheduling de Procesos</h3>
+
+    <!-- Proceso -->
+    <div class="evt-column">
+
+      <p class="sub-title">Proceso a modificar:</p>
+
+      <mat-form-field
+        class="max-evento"
+        appearance="outline">
+        <mat-label>Proceso</mat-label>
+        <mat-select
+          formControlName="eventoId"
+          required>
+          <mat-option
+            *ngFor="let data of eventOptions"
+            [value]="data">
+            {{ data }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <!--  Schedule proceso  -->
+    <div class="evt-column">
+
+      <p class="sub-title">Ejecutar el proceso cada:</p>
+
+      <div class="evt-row">
+        <!-- Valor -->
+        <mat-form-field
+          class="evt-value"
+          appearance="outline">
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="actualValue">
+        </mat-form-field>
+
+        <!-- Time -->
+        <mat-form-field
+          class="evt-time"
+          appearance="outline">
+          <mat-label>Tiempo</mat-label>
+          <mat-select
+            formControlName="actualTime">
+            <mat-option
+              *ngFor="let data of timeOptions"
+              [value]="data.id">
+              {{ data.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <!-- Botones -->
+      <div class="buttons-area">
+
+        <!-- Button: Subir reporte-->
+        <div class="btns btn-submit">
+
+          <!-- boton -->
+          <button
+            appHoldable
+            (holdTime)="holdHandler($event)"
+            mat-stretch
+            [disabled]="!eventForm.dirty"
+            mat-raised-button
+            color="primary"
+            title="Modificar el Schedule del Proceso"
+            color=primary>
+            Modificar Schedule&nbsp;
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+
+          <!-- Progress bar for button -->
+          <mat-progress-bar
+            [color]="color"
+            mode="determinate"
+            [value]="holdableButtonMs">
+          </mat-progress-bar>
+
+          <!-- Spinner -->
+          <div class="spinner" *ngIf="isFetching">
+            <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "ARS",
+    "name": "ARS-Argentino"
+  }, {
+    "id": "BRL",
+    "name": "BRL-Real Brasil"
+  }, {
+    "id": "CLP",
+    "name": "CLP-Chileno"
+  }, {
+    "id": "COP",
+    "name": "COP-Colombiano"
+  }, {
+    "id": "EUR",
+    "name": "Euro"
+  }, {
+    "id": "MXN",
+    "name": "MXN-Mexicano"
+  }, {
+    "id": "PEN",
+    "name": "PEN-Peruano"
+  }, {
+    "id": "USD",
+    "name": "USD-Dólar USA"
+  }, {
+    "id": "UYU",
+    "name": "UYU-Uruguayo"
+  }, {
+    "id": "VES",
+    "name": "VES-Bolívar Soberano"
+  }, {
+    "id": "VEL",
+    "name": "VEL-Bolívar Libre"
+  }
+]

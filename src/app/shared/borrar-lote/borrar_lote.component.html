@@ -1,0 +1,75 @@
+<div
+  *ngIf="descripcionLote || formLote"
+  class="container"
+  [formGroup]="formLote">
+
+  <!-- Título -->
+  <h2>Borrar Lotes</h2>
+
+  <!-- Lote -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill">
+    <mat-label>Lote a borrar</mat-label>
+    <mat-select
+      formControlName="loteId"
+      required>
+      <mat-option
+        *ngFor="let data of infoLotes | async"
+        [value]="data.id">
+        {{ data.idProceso }}
+      </mat-option>
+    </mat-select>
+    <mat-error>El lote es obligatorio</mat-error>
+  </mat-form-field>
+
+  <!-- Descripción Lote -->
+  <mat-form-field class="maximize" appearance="fill">
+    <mat-label>Descripción</mat-label>
+    <textarea
+      class="textarea"
+      matInput
+      placeholder="Descripción Lote"
+      formControlName="descripcionLote"
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="5">
+    </textarea>
+  </mat-form-field>
+
+  <!-- Botones -->
+  <div class="buttons-area">
+
+    <!-- Button: Borrar Lote-->
+    <div class="btns btn-submit">
+
+      <!-- boton -->
+      <button
+        class="inline-buttons"
+        appHoldable
+        (holdTime)="holdHandler($event)"
+        mat-stretch
+        [disabled]="formLote.invalid || isFetching"
+        mat-raised-button
+        color="primary"
+        title="Borrar lote"
+        color=primary>
+        Borrar lote&nbsp;
+        <mat-icon svgIcon="delete_basket"></mat-icon>
+      </button>
+
+      <!-- Progress bar for button -->
+      <mat-progress-bar
+        [color]="color"
+        mode="determinate"
+        [value]="holdableButtonMs">
+      </mat-progress-bar>
+
+      <!-- Spinner -->
+      <div class="spinner" *ngIf="isFetching">
+        <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,126 @@
+<div
+  class="container"
+  [formGroup]="formData">
+
+  <!-- Título -->
+  <h3>Saldos en Cuenta Corriente</h3>
+  <h4>Filtros</h4>
+
+  <!-- Compañías -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill">
+    <mat-label>Compañías</mat-label>
+    <mat-select
+      formControlName="companyIds"
+      [(value)]="companyInitial"
+      multiple
+      required>
+      <mat-select-trigger>
+        {{companyIds.value ? companyIds.value[0] : ''}}
+        <span *ngIf="companyIds.value.length > 1" class="additional-selection">
+          (+{{companyIds.value.length - 1}} {{companyIds.value?.length === 2 ? 'otro' : 'otros'}})
+        </span>
+      </mat-select-trigger>
+      <mat-option
+        *ngFor="let company of companyOptions"
+        [value]="company.id">
+        {{ company.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error>Seleccionar por lo menos 1</mat-error>
+  </mat-form-field>
+
+  <!-- Mes Reporte -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill">
+    <mat-label>Mes Reporte</mat-label>
+    <input
+      required
+      matInput
+      [matDatepicker]="reportMonth"
+      formControlName="reportMonth">
+    <mat-datepicker-toggle matSuffix [for]="reportMonth"></mat-datepicker-toggle>
+    <mat-datepicker #reportMonth></mat-datepicker>
+    <mat-error>Fecha inválida</mat-error>
+  </mat-form-field>
+
+  <!-- Area de Botones -->
+  <div class="button-area">
+
+    <!-- Botón OBTENER de SAP -->
+    <div class="btns btn-submit">
+      <button
+        appHoldable
+        (holdTime)="holdHandlerSap($event)"
+        mat-stretch
+        mat-raised-button
+        matTooltip="Obtener el reporte del SAP"
+        title="Obtener el reporte del SAP"
+        color="primary"
+        [disabled]="formData.invalid || isFetchingSap"
+      >
+        SAP&nbsp;
+        <mat-icon>save_alt</mat-icon>
+      </button>
+
+      <!-- Progress bar for button -->
+      <mat-progress-bar
+        [color]="color"
+        mode="determinate"
+        [value]="sapProgressBarValue"
+        progressbarId="sap">
+      </mat-progress-bar>
+
+      <!-- Spinner -->
+      <img *ngIf="isFetchingSap" src="/assets/images/spinner01.svg" style="z-index: 50;" />
+    </div>
+
+    <!-- Botón SUBIR al MySql -->
+    <div class="btns btn-submit">
+      <button
+        appHoldable
+        (holdTime)="holdHandlerMySql($event)"
+        mat-raised-button
+        matTooltip="Subir los datos al MySql"
+        title="Subir los datos al MySql"
+        color="accent"
+        [disabled]="dataToExcel.length <= 0 || isUploadingMySql"
+      >
+        MySql&nbsp;
+        <mat-icon>cloud_upload</mat-icon>
+      </button>
+
+      <!-- Progress bar for button -->
+      <mat-progress-bar
+        [color]="color"
+        mode="determinate"
+        [value]="MySqlProgressBarValue"
+        progressbarId="mysql">
+      </mat-progress-bar>
+
+      <!-- Spinner -->
+      <img *ngIf="isUploadingMySql" src="/assets/images/spinner01.svg" style="z-index: 50;" />
+    </div>
+
+    <!-- Botón EXCEL -->
+    <button
+      class="btns"
+      mat-raised-button
+      matTooltip="Descargar a Excel"
+      title="Descargar a Excel"
+      [disabled]="dataToExcel.length <= 0"
+      (click)="exportExcel()">
+      Excel &nbsp;
+      <mat-icon svgIcon="excel" style="color: black;"></mat-icon>
+    </button>
+  </div>
+
+  <!-- Descripción reporte -->
+  <h3>Descripción</h3>
+  <p class="maximize">
+    Este programa obtiene los saldos de la cuenta corriente para todos los
+    clientes de una compañia y lo sube a una base de datos MySql.
+  </p>
+</div>

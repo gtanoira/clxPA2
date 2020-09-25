@@ -1,0 +1,86 @@
+/* ************************
+*  GENERAL
+*********************** */
+h3,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  padding: 1em 0;
+}
+
+p {
+  font-style: italic;
+}
+
+
+/* ************************
+ *  LAYOUT
+ *********************** */
+.container {
+  width: 90%;
+  max-width: 1128px;
+  margin: 0 auto;
+}
+
+.form-section {
+  padding: 0 1em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.maximize {
+  max-width: 320px;
+}
+
+.buttons-area {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.btn {
+  width: 130px;
+}
+
+.btn + .btn {
+  margin-left: 1em;
+}
+
+.btn-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner {
+  margin: auto auto;
+}
+
+.radio-item {
+  display: block;
+  margin-bottom: 0.75em;
+  color: rgba(0, 0, 0, 0.6)
+}
+
+
+/* ************************
+ *  TYPOGRAPHY
+ *********************** */
+.descripcion-text {
+  line-height: 1.6em;
+  color: #4b4b4b;
+}

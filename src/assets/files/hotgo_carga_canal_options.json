@@ -1,0 +1,22 @@
+[
+  {
+    "id": "Display",
+    "name": "Display"
+  },
+  {
+    "id": "Email",
+    "name": "Email"
+  },
+  {
+    "id": "Other",
+    "name": "Other"
+  },
+  {
+    "id": "Paid Search",
+    "name": "Paid Search"
+  },
+  {
+    "id": "Social",
+    "name": "Social"
+  }
+]

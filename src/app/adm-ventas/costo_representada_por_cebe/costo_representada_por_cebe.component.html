@@ -1,0 +1,108 @@
+<div
+  class="container"
+  [formGroup]="formData">
+
+  <!-- Título -->
+  <h4>Filtros</h4>
+
+  <!-- Fecha Desde-->
+  <mat-form-field
+    class="maximize"
+    appearance="fill">
+    <mat-label>Fecha desde</mat-label>
+    <input
+      required
+      matInput
+      [matDatepicker]="fechaDesde"
+      formControlName="fechaDesde">
+    <mat-datepicker-toggle matSuffix [for]="fechaDesde"></mat-datepicker-toggle>
+    <mat-datepicker #fechaDesde></mat-datepicker>
+    <mat-error>Fecha inválida</mat-error>
+  </mat-form-field>
+
+  <!-- Fecha Hasta-->
+  <mat-form-field
+    class="maximize"
+    appearance="fill">
+    <mat-label>Fecha hasta</mat-label>
+    <input
+      required
+      matInput
+      [matDatepicker]="fechaHasta"
+      formControlName="fechaHasta">
+    <mat-datepicker-toggle matSuffix [for]="fechaHasta"></mat-datepicker-toggle>
+    <mat-datepicker #fechaHasta></mat-datepicker>
+    <mat-error>Fecha inválida</mat-error>
+  </mat-form-field>
+
+  <!-- CeBe -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill">
+    <mat-label>Centro de Beneficio</mat-label>
+    <mat-select
+      required
+      [(ngModel)]="ceBeSelected"
+      formControlName="ceBe">
+      <mat-option
+        *ngFor="let centro of ceBeOptions"
+        [value]="centro.id">
+        {{ centro.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="ceBe.invalid">
+      El centro de beneficio es <strong>obligatorio</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Area de Botones -->
+  <div class="button-area">
+
+    <!-- Botón OBTENER de SAP -->
+    <div class="btns btn-submit">
+      <button
+        appHoldable
+        (holdTime)="holdHandlerSap($event)"
+        mat-stretch
+        mat-raised-button
+        matTooltip="Obtener el reporte del SAP"
+        title="Obtener el reporte del SAP"
+        color="primary"
+        [disabled]="formData.invalid || isFetchingSap"
+      >
+        SAP&nbsp;
+        <mat-icon>save_alt</mat-icon>
+      </button>
+
+      <!-- Progress bar for button -->
+      <mat-progress-bar
+        [color]="color"
+        mode="determinate"
+        [value]="sapProgressBarValue"
+        progressbarId="sap">
+      </mat-progress-bar>
+
+      <!-- Spinner -->
+      <img *ngIf="isFetchingSap" src="/assets/images/spinner01.svg" style="z-index: 50;" />
+    </div>
+
+    <!-- Botón EXCEL -->
+    <button
+      class="btns"
+      mat-raised-button
+      matTooltip="Descargar a Excel"
+      title="Descargar a Excel"
+      [disabled]="dataToExcel.length <= 0"
+      (click)="exportExcel()">
+      Excel &nbsp;
+      <mat-icon svgIcon="excel" style="color: black;"></mat-icon>
+    </button>
+  </div>
+
+  <!-- Descripción reporte -->
+  <h3>Descripción</h3>
+  <p class="maximize">
+    Este programa obtiene la información necesaria para poder calcular los costos de representadas de la señal Televisa.
+  </p>
+
+</div>

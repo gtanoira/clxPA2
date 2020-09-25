@@ -1,0 +1,49 @@
+﻿<!-- Container Right -->
+<div
+  class="header-spacer  col"
+  [formGroup]="loginForm">
+
+  <img src="/assets/files/claxsonLogo.png" />
+  <h2>Login</h2>
+
+    <!-- Username -->
+    <mat-form-field
+      class="maximize"
+      appearance="outline">
+      <mat-label>Nombre de usuario</mat-label>
+      <input
+        matInput
+        placeholder="Ingrese su usuario de red"
+        formControlName="username"
+        [ngClass]="{ 'is-invalid': submitted && lfctrls.username.errors }" />
+      <mat-icon matSuffix>user</mat-icon>
+      <mat-error>Este campo es obligatorio</mat-error>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field
+      class="maximize"
+      appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input
+        type="password"
+        matInput
+        placeholder="contraseña"
+        formControlName="password"
+        [ngClass]="{ 'is-invalid': submitted && lfctrls.username.errors }" />
+      <mat-icon matSuffix>password</mat-icon>
+      <mat-error>Este campo es obligatorio</mat-error>
+    </mat-form-field>
+
+    <!-- LOGIN button -->
+    <button
+      style="width: 200px; margin: auto;"
+      [disabled]="loading"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()">
+      Login
+    </button>
+    <div *ngIf="error" class="login-error">{{error}}</div>
+
+</div>

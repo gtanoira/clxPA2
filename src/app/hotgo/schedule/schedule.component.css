@@ -1,0 +1,90 @@
+ /**
+ * LAYOUT
+ */
+h3 {
+  margin-top: 0px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+.schedule {
+  /* margin: 0 auto; */
+  margin-top: 2em;
+  width: 90vw;
+  max-width: 462px;
+}
+
+.schedule--height {
+  height: 302px;
+  /* max-width: 1204px; */
+  margin: 0 auto;
+}
+
+.evt-row {
+  display: flex;
+  flex-direction: row wrap;
+}
+
+.evt-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.max-evento {
+  width: 213px;
+}
+
+.evt-value {
+  width: 70px;
+}
+
+.evt-time {
+  margin-left: 2em;
+  width: 130px;
+}
+
+.main-title {
+  display: block;
+  margin-top: 2em;
+}
+
+.sub-title {
+  margin-top: 0.75em;
+}
+
+.btns {
+  width: 182px;
+}
+
+.btn-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+
+@media (max-width: 1000px) {
+  .container {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 860px) {
+  .container {
+    justify-content: center;
+  }
+}
+
+/* *********************
+ * TYPOGRAPHY
+ * ********************/
+.sub-title {
+  font-size: 1rem;
+  color: #3a3a3a;
+}

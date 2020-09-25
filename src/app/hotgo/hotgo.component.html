@@ -1,0 +1,51 @@
+<!-- Cada componente se maneja via TABS MODULE -->
+<mat-tab-group
+  mat-stretch-tabs
+  backgroundColor="primary"
+  fxFlexFill>
+
+  <!-- Errors Log -->
+  <mat-tab *ngIf="ynErrorsLog">
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      &nbsp;Errors Log
+    </ng-template>
+    <app-errors-log></app-errors-log>
+  </mat-tab>
+
+  <!-- Mkt Expenditures -->
+  <mat-tab *ngIf="ynMktExpenditures">
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      &nbsp;Marketing Expenditures
+    </ng-template>
+    <app-mkt-expenditures></app-mkt-expenditures>
+  </mat-tab>
+
+  <!-- Procesos batchs -->
+  <mat-tab *ngIf="ynProcesosBatchs">
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      &nbsp;Procesos Batchs
+    </ng-template>
+    <app-procesos-batchs></app-procesos-batchs>
+  </mat-tab>
+
+  <!-- Events Schedule -->
+  <mat-tab *ngIf="ynSchedule">
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      &nbsp;Schedule
+    </ng-template>
+    <app-schedule></app-schedule>
+  </mat-tab>
+
+  <!-- Missing Records -->
+  <mat-tab *ngIf="ynMissingRecords">
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      &nbsp;Missing Records
+    </ng-template>
+    <app-missing-records></app-missing-records>
+  </mat-tab>
+</mat-tab-group>
