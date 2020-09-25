@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 
 // Servicios

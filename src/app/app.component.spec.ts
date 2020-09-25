@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatMenuModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 import { getTestScheduler, cold } from 'jasmine-marbles';
 
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';

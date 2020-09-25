@@ -4,7 +4,7 @@
 */
 import { Component, ElementRef, AfterViewInit, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 
 // Services
