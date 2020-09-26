@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 
 // External Libraries
 import * as moment from 'moment';
+
+// Common
+import { arraySort } from 'src/app/shared/sort_functions';
 
 // Servicios
 import { ErrorMessageService } from 'src/app/core/error-message.service';
@@ -11,136 +13,69 @@ import { HotgoService } from 'src/app/shared/hotgo.service';
 // Modelos
 import { HgErrorLogModel } from 'src/app/models/hg-error-log.model';
 
-// Componentes
-import { AgGridLoadingComponent } from 'src/app/shared/ag-grid/ag-grid_loading.component';
+interface ErrorSection {
+  name: string;
+  cantidad: number;
+  noResuelto: number;
+  resuelto: number;
+  soloInfo: number;
+}
 
 @Component({
   selector: 'app-errors-log',
   templateUrl: './errors-log.component.html',
-  styleUrls: ['./errors-log.component.css']
+  styleUrls: ['./errors-log.component.scss']
 })
-export class ErrorsLogComponent {
+export class ErrorsLogComponent implements OnInit {
 
-  // Definir variables del AG-GRID
-  public  columnDefs;
-  public  defaultColDef;
-  public  frameworkComponents;
-  private gridApi;
-  private gridColumnApi;
-  public  isFetching = true;
-  public  loadingOverlayComponent;
-  public  loadingOverlayComponentParams;
-  public  overlayLoadingTemplate;
-  public  rowData: HgErrorLogModel[] = [];
-  private initComponent = true;  // ajuste de las columnas en el ag-grid
-  // TRUE: ajusta cada columnas a su ancho establecido
-  // FALSE: ajusta cada columna para que quepan en el ancho de la ventana
+  // Definir variables
+  public errorLogs: HgErrorLogModel[];
+  public errorSections: ErrorSection[];
 
   constructor(
     private errorMessageService: ErrorMessageService,
-    private fb: FormBuilder,
     private hotgoService: HotgoService
-  ) {
+  ) { }
 
-    // Definir las columnas del AG-GRID
-    this. columnDefs = [
-      {
-        headerName: 'Fecha error',
-        field: 'timestamp',
-        width: 160,
-        sort: 'desc',
-        valueFormatter: (params) => {
-          return moment(params.value, 'YYYY/MM/DDTHH:mm:ssZ').format('DD-MMM-YYYY  HH:mm:ss');
-        },
-        filter: 'agDateColumnFilter',
-        filterParams: {
-          comparator: function(filterValue: Date, cellValue: Date) {
-            const filterData = filterValue.toISOString().substring(0, 7).replace('-', '/') ;
-            const cellData = cellValue.toString().substring(0, 7);
-            // Comparar las fechas
-            if (filterData === cellData) {
-              return 0;
-            }
-            if (cellData < filterData) {
-              return -1;
-            }
-            if (cellData > filterData) {
-              return 1;
-            }
-          },
-          browserDatePicker: true,
-        }
-      },
-      {
-        headerName: 'Tipo',
-        field: 'errorType',
-        width: 150,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        headerName: 'Resultado',
-        field: 'message',
-        width: 927
-      },
-      {
-        headerName: 'Código',
-        field: 'errorCode',
-        width: 111,
-        filter: 'agTextColumnFilter'
-      },
-    ];
-    this.defaultColDef = {
-      sortable: true,
-      resizable: true
-    };
-    this.frameworkComponents = {
-      customLoadingOverlay: AgGridLoadingComponent
-    };
-    this.loadingOverlayComponent = 'customLoadingOverlay';
-    this.loadingOverlayComponentParams = { loadingMessage: 'Loading ...' };
-  }
-
-  // Ejecutar una vez inicializado el AG-GRID
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
-    // Actualizar el maestro de titulos
+  ngOnInit() {
     this.getErrorsLog();
   }
 
-  // Ajustar las columnas del grid
-  private autoSizeAllColumns() {
-    const allColumnIds = [];
-    this.gridColumnApi.getAllColumns().forEach((column) => {
-      allColumnIds.push(column.colId);
-    });
-    this.gridColumnApi.autoSizeColumns(allColumnIds);
-  }
-
   // Leer las cotizaciones diaria y cargarlas en el grid
-  getErrorsLog() {
+  private getErrorsLog() {
 
     // Spinner
-    this.gridApi.showLoadingOverlay();
 
     // Buscar los titulos en la BDatos
     this.hotgoService.getErrorsLog().subscribe(
       data => {
-        // Cargo el grid con datos
-        this.gridApi.setRowData(data);
+        // Cargo el grid con datos ordenado por timestamp
+        this.errorLogs = arraySort(data, ['errorType', '-timestamp']);
+        // this.errorLogs = data.sort((a, b) => moment(b.timestamp).unix() - moment(a.timestamp).unix() );
 
-        // Autosize a las columnas
-        /* if (this.initComponent) {
-          this.gridApi.sizeColumnsToFit();
-          this.initComponent = false;
-        } else {
-          this.autoSizeAllColumns();
-        } */
+        // Crear el array para separar los distintos errores
+        this.errorSections = [];
+        this.errorLogs.forEach( (el) => {
+          const i = this.errorSections.findIndex( section => section.name === el.errorType );
+          if (i < 0) {
+            this.errorSections.push({ name: el.errorType, cantidad: 0, noResuelto: 0, resuelto: 0, soloInfo: 0 });
+          } else {
+            this.errorSections[i].cantidad = this.errorSections[i].cantidad + 1;
+            if (el.errorSolved === 0) { this.errorSections[i].noResuelto = this.errorSections[i].noResuelto + 1; }
+            if (el.errorSolved === 1) { this.errorSections[i].resuelto = this.errorSections[i].resuelto + 1; }
+            if (el.errorSolved === 2) { this.errorSections[i].soloInfo = this.errorSections[i].soloInfo + 1; }
+          }
+        });
+        console.log('*** errorSections');
+        console.log(this.errorSections);
       },
       err => {
         this.errorMessageService.changeErrorMessage(err);
       }
     );
+  }
+
+  public formatDate(dateToFormat: string): String {
+    return moment(dateToFormat, 'YYYY-MM-DD HH:mm:ss').format('ddd DD, MMM');
   }
 }

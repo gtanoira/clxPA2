@@ -9,7 +9,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Modules
 import { AppRoutingModule } from './app.routing.module';
-import { CoreModule } from '@angular/flex-layout';
 import { MainModule } from 'src/app/main/main.module';
 
 // Componentes
@@ -29,7 +28,6 @@ import { AppComponent } from './app.component';
     MatTooltipModule,
     // Modules
     AppRoutingModule,
-    CoreModule,
     MainModule
   ],
   bootstrap: [AppComponent]
