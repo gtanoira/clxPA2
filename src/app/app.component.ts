@@ -123,7 +123,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.matIconRegistry.addSvgIcon(
       'info_circle',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/info-circle.svg')
-    );    // Logout
+    );
+    // Logout
     this.matIconRegistry.addSvgIcon(
       'logout',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/logout.svg')
@@ -148,7 +149,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       'user_toolbar',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/avatar.svg')
     );
-
+    // Warning
+    this.matIconRegistry.addSvgIcon(
+      'warning',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/warning.svg')
+    );
     // Subscribir a los errores del módulo, para que sean mostrados en la pantalla
     this.errorLine = this.errorMessageService.formCurrentMessage.subscribe(
       message => {

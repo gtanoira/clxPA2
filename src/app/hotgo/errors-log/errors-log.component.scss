@@ -53,19 +53,19 @@
   &-badge-noResuelto {
     color: red;
     margin-left: 1em;
-    margin-top: 1em;
+    margin-top: 0.75em;
   }
 
   &-badge-resuelto {
     color: green;
     margin-left: 1em;
-    margin-top: 1em;
+    margin-top: 0.75em;
   }
 
   &-badge-info {
     color: yellow;
     margin-left: 1em;
-    margin-top: 1em;
+    margin-top: 0.75em;
   }
 
   &-cantidad {
@@ -131,7 +131,7 @@
    TYPOGRAPHY
  */
 .titulo {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
   align-self: center;

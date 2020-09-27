@@ -11,13 +11,17 @@
       <!-- Menu -->
       <mat-menu #menu="matMenu">
 
-        <button mat-menu-item>
+        <button mat-menu-item (click)="getErrorLogs()">
           <mat-icon>refresh</mat-icon>
-          <span>ReCargar</span>
+          <span>Re-Cargar</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="downloadToExcel()">
           <mat-icon svgIcon="excel"></mat-icon>
           <span>Descargar a Excel</span>
+        </button>
+        <button mat-menu-item (click)="checkErrors()" matTooltip="Validar que los errores se hayan solucionado">
+          <mat-icon svgIcon="warning"></mat-icon>
+          <span>Chequear Errores</span>
         </button>
       </mat-menu>
     </div>
@@ -32,9 +36,32 @@
           <mat-panel-title class="panel-titulo">
             <span class="panel-cantidad">{{errorSection.cantidad}}</span>
             {{errorSection.name}}
-            <mat-icon class="panel-badge-noResuelto" matTooltip="errores NO resueltos" svgIcon="cross_circle" matBadge="{{errorSection.noResuelto}}" matBadgeColor="warn"></mat-icon>
-            <mat-icon class="panel-badge-resuelto" matTooltip="errores resueltos" svgIcon="done_circle" matBadge="{{errorSection.resuelto}}" matBadgeColor="warn"></mat-icon>
-            <mat-icon class="panel-badge-info" matTooltip="solo Información" svgIcon="info_circle" matBadge="{{errorSection.soloInfo}}" matBadgeColor="warn"></mat-icon>
+            <!-- No resueltos -->
+            <mat-icon
+              *ngIf="errorSection.noResuelto !== 0"
+              class="panel-badge-noResuelto"
+              matTooltip="errores NO resueltos"
+              svgIcon="cross_circle" matBadge="{{errorSection.noResuelto}}"
+              matBadgeColor="warn">
+            </mat-icon>
+            <!-- Resueltos -->
+            <mat-icon
+              *ngIf="errorSection.resuelto !== 0"
+              class="panel-badge-resuelto"
+              matTooltip="errores resueltos"
+              svgIcon="done_circle"
+              matBadge="{{errorSection.resuelto}}"
+              matBadgeColor="warn">
+            </mat-icon>
+            <!-- Solo Info -->
+            <mat-icon
+              *ngIf="errorSection.soloInfo !== 0"
+              class="panel-badge-info"
+              matTooltip="solo Información"
+              svgIcon="info_circle"
+              matBadge="{{errorSection.soloInfo}}"
+              matBadgeColor="warn">
+            </mat-icon>
           </mat-panel-title>
           <mat-icon class="panel-icon">date_range</mat-icon>
         </mat-expansion-panel-header>
