@@ -9,7 +9,7 @@ export const environment = {
     sapGwServer: 'http://clxsapjgw02:8080/ClxWebService',
     loginServer: 'http://logincentraldev.claxson.com',
     portalAdminServer: 'http://portaladmindev.claxson.com',
-    hotgoBackendServer: 'http://localhost:5000'   // 'http://hgdw.claxson.com'
+    hotgoBackendServer: 'http://admapps02:5000' // 'http://localhost:5000'  //
   }
 };
 
