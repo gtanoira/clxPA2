@@ -32,6 +32,7 @@ export class ErrorsLogComponent implements OnInit {
   // Definir variables
   public errorLogs: HgErrorLogModel[];
   public errorSections: ErrorSection[];
+  public isFetching = false;  // para el spinner
 
   constructor(
     private errorMessageService: ErrorMessageService,
@@ -45,6 +46,8 @@ export class ErrorsLogComponent implements OnInit {
 
   // Leer las cotizaciones diaria y cargarlas en el grid
   public getErrorLogs() {
+
+    this.isFetching = true;
 
     // Buscar los datos
     this.hotgoService.getErrorsLog().subscribe(
@@ -69,8 +72,10 @@ export class ErrorsLogComponent implements OnInit {
             if (el.errorSolved === 2) { this.errorSections[i].soloInfo = this.errorSections[i].soloInfo + 1; }
           }
         });
+        this.isFetching = false;
       },
       err => {
+        this.isFetching = false;
         this.errorMessageService.changeErrorMessage(err);
       }
     );

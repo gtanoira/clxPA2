@@ -28,67 +28,75 @@
   </div>
 
   <!-- ERROR LOGS -->
-  <ng-container *ngIf="errorSections && errorSections.length > 0 else noErrorLogs">
+  <ng-container *ngIf="!isFetching else loading">
+    <ng-container *ngIf="errorSections && errorSections.length > 0 else noErrorLogs">
 
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel hideToggle *ngFor="let errorSection of errorSections">
-        <mat-expansion-panel-header>
-          <mat-panel-title class="panel-titulo">
-            <span class="panel-cantidad">{{errorSection.cantidad}}</span>
-            {{errorSection.name}}
-            <!-- No resueltos -->
-            <mat-icon
-              *ngIf="errorSection.noResuelto !== 0"
-              class="panel-badge-noResuelto"
-              matTooltip="errores NO resueltos"
-              svgIcon="cross_circle" matBadge="{{errorSection.noResuelto}}"
-              matBadgeColor="warn">
-            </mat-icon>
-            <!-- Resueltos -->
-            <mat-icon
-              *ngIf="errorSection.resuelto !== 0"
-              class="panel-badge-resuelto"
-              matTooltip="errores resueltos"
-              svgIcon="done_circle"
-              matBadge="{{errorSection.resuelto}}"
-              matBadgeColor="warn">
-            </mat-icon>
-            <!-- Solo Info -->
-            <mat-icon
-              *ngIf="errorSection.soloInfo !== 0"
-              class="panel-badge-info"
-              matTooltip="solo Información"
-              svgIcon="info_circle"
-              matBadge="{{errorSection.soloInfo}}"
-              matBadgeColor="warn">
-            </mat-icon>
-          </mat-panel-title>
-          <mat-icon class="panel-icon">date_range</mat-icon>
-        </mat-expansion-panel-header>
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel hideToggle *ngFor="let errorSection of errorSections">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="panel-titulo">
+              <span class="panel-cantidad">{{errorSection.cantidad}}</span>
+              {{errorSection.name}}
+              <!-- No resueltos -->
+              <mat-icon
+                *ngIf="errorSection.noResuelto !== 0"
+                class="panel-badge-noResuelto"
+                matTooltip="errores NO resueltos"
+                svgIcon="cross_circle" matBadge="{{errorSection.noResuelto}}"
+                matBadgeColor="warn">
+              </mat-icon>
+              <!-- Resueltos -->
+              <mat-icon
+                *ngIf="errorSection.resuelto !== 0"
+                class="panel-badge-resuelto"
+                matTooltip="errores resueltos"
+                svgIcon="done_circle"
+                matBadge="{{errorSection.resuelto}}"
+                matBadgeColor="warn">
+              </mat-icon>
+              <!-- Solo Info -->
+              <mat-icon
+                *ngIf="errorSection.soloInfo !== 0"
+                class="panel-badge-info"
+                matTooltip="solo Información"
+                svgIcon="info_circle"
+                matBadge="{{errorSection.soloInfo}}"
+                matBadgeColor="warn">
+              </mat-icon>
+            </mat-panel-title>
+            <mat-icon class="panel-icon">date_range</mat-icon>
+          </mat-expansion-panel-header>
 
-        <ng-container *ngFor="let errorLog of errorLogs">
-          <ng-container *ngIf="errorLog.errorType === errorSection.name">
-            <div class="error-log">
-              <div class="row row--wrap">
-                <div class="error-log-fecha">{{formatDate(errorLog.timestamp)}}</div>
-                <mat-chip-list class="error-log-chip">
-                  <ng-template [ngIf]="errorLog.errorSolved === 0"><mat-chip class="error-log-noResuelto">no resuelto</mat-chip></ng-template>
-                  <ng-template [ngIf]="errorLog.errorSolved === 1"><mat-chip class="error-log-resuelto">resuelto</mat-chip></ng-template>
-                  <ng-template [ngIf]="errorLog.errorSolved === 2"><mat-chip class="error-log-info">solo info</mat-chip></ng-template>
-                </mat-chip-list>
-                <div class="error-log-text"><strong>{{errorSection.name}}</strong>: {{errorLog.message}}</div>
+          <ng-container *ngFor="let errorLog of errorLogs">
+            <ng-container *ngIf="errorLog.errorType === errorSection.name">
+              <div class="error-log">
+                <div class="row row--wrap">
+                  <div class="error-log-fecha">{{formatDate(errorLog.timestamp)}}</div>
+                  <mat-chip-list class="error-log-chip">
+                    <ng-template [ngIf]="errorLog.errorSolved === 0"><mat-chip class="error-log-noResuelto">no resuelto</mat-chip></ng-template>
+                    <ng-template [ngIf]="errorLog.errorSolved === 1"><mat-chip class="error-log-resuelto">resuelto</mat-chip></ng-template>
+                    <ng-template [ngIf]="errorLog.errorSolved === 2"><mat-chip class="error-log-info">solo info</mat-chip></ng-template>
+                  </mat-chip-list>
+                  <div class="error-log-text"><strong>{{errorSection.name}}</strong>: {{errorLog.message}}</div>
+                </div>
               </div>
-            </div>
+            </ng-container>
           </ng-container>
-        </ng-container>
 
-      </mat-expansion-panel>
-    </mat-accordion>
+        </mat-expansion-panel>
+      </mat-accordion>
 
+    </ng-container>
   </ng-container>
 
   <ng-template #noErrorLogs>
     <h3>No hay errores que mostrar</h3>
   </ng-template>
 
+  <ng-template #loading>
+    <div class="spinner">
+      <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+      <span class="loading">Loading ...</span>
+    </div>
+  </ng-template>
 </div>

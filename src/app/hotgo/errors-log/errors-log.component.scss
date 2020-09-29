@@ -116,6 +116,11 @@
   }
 }
 
+.spinner {
+  top: 3em;
+  left: 3em;
+}
+
 @media (min-width: 900px) {
   .container {
     width: 80%;
@@ -135,4 +140,12 @@
   font-weight: bold;
   text-transform: uppercase;
   align-self: center;
+}
+
+.loading {
+  padding-bottom: 1.25em;
+  margin-left: 2em;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: #444;
 }
