@@ -5,4 +5,5 @@ export interface HgErrorLogModel {
   timestamp: string;
   errorCode: string;
   errorSolved: number;
+  idFk: number;
 }

@@ -13,6 +13,8 @@ import { HotgoService } from 'src/app/shared/hotgo.service';
 
 // Modelos
 import { HgErrorLogModel } from 'src/app/models/hg-error-log.model';
+import { DialogModalComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface ErrorSection {
   name: string;
@@ -33,8 +35,10 @@ export class ErrorsLogComponent implements OnInit {
   public errorLogs: HgErrorLogModel[];
   public errorSections: ErrorSection[];
   public isFetching = false;  // para el spinner
+  public spinnerText = 'Loading ...';
 
   constructor(
+    public  dialog: MatDialog,
     private errorMessageService: ErrorMessageService,
     private excelExporterService: ExcelExporterService,
     private hotgoService: HotgoService
@@ -47,16 +51,16 @@ export class ErrorsLogComponent implements OnInit {
   // Leer las cotizaciones diaria y cargarlas en el grid
   public getErrorLogs() {
 
+    this.spinnerText = 'Leyendo ...';
     this.isFetching = true;
 
     // Buscar los datos
     this.hotgoService.getErrorsLog().subscribe(
       data => {
-        // Cargo el grid con datos ordenado por timestamp
+        // Ordenar los datos
         this.errorLogs = arraySort(data, ['errorType', '-timestamp']);
-        // this.errorLogs = data.sort((a, b) => moment(b.timestamp).unix() - moment(a.timestamp).unix() );
 
-        // Crear el array para separar los distintos errores
+        // Crear el array errorSections para separar los distintos errores
         this.errorSections = [];
         this.errorLogs.forEach( (el) => {
           const i = this.errorSections.findIndex( section => section.name === el.errorType );
@@ -89,11 +93,27 @@ export class ErrorsLogComponent implements OnInit {
   // Download de los datos a Excel
   public downloadToExcel() {
     this.excelExporterService.exportAsExcelFile(
-       this.errorLogs,
-       `error_logs_`);
-   }
+      this.errorLogs,
+      `error_logs_`);
+  }
 
-   public checkErrors() {
-     return null;
-   }
+  public checkErrors() {
+
+    this.isFetching = true;
+    this.spinnerText = 'Validando errores ...';
+
+    return this.hotgoService.checkErrors().subscribe(
+      data => {
+        this.errorMessageService.changeErrorMessage(data['message'].toString());
+        // Recargar los datos para que refresque la pantalla
+        this.getErrorLogs();
+        this.isFetching = false;
+      },
+      err => {
+        this.errorMessageService.changeErrorMessage(err);
+        this.isFetching = false;
+      }
+    );
+  }
+
 }

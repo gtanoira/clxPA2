@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 // Services
+import { AuthenticationService } from 'src/app/core/authentication.service';
 import { AuxiliarTablesService } from 'src/app/shared/auxiliar-tables.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
 
@@ -30,6 +31,7 @@ export class HotgoService {
   public actualizarScheduleEvents = new BehaviorSubject(true);
 
   constructor(
+    private authenticationService: AuthenticationService,
     private auxiliarTablesService: AuxiliarTablesService,
     private http: HttpClient,
     private errorMessageService: ErrorMessageService
@@ -38,6 +40,12 @@ export class HotgoService {
   // Agregar datos manuales a la tabla MKT_EXPENDITURES en data lake
   public addMktExpenditures(data: {}): Observable<String> {
     return this.http.post<String>(`${environment.envData.portalAdminServer}/api/add_mkt_expenditures/`, data);
+  }
+
+  // Chequear la solución de los errores de la tabla error_logs
+  public checkErrors() {
+    const userId = this.authenticationService.currentUserValue.userName;
+    return this.http.patch(`${environment.envData.hotgoBackendServer}/api2/error_logs/check/${userId}`, {});
   }
 
   // Borrar un registro de la tabla MKT_EXPENDITURES en data lake
