@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row row--wrap">
+
+    <!-- Fecha -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Fecha</mat-label>
+      <input
+        required
+        matInput
+        matTootltip="Fecha inicio de vigencia del precio"
+        [matDatepicker]="mesAnio"
+        formControlName="mesAnio">
+      <mat-datepicker-toggle matSuffix [for]="mesAnio"></mat-datepicker-toggle>
+      <mat-datepicker #mesAnio></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>

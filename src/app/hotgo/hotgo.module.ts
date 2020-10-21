@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
@@ -39,6 +40,9 @@ import { MktExpendituresComponent } from './mkt-expenditures/mkt-expenditures.co
 import { PbatchsBtnActionsComponent } from './procesos-batchs/pbatchs-btn-actions.component';
 import { ProcesosBatchsComponent } from './procesos-batchs/procesos-batchs.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { LocalPricesComponent } from './local-prices/local-prices.component';
+import { LocalPricesCrudComponent } from './local-prices/crud/crud.component';
+import { GaComponent } from './ga/ga.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,10 @@ import { ScheduleComponent } from './schedule/schedule.component';
     MktExpendituresComponent,
     ProcesosBatchsComponent,
     PbatchsBtnActionsComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    LocalPricesComponent,
+    LocalPricesCrudComponent,
+    GaComponent
   ],
   imports: [
     AggridAddonsModule,
@@ -68,6 +75,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
     MatMenuModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatTableModule,
     MatTabsModule,
     MatTooltipModule,
     ReactiveFormsModule

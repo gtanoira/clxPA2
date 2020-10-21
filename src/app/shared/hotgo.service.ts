@@ -16,6 +16,7 @@ import { HgErrorLogModel } from '../models/hg-error-log.model';
 import { HgScheduleModel } from '../models/hg-schedule.model';
 import { MktExpenditureModel } from 'src/app/models/mkt_expenditure.model';
 import { ProcesoBatchModel } from 'src/app/models/proceso-batch.model';
+import { ProductLocalPriceModel } from '../models/product-local-price.model';
 import { SelectOption } from 'src/app/models/select-option';
 
 @Injectable()
@@ -136,6 +137,12 @@ export class HotgoService {
     ).pipe( map( data => data ) );
   }
 
+  // Leer todos los registros de Product Local Prices
+  public getProductLocalPrices(): Observable<ProductLocalPriceModel[]>  {
+    return this.http.get<ProductLocalPriceModel[]>(
+      `${environment.envData.hotgoBackendServer}/api2/product_local_prices`);
+  }
+
   // Procesos Batchs
   public getProcesosBatchs(): Observable<ProcesoBatchModel[]>  {
     return this.http.get<ProcesoBatchModel[]>(
@@ -165,6 +172,7 @@ export class HotgoService {
   public uploadCancel(formData: FormData): Observable<any> {
     return this.http.post<any>(`${environment.envData.hotgoBackendServer}/api2/cancel/missing`, formData);
   }
+
   // Procesar los missing PAYMENT COMMITS y cargarlos en el Datalake.
   public uploadPyc(formData: FormData): Observable<any> {
     return this.http.post<any>(`${environment.envData.hotgoBackendServer}/api2/payment_commit/missing`, formData);

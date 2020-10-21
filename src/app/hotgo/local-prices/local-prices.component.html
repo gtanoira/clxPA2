@@ -1,0 +1,57 @@
+<div class="container">
+  <table
+    mat-table
+    [dataSource]="localPricesData"
+    multiTemplateDataRows
+    class="mat-elevation-z8">
+
+    // columna FECHA
+    <ng-container matColumnDef="fecha">
+      <th class="cell-fecha" mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td class="cell-fecha"  mat-cell *matCellDef="let element"> {{element.fecha | date:'fullDate'}} </td>
+    </ng-container>
+
+    // columna COUNTRY
+    <ng-container matColumnDef="country">
+      <th class="cell-country"  mat-header-cell *matHeaderCellDef> País </th>
+      <td class="cell-country"  mat-cell *matCellDef="let element"> {{element.country}} </td>
+    </ng-container>
+
+    // columna DURATION
+    <ng-container matColumnDef="duration">
+      <th class="cell-duration" mat-header-cell *matHeaderCellDef> Producto </th>
+      <td class="cell-duration" mat-cell *matCellDef="let element"> {{element.duration}} </td>
+    </ng-container>
+
+    // columna CURRENCY
+    <ng-container matColumnDef="currency">
+      <th class="cell-currency"  mat-header-cell *matHeaderCellDef> Moneda </th>
+      <td class="cell-currency"  mat-cell *matCellDef="let element"> {{element.currency}} </td>
+    </ng-container>
+
+    // columna TAXABLEAMOUNT
+    <ng-container matColumnDef="taxableAmount">
+      <th class="cell-taxableAmount" mat-header-cell *matHeaderCellDef> Importe </th>
+      <td class="cell-taxableAmount" mat-cell *matCellDef="let element"> {{element.taxableAmount | number:'1.2-2'}} </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <app-local-prices-crud></app-local-prices-crud>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="example-element-row"
+        matTooltip="Hacer un click para editar el registro"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+</div>

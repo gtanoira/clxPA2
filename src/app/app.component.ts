@@ -129,6 +129,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       'logout',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/logout.svg')
     );
+    // Lost items
+    this.matIconRegistry.addSvgIcon(
+      'lost_items',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/lost-items.svg')
+    );
     // Recycle
     this.matIconRegistry.addSvgIcon(
       'recycle',

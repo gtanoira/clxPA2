@@ -1,17 +1,19 @@
-import { Directive, ElementRef } from '@angular/core';
-import { NgControl } from '@angular/forms';
-
 /* *************************************************************************************
- * Directive: Allow Only Numbers
- *
- * Usage inside form (HTML):
- *    <input type='text' numbers>
+* Directive: Allow Only Numbers
+*
+* Usage inside form (HTML):
+*    <input type='text' numbers>
 */
-@Directive({ selector: '[appOnlyNumbers]' })
+
+import { Directive, ElementRef } from '@angular/core';
+
+@Directive({
+  selector: '[appOnlyNumbers]'
+})
 export class OnlyNumbersDirective {
+
   constructor(
-    public el: ElementRef,
-    private control: NgControl
+    public el: ElementRef
   ) {
 
     this.el.nativeElement.onkeypress =
@@ -30,6 +32,5 @@ export class OnlyNumbersDirective {
           }
         }
       };
-
   }
 }

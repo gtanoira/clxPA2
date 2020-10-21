@@ -7,7 +7,7 @@
   <!-- Errors Log -->
   <mat-tab *ngIf="ynErrorsLog">
     <ng-template mat-tab-label>
-      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      <mat-icon>error_outline</mat-icon>
       &nbsp;Errors Log
     </ng-template>
     <app-errors-log></app-errors-log>
@@ -16,7 +16,7 @@
   <!-- Mkt Expenditures -->
   <mat-tab *ngIf="ynMktExpenditures">
     <ng-template mat-tab-label>
-      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      <mat-icon>add_business</mat-icon>
       &nbsp;Marketing Expenditures
     </ng-template>
     <app-mkt-expenditures></app-mkt-expenditures>
@@ -25,7 +25,7 @@
   <!-- Procesos batchs -->
   <mat-tab *ngIf="ynProcesosBatchs">
     <ng-template mat-tab-label>
-      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      <mat-icon>batch_prediction</mat-icon>
       &nbsp;Procesos Batchs
     </ng-template>
     <app-procesos-batchs></app-procesos-batchs>
@@ -34,7 +34,7 @@
   <!-- Events Schedule -->
   <mat-tab *ngIf="ynSchedule">
     <ng-template mat-tab-label>
-      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      <mat-icon>schedule</mat-icon>
       &nbsp;Schedule
     </ng-template>
     <app-schedule></app-schedule>
@@ -43,9 +43,18 @@
   <!-- Missing Records -->
   <mat-tab *ngIf="ynMissingRecords">
     <ng-template mat-tab-label>
-      <mat-icon svgIcon="cotizacion_promedio"></mat-icon>
+      <mat-icon svgIcon="lost_items"></mat-icon>
       &nbsp;Missing Records
     </ng-template>
     <app-missing-records></app-missing-records>
+  </mat-tab>
+
+  <!-- Local Prices -->
+  <mat-tab *ngIf="ynLocalPrices">
+    <ng-template mat-tab-label>
+      <mat-icon>monetization_on</mat-icon>
+      &nbsp;Local Prices
+    </ng-template>
+    <app-local-prices></app-local-prices>
   </mat-tab>
 </mat-tab-group>

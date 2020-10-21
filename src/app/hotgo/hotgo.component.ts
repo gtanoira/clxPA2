@@ -33,6 +33,7 @@ export class HotgoComponent implements OnInit {
   public ynProcesosBatchs = true;
   public ynSchedule = true;
   public ynMissingRecords = true;
+  public ynLocalPrices = true;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -50,6 +51,7 @@ export class HotgoComponent implements OnInit {
     this.ynProcesosBatchs = this.authorizationService.componentAccess('pgmHotGo', 'cptProcesosBatchs');
     this.ynSchedule = this.authorizationService.componentAccess('pgmHotGo', 'cptSchedule');
     this.ynMissingRecords = this.authorizationService.componentAccess('pgmHotGo', 'cptMissingynMissingRecords');
+    this.ynLocalPrices = this.authorizationService.componentAccess('pgmHotGo', 'cptLocalPrices');
 
     // Borrar la linea de mensaje de error
     this.errorMessageService.changeErrorMessage(null);
