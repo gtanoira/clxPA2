@@ -23,6 +23,9 @@ export class LocalPricesCrudComponent implements OnInit {
     });
   }
 
+  // GETTERS
+  get fecha() { return this.localPriceRecord.get('fecha'); }
+
   ngOnInit(): void {
   }
 

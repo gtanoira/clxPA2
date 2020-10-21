@@ -29,6 +29,7 @@ export class HotgoComponent implements OnInit {
 
   // Variables para el acceso a los componentes del programa
   public ynErrorsLog = true;
+  public ynGA = true;
   public ynMktExpenditures = true;
   public ynProcesosBatchs = true;
   public ynSchedule = true;
@@ -47,6 +48,7 @@ export class HotgoComponent implements OnInit {
   ngOnInit() {
     // Setear el acceso a los componentes
     this.ynErrorsLog = this.authorizationService.componentAccess('pgmHotGo', 'cptErrorsLog');
+    this.ynGA = this.authorizationService.componentAccess('pgmHotGo', 'cptGA');
     this.ynMktExpenditures = this.authorizationService.componentAccess('pgmHotGo', 'cptMktExpenditures');
     this.ynProcesosBatchs = this.authorizationService.componentAccess('pgmHotGo', 'cptProcesosBatchs');
     this.ynSchedule = this.authorizationService.componentAccess('pgmHotGo', 'cptSchedule');

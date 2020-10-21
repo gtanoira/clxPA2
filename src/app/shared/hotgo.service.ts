@@ -94,6 +94,13 @@ export class HotgoService {
     );
   }
 
+  // Obtener datos desde Google Analytics
+  public getFromGA(metrics: string, dimensions: string): Observable<{}> {
+    return this.http.get(
+      `${environment.envData.hotgoBackendServer}/api2/ga/data?metrics=${metrics}&dimensions=${dimensions}`
+    );
+  }
+
   // HotGo - Canales
   public getHotGoCanales(): Observable<SelectOption[]>  {
     return this.http.get<SelectOption[]>(

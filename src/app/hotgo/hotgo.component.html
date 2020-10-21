@@ -57,4 +57,13 @@
     </ng-template>
     <app-local-prices></app-local-prices>
   </mat-tab>
+
+  <!-- Google Analytics -->
+  <mat-tab *ngIf="ynGA">
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="analytics"></mat-icon>
+      &nbsp;Google Analytics
+    </ng-template>
+    <app-ga></app-ga>
+  </mat-tab>
 </mat-tab-group>

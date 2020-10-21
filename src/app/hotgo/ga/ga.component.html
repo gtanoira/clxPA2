@@ -1,1 +1,71 @@
-<p>ga works!</p>
+<div class="container container--center row row--wrap">
+  <!-- Dimensiones a incluir -->
+  <div class="col col--mobile" [formGroup]="gaDimensions">
+    <h3 class="sec-title">Dimensiones a incluir</h3>
+    <mat-checkbox formControlName="userId">User Id</mat-checkbox>
+    <mat-checkbox formControlName="transactionId">Transaction Id</mat-checkbox>
+    <mat-checkbox formControlName="paisId">Pais</mat-checkbox>
+    <mat-checkbox formControlName="medioPago">Medio de pago</mat-checkbox>
+    <mat-checkbox formControlName="dateTime">Fecha y Hora</mat-checkbox>
+    <mat-checkbox formControlName="channelGrouping">Canal</mat-checkbox>
+    <mat-checkbox formControlName="acquisitionTrafficChannel">Canal por adquisición</mat-checkbox>
+    <mat-checkbox formControlName="source">Fuente</mat-checkbox>
+    <mat-checkbox formControlName="medium">Medio</mat-checkbox>
+    <mat-checkbox formControlName="campaign">Campaña</mat-checkbox>
+    <mat-checkbox formControlName="adContent">Contenido</mat-checkbox>
+    <mat-checkbox formControlName="socialNetwork">Red Social</mat-checkbox>
+  </div>
+
+  <!-- Metricas a incluir -->
+  <div class="col col--mobile" [formGroup]="gaMetrics">
+    <h3 class="sec-title">Métricas a incluir</h3>
+    <mat-checkbox formControlName="itemRevenue">Item revenue</mat-checkbox>
+    <mat-checkbox formControlName="localRefundAmount">Local Refund Amount</mat-checkbox>
+  </div>
+
+  <!-- Botones -->
+  <div class="buttons-area">
+
+    <!-- Button: Obtener reporte-->
+    <div class="btns btn-submit">
+
+      <!-- boton -->
+      <button
+        class="inline-buttons"
+        (click)="getFromGA()"
+        mat-stretch
+        [disabled]="isFetching"
+        mat-raised-button
+        color="primary"
+        title="Obtener reporte"
+        color=primary>
+         Reorte GA&nbsp;
+        <mat-icon svgIcon="save"></mat-icon>
+      </button>
+
+      <!-- Progress bar for button -->
+      <mat-progress-bar
+        [color]="color"
+        mode="determinate"
+        [value]="holdableButtonMs">
+      </mat-progress-bar>
+
+      <!-- Spinner -->
+      <div class="spinner" *ngIf="isFetching">
+        <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+      </div>
+    </div>
+
+    <!-- Exportar Excel -->
+    <div class="btns btn-download">
+      <button
+        [disabled]="dataToExcel.length <= 0"
+        mat-raised-button
+        title="Exportar a Excel"
+        (click)="exportExcel()">
+        A Excel &nbsp;
+        <mat-icon svgIcon="excel" style="color: black;"></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

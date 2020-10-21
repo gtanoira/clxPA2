@@ -49,6 +49,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
 
     // Definir iconos
+    // Analytics
+    this.matIconRegistry.addSvgIcon(
+      'analytics',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/analytics.svg')
+    );
     // Close
     this.matIconRegistry.addSvgIcon(
       'close',

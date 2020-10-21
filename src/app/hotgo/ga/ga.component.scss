@@ -1,0 +1,71 @@
+/* *******************
+   LAYOUT
+ */
+ .container {
+  width: 100%;
+  /* max-width: 1280px; */
+  padding: 1em 1em;
+
+  &--center {
+    margin: 0 auto;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--hcenter {
+    justify-content: center;
+  }
+
+  &--vcenter {
+    align-items: center;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col--mobile {
+  width: 360px;
+}
+
+.buttons-area {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex: 100%;
+}
+
+.btns {
+  width: 140px;
+}
+
+.btn-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+.spinner {
+  margin: auto auto;
+}
+
+/* *******************
+   TYPOGRAPHY
+ */
+ .titulo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  align-self: center;
+}

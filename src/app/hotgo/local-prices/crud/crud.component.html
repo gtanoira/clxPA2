@@ -1,8 +1,8 @@
 <div class="container">
-  <div class="row row--wrap">
+  <div class="row row--wrap" [formGroup]="localPriceRecord">
 
     <!-- Fecha -->
-    <mat-form-field
+    <!-- <mat-form-field
       class="maximize"
       appearance="fill">
       <mat-label>Fecha</mat-label>
@@ -10,10 +10,10 @@
         required
         matInput
         matTootltip="Fecha inicio de vigencia del precio"
-        [matDatepicker]="mesAnio"
-        formControlName="mesAnio">
-      <mat-datepicker-toggle matSuffix [for]="mesAnio"></mat-datepicker-toggle>
+        [matDatepicker]="fecha"
+        formControlName="fecha">
+      <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
       <mat-datepicker #mesAnio></mat-datepicker>
-    </mat-form-field>
+    </mat-form-field> -->
   </div>
 </div>
