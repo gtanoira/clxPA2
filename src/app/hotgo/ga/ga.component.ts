@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 
 // Services
 import { ErrorMessageService } from 'src/app/core/error-message.service';
@@ -34,10 +35,12 @@ export class GaComponent implements OnInit {
   ) {
     // Filtros
     this.gaFiltros = this.fb.group({
-      fechaDesde: [moment()]
+      fechaDesde: [moment()],
+      fechaHasta: [moment().subtract(7, 'days')]
     });
     // Dimensiones
     this.gaDimensions = this.fb.group({
+      customDimensions: [''],
       userId: [true],
       transactionId: [false],
       paisId: [false],
@@ -53,6 +56,7 @@ export class GaComponent implements OnInit {
     });
     // Metricas
     this.gaMetrics = this.fb.group({
+      customMetrics: [''],
       itemRevenue: [false],
       localRefundAmount: [false]
     });
@@ -60,6 +64,10 @@ export class GaComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  // GETTERS
+  get fechaDesde() { return this.gaFiltros.get('fechaDesde'); }
+  get fechaHasta() { return this.gaFiltros.get('fechaHasta'); }
 
   // Confirmar botón SUBMIT
   public holdHandler(e) {
@@ -92,6 +100,7 @@ export class GaComponent implements OnInit {
     let metrics = '';
     metrics += this.gaMetrics.get('itemRevenue').value ? 'ga:itemRevenue,' : '';
     metrics += this.gaMetrics.get('localRefundAmount').value ? 'ga:localRefundAmount,' : '';
+    metrics += this.gaMetrics.get('customMetrics').value;
     if (metrics.substr(metrics.length - 1) === ',') { metrics = metrics.substring(0, metrics.length - 1); }
 
     // Armar el campo DIMENSIONS
@@ -108,11 +117,18 @@ export class GaComponent implements OnInit {
     dimensions += this.gaDimensions.get('campaign').value ? 'ga:campaign,' : '';
     dimensions += this.gaDimensions.get('adContent').value ? 'ga:adContent,' : '';
     dimensions += this.gaDimensions.get('socialNetwork').value ? 'ga:socialNetwork,' : '';
+    dimensions += this.gaDimensions.get('customDimensions').value;
+    // Quitar la coma final
     if (dimensions.substr(dimensions.length - 1) === ',') { dimensions = dimensions.substring(0, dimensions.length - 1); }
 
     // Validar que haya por lo menos 1 metrica o dimension
     if (dimensions === '' && metrics === '') { dimensions = 'ga:dimension1,ga:sessionCount'; }
-    this.hotgoService.getFromGA(metrics, dimensions).subscribe(
+    this.hotgoService.getFromGA(
+      metrics,
+      dimensions,
+      this.fechaDesde.value.format('YYYY-MM-DD'),
+      this.fechaHasta.value.format('YYYY-MM-DD')
+    ).subscribe(
       data => {
         // Obtener los datos
         const rows: [] = data['rows'];

@@ -95,9 +95,9 @@ export class HotgoService {
   }
 
   // Obtener datos desde Google Analytics
-  public getFromGA(metrics: string, dimensions: string): Observable<{}> {
+  public getFromGA(metrics: string, dimensions: string, fechaDesde: string, fechaHasta: string): Observable<{}> {
     return this.http.get(
-      `${environment.envData.hotgoBackendServer}/api2/ga/data?metrics=${metrics}&dimensions=${dimensions}`
+      `${environment.envData.hotgoBackendServer}/api2/ga/data?metrics=${metrics}&dimensions=${dimensions}&fechadesde=${fechaDesde}&fechahasta=${fechaHasta}`
     );
   }
 

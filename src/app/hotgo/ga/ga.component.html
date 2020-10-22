@@ -14,6 +14,19 @@
     <mat-checkbox formControlName="campaign">Campaña</mat-checkbox>
     <mat-checkbox formControlName="adContent">Contenido</mat-checkbox>
     <mat-checkbox formControlName="socialNetwork">Red Social</mat-checkbox>
+    <!-- Custom Dimensions -->
+    <mat-form-field class="maximize" appearance="fill">
+      <mat-label>Custom Dimensions</mat-label>
+      <textarea
+        class="textarea"
+        matInput
+        placeholder="Dimensiones"
+        formControlName="customDimensions"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="2">
+      </textarea>
+    </mat-form-field>
   </div>
 
   <!-- Metricas a incluir -->
@@ -21,6 +34,54 @@
     <h3 class="sec-title">Métricas a incluir</h3>
     <mat-checkbox formControlName="itemRevenue">Item revenue</mat-checkbox>
     <mat-checkbox formControlName="localRefundAmount">Local Refund Amount</mat-checkbox>
+    <!-- Custom Metrics -->
+    <mat-form-field class="maximize" appearance="fill">
+      <mat-label>Custom Metrics</mat-label>
+      <textarea
+        class="textarea"
+        matInput
+        placeholder="Métricas"
+        formControlName="customMetrics"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="2">
+      </textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Filtros -->
+  <div class="col col--mobile" [formGroup]="gaFiltros">
+    <h3 class="sec-title">Filtros</h3>
+
+    <!-- Fecha Desde -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Fecha desde</mat-label>
+      <input
+        required
+        matInput
+        [matDatepicker]="fechaDesde"
+        formControlName="fechaDesde">
+      <mat-datepicker-toggle matSuffix [for]="fechaDesde"></mat-datepicker-toggle>
+      <mat-datepicker #fechaDesde></mat-datepicker>
+      <mat-error>Fecha inválida</mat-error>
+    </mat-form-field>
+
+    <!-- Fecha Hasta -->
+    <mat-form-field
+      class="maximize"
+      appearance="fill">
+      <mat-label>Fecha hasta</mat-label>
+      <input
+        required
+        matInput
+        [matDatepicker]="fechaHasta"
+        formControlName="fechaHasta">
+      <mat-datepicker-toggle matSuffix [for]="fechaHasta"></mat-datepicker-toggle>
+      <mat-datepicker #fechaHasta></mat-datepicker>
+      <mat-error>Fecha inválida</mat-error>
+    </mat-form-field>
   </div>
 
   <!-- Botones -->
@@ -34,7 +95,7 @@
         class="inline-buttons"
         (click)="getFromGA()"
         mat-stretch
-        [disabled]="isFetching"
+        [disabled]="isFetching || gaFiltros.invalid"
         mat-raised-button
         color="primary"
         title="Obtener reporte"
