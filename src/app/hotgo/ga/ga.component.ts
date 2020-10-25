@@ -21,6 +21,7 @@ export class GaComponent implements OnInit {
 
   // Otros datos
   public dataToExcel: [] = [];
+  ayudaFiltros = false;  // botón de ayuda para filtros
 
   // Variables para Holdable Button bar
   public color = 'warn';
@@ -35,8 +36,9 @@ export class GaComponent implements OnInit {
   ) {
     // Filtros
     this.gaFiltros = this.fb.group({
-      fechaDesde: [moment()],
-      fechaHasta: [moment().subtract(7, 'days')]
+      fechaDesde: [moment().subtract(7, 'days')],
+      fechaHasta: [moment()],
+      filters: ['']
     });
     // Dimensiones
     this.gaDimensions = this.fb.group({
@@ -47,7 +49,6 @@ export class GaComponent implements OnInit {
       medioPago: [false],
       dateTime: [false],
       channelGrouping: [false],
-      acquisitionTrafficChannel: [false],
       source: [false],
       medium: [false],
       campaign: [false],
@@ -57,8 +58,11 @@ export class GaComponent implements OnInit {
     // Metricas
     this.gaMetrics = this.fb.group({
       customMetrics: [''],
+      organicSearches: [false],
       itemRevenue: [false],
-      localRefundAmount: [false]
+      localRefundAmount: [false],
+      newUsers: [false],
+      users: [true]
     });
   }
 
@@ -68,6 +72,7 @@ export class GaComponent implements OnInit {
   // GETTERS
   get fechaDesde() { return this.gaFiltros.get('fechaDesde'); }
   get fechaHasta() { return this.gaFiltros.get('fechaHasta'); }
+  get filters() { return this.gaFiltros.get('filters'); }
 
   // Confirmar botón SUBMIT
   public holdHandler(e) {
@@ -98,6 +103,9 @@ export class GaComponent implements OnInit {
 
     // Armar el campo METRICS
     let metrics = '';
+    metrics += this.gaMetrics.get('users').value ? 'ga:users,' : '';
+    metrics += this.gaMetrics.get('newUsers').value ? 'ga:newUsers,' : '';
+    metrics += this.gaMetrics.get('organicSearches').value ? 'ga:organicSearches,' : '';
     metrics += this.gaMetrics.get('itemRevenue').value ? 'ga:itemRevenue,' : '';
     metrics += this.gaMetrics.get('localRefundAmount').value ? 'ga:localRefundAmount,' : '';
     metrics += this.gaMetrics.get('customMetrics').value;
@@ -111,7 +119,6 @@ export class GaComponent implements OnInit {
     dimensions += this.gaDimensions.get('medioPago').value ? 'ga:dimension8,' : '';
     dimensions += this.gaDimensions.get('dateTime').value ? 'ga:dateHourMinute,' : '';
     dimensions += this.gaDimensions.get('channelGrouping').value ? 'ga:channelGrouping,' : '';
-    dimensions += this.gaDimensions.get('acquisitionTrafficChannel').value ? 'ga:acquisitionTrafficChannel,' : '';
     dimensions += this.gaDimensions.get('source').value ? 'ga:source,' : '';
     dimensions += this.gaDimensions.get('medium').value ? 'ga:medium,' : '';
     dimensions += this.gaDimensions.get('campaign').value ? 'ga:campaign,' : '';
@@ -127,7 +134,8 @@ export class GaComponent implements OnInit {
       metrics,
       dimensions,
       this.fechaDesde.value.format('YYYY-MM-DD'),
-      this.fechaHasta.value.format('YYYY-MM-DD')
+      this.fechaHasta.value.format('YYYY-MM-DD'),
+      this.filters.value
     ).subscribe(
       data => {
         // Obtener los datos

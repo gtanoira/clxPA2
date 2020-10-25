@@ -2,24 +2,24 @@
   <!-- Dimensiones a incluir -->
   <div class="col col--mobile" [formGroup]="gaDimensions">
     <h3 class="sec-title">Dimensiones a incluir</h3>
-    <mat-checkbox formControlName="userId">User Id</mat-checkbox>
-    <mat-checkbox formControlName="transactionId">Transaction Id</mat-checkbox>
-    <mat-checkbox formControlName="paisId">Pais</mat-checkbox>
-    <mat-checkbox formControlName="medioPago">Medio de pago</mat-checkbox>
-    <mat-checkbox formControlName="dateTime">Fecha y Hora</mat-checkbox>
-    <mat-checkbox formControlName="channelGrouping">Canal</mat-checkbox>
-    <mat-checkbox formControlName="acquisitionTrafficChannel">Canal por adquisición</mat-checkbox>
-    <mat-checkbox formControlName="source">Fuente</mat-checkbox>
-    <mat-checkbox formControlName="medium">Medio</mat-checkbox>
-    <mat-checkbox formControlName="campaign">Campaña</mat-checkbox>
-    <mat-checkbox formControlName="adContent">Contenido</mat-checkbox>
-    <mat-checkbox formControlName="socialNetwork">Red Social</mat-checkbox>
+    <mat-checkbox formControlName="userId">User Id <span class="ga-def">(ga:dimension1)</span></mat-checkbox>
+    <mat-checkbox formControlName="transactionId">Transaction Id <span class="ga-def">(ga:transactionId)</span></mat-checkbox>
+    <mat-checkbox formControlName="paisId">Pais <span class="ga-def">(ga:dimension5)</span></mat-checkbox>
+    <mat-checkbox formControlName="medioPago">Medio de pago <span class="ga-def">(ga:dimension8)</span></mat-checkbox>
+    <mat-checkbox formControlName="dateTime">Fecha y Hora <span class="ga-def">(ga:dateHourMinute)</span></mat-checkbox>
+    <mat-checkbox formControlName="channelGrouping">Canal <span class="ga-def">(ga:channelGrouping)</span></mat-checkbox>
+    <mat-checkbox formControlName="source">Fuente <span class="ga-def">(ga:source)</span></mat-checkbox>
+    <mat-checkbox formControlName="medium">Medio <span class="ga-def">(ga:medium)</span></mat-checkbox>
+    <mat-checkbox formControlName="campaign">Campaña <span class="ga-def">(ga:campaign)</span></mat-checkbox>
+    <mat-checkbox formControlName="adContent">Contenido <span class="ga-def">(ga:adContent)</span></mat-checkbox>
+    <mat-checkbox formControlName="socialNetwork">Red Social <span class="ga-def">(ga:socialNetwork)</span></mat-checkbox>
     <!-- Custom Dimensions -->
     <mat-form-field class="maximize" appearance="fill">
-      <mat-label>Custom Dimensions</mat-label>
+      <mat-label>Dimensiones específicas</mat-label>
       <textarea
         class="textarea"
         matInput
+        matTooltip="Ingresar valores del tipo ga:<dimensión>, separadas por comas. Ej.: ga:sessionCount,ga:source,ga:...etc"
         placeholder="Dimensiones"
         formControlName="customDimensions"
         cdkTextareaAutosize
@@ -32,14 +32,18 @@
   <!-- Metricas a incluir -->
   <div class="col col--mobile" [formGroup]="gaMetrics">
     <h3 class="sec-title">Métricas a incluir</h3>
-    <mat-checkbox formControlName="itemRevenue">Item revenue</mat-checkbox>
-    <mat-checkbox formControlName="localRefundAmount">Local Refund Amount</mat-checkbox>
+    <mat-checkbox formControlName="users">Total usuarios <span class="ga-def">(ga:users)</span></mat-checkbox>
+    <mat-checkbox formControlName="newUsers">Usuarios nuevos <span class="ga-def">(ga:newUsers)</span></mat-checkbox>
+    <mat-checkbox formControlName="organicSearches">Búsquedas orgánicas <span class="ga-def">(ga:organicSearches)</span></mat-checkbox>
+    <mat-checkbox formControlName="itemRevenue">Item revenue <span class="ga-def">(ga:itemRevenue)</span></mat-checkbox>
+    <mat-checkbox formControlName="localRefundAmount">Local Refund Amount <span class="ga-def">(ga:localRefundAmount)</span></mat-checkbox>
     <!-- Custom Metrics -->
     <mat-form-field class="maximize" appearance="fill">
-      <mat-label>Custom Metrics</mat-label>
+      <mat-label>Métricas específicas</mat-label>
       <textarea
         class="textarea"
         matInput
+        matTooltip="Ingresar valores del tipo ga:<métrica>, separadas por comas. Ej.: ga:users,ga:sessions,ga:...etc"
         placeholder="Métricas"
         formControlName="customMetrics"
         cdkTextareaAutosize
@@ -82,6 +86,41 @@
       <mat-datepicker #fechaHasta></mat-datepicker>
       <mat-error>Fecha inválida</mat-error>
     </mat-form-field>
+
+    <!-- Filtros -->
+    <mat-form-field class="maximize" appearance="fill">
+      <mat-label>Filtros específicos</mat-label>
+      <textarea
+        class="textarea"
+        matInput
+        matTooltip="Ej.: ga:dimension5==AR (país ARgentina)"
+        placeholder="Filtros a aplicar"
+        formControlName="filters"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="2">
+      </textarea>
+      <button
+        mat-icon-button
+        matSuffix
+        cdkOverlayOrigin
+        #trigger="cdkOverlayOrigin"
+        (click)="ayudaFiltros = ayudaFiltros ? false : true">
+        <mat-icon>help_outlined</mat-icon>
+      </button>
+    </mat-form-field>
+    <!-- Botón de ayuda para los filtros -->
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="ayudaFiltros"
+      >
+      <div class="ayudaFiltros">
+        Para más ayuda ir a este link<br>
+        <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters"
+          target="blank">Google Analytics Filters</a>
+      </div>
+    </ng-template>
   </div>
 
   <!-- Botones -->
@@ -100,16 +139,16 @@
         color="primary"
         title="Obtener reporte"
         color=primary>
-         Reorte GA&nbsp;
+         Reporte GA&nbsp;
         <mat-icon svgIcon="save"></mat-icon>
       </button>
 
       <!-- Progress bar for button -->
-      <mat-progress-bar
+      <!-- <mat-progress-bar
         [color]="color"
         mode="determinate"
         [value]="holdableButtonMs">
-      </mat-progress-bar>
+      </mat-progress-bar> -->
 
       <!-- Spinner -->
       <div class="spinner" *ngIf="isFetching">

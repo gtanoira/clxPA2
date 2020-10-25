@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 // External libraries
 import { AgGridModule } from 'ag-grid-angular';
@@ -80,6 +81,7 @@ import { GaComponent } from './ga/ga.component';
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
+    OverlayModule,
     ReactiveFormsModule
   ],
   providers: [
