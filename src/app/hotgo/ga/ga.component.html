@@ -26,7 +26,27 @@
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="2">
       </textarea>
+      <button
+        mat-icon-button
+        matSuffix
+        cdkOverlayOrigin
+        #triggerDimensiones="cdkOverlayOrigin"
+        (click)="ayudaDimensiones = ayudaDimensiones ? false : true">
+        <mat-icon>help_outlined</mat-icon>
+      </button>
     </mat-form-field>
+    <!-- Botón de ayuda para los Metricas -->
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="triggerDimensiones"
+      [cdkConnectedOverlayOpen]="ayudaDimensiones"
+      >
+      <div class="ayudaFiltros">
+        Para más ayuda ir a este link<br>
+        <a href="https://ga-dev-tools.appspot.com/dimensions-metrics-explorer/"
+          target="blank">Google Analytics Dimensions</a>
+      </div>
+    </ng-template>
   </div>
 
   <!-- Metricas a incluir -->
@@ -50,8 +70,30 @@
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="2">
       </textarea>
+      <button
+        mat-icon-button
+        matSuffix
+        cdkOverlayOrigin
+        #triggerMetricas="cdkOverlayOrigin"
+        (click)="ayudaMetricas = ayudaMetricas ? false : true">
+        <mat-icon>help_outlined</mat-icon>
+      </button>
     </mat-form-field>
+    <!-- Botón de ayuda para los Metricas -->
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="triggerMetricas"
+      [cdkConnectedOverlayOpen]="ayudaMetricas"
+      >
+      <div class="ayudaFiltros">
+        Para más ayuda ir a este link<br>
+        <a href="https://ga-dev-tools.appspot.com/dimensions-metrics-explorer/"
+          target="blank">Google Analytics Metrics</a>
+      </div>
+    </ng-template>
   </div>
+
+
 
   <!-- Filtros -->
   <div class="col col--mobile" [formGroup]="gaFiltros">
@@ -104,7 +146,7 @@
         mat-icon-button
         matSuffix
         cdkOverlayOrigin
-        #trigger="cdkOverlayOrigin"
+        #triggerFiltros="cdkOverlayOrigin"
         (click)="ayudaFiltros = ayudaFiltros ? false : true">
         <mat-icon>help_outlined</mat-icon>
       </button>
@@ -112,7 +154,7 @@
     <!-- Botón de ayuda para los filtros -->
     <ng-template
       cdkConnectedOverlay
-      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOrigin]="triggerFiltros"
       [cdkConnectedOverlayOpen]="ayudaFiltros"
       >
       <div class="ayudaFiltros">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NoRowsOverlayComponent } from 'ag-grid-community/dist/lib/rendering/overlays/noRowsOverlayComponent';
 import * as moment from 'moment';
 
 // Services
@@ -21,7 +22,9 @@ export class GaComponent implements OnInit {
 
   // Otros datos
   public dataToExcel: [] = [];
+  ayudaDimensiones = false;  // botón de ayuda para Dimensiones
   ayudaFiltros = false;  // botón de ayuda para filtros
+  ayudaMetricas = false;  // botón de ayuda para Metricas
 
   // Variables para Holdable Button bar
   public color = 'warn';
@@ -138,13 +141,24 @@ export class GaComponent implements OnInit {
       this.filters.value
     ).subscribe(
       data => {
+
         // Obtener los datos
-        const rows: [] = data['rows'];
-        console.log('*** ROWS:', rows);
+        let rows = data['rows'];
+        console.log('*** GA data:', data);
 
         if (!rows || rows.length <= 0) {
           this.errorMessageService.changeErrorMessage('Ningún dato encontrado.');
         } else {
+
+          // Obtener los Headers
+          const headers = data['columnHeaders'];
+          // Armar el header que va al excel
+          const rowHeader = [];
+          headers.forEach(element => {
+            rowHeader.push(element['name']);
+          });
+          // Agregar el header a los datos
+          rows = [rowHeader, ...rows];
           this.dataToExcel = rows;
         }
         this.isFetching = false;
