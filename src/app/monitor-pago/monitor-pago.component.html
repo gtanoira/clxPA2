@@ -1,1 +1,30 @@
-<p>monitor-pago works!</p>
+<div class="container row">
+
+  <!-- Area de botones de acción -->
+  <div class="buttons-area row">
+
+    <!-- Crear nuevo pago -->
+    <button
+      class="btns"
+      mat-stroked-button
+      color="primary"
+      (click)="nuevoPagoDialog()"
+      >
+      <mat-icon>add</mat-icon>
+      &nbsp;Nuevo pago
+    </button>
+
+    <!-- Simular -->
+    <button
+      class="btns"
+      mat-raised-button
+      color="primary"
+      (click)="simular()"
+      >
+      Simular
+    </button>
+
+    <!-- Pagar -->
+    <button class="btns" mat-raised-button (click)="pagar()">Pagar</button>
+  </div>
+</div>

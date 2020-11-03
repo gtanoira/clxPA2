@@ -35,9 +35,15 @@ const appRoutes: Routes = [
     loadChildren: () => import('./hotgo/hotgo.module').then(m => m.HotgoModule)
   },
 
+  // Monitor de Pagos
+  {
+    path: 'monitorpago',
+    loadChildren: () => import('./monitor-pago/monitor-pago.module').then(m => m.MonitorPagoModule)
+  },
+
   // Main Module Paths
   { path: '', redirectTo: '/main/menu', pathMatch: 'full' },
-  { path: 'main/pgmCotizaciones', redirectTo: '/main/pgmCotizaciones' },
+  // { path: 'main/pgmCotizaciones', redirectTo: '/main/pgmCotizaciones' },
 
   // otherwise redirect to Lgin
   { path: '**', redirectTo: '/login' }

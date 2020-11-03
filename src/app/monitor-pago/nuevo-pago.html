@@ -1,0 +1,63 @@
+<!-- Nuevo Pago (formulario) -->
+<div class="nuevo-pago col--mobile" [formGroup]="nuevoPagoForm">
+  <h3>Generar Nuevo Pago</h3>
+
+  <!-- Compañías -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill"
+    >
+    <mat-label>Compañía</mat-label>
+    <mat-select
+      formControlName="companyId"
+      required>
+      <mat-option
+        *ngFor="let company of empresaOptions"
+        [value]="company.id">
+        {{ company.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Fecha de Pago -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill"
+    >
+    <mat-label>Fecha de pago</mat-label>
+    <input
+      required
+      matInput
+      [matDatepicker]="fechaPago"
+      formControlName="fechaPago">
+    <mat-datepicker-toggle matSuffix [for]="fechaPago"></mat-datepicker-toggle>
+    <mat-datepicker #fechaPago></mat-datepicker>
+    <mat-error>Fecha inválida</mat-error>
+  </mat-form-field>
+
+  <!-- Vias de pago -->
+  <mat-form-field
+    class="maximize"
+    appearance="fill"
+    >
+    <mat-label>Vías de pago</mat-label>
+    <mat-select
+      formControlName="viaPago"
+      required>
+      <mat-option
+        *ngFor="let company of empresaOptions"
+        [value]="company.id">
+        {{ company.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Area Botones-->
+  <div class="buttons-area row">
+    <!-- Buscar cbtes. -->
+    <button class="btns" mat-raised-button color="primary" (click)="nuevoPago()">Buscar Cbtes.</button>
+    <!-- Cancel -->
+    <button class="btns" mat-raised-button (click)="onCancelDialog()">Cancelar</button>
+  </div>
+
+</div>
