@@ -1,16 +1,15 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
 
 // Services
 import { SapService } from '../shared/sap.service';
 
 // Models
 import { MonitorPartidaModel } from '../models/monitor-partida.model';
-import { SelectOption } from '../models/select-option';
-import { AuxiliarTablesService } from '../shared/auxiliar-tables.service';
+
+// Components
+import { NuevoPagoModalComponent } from './nuevo-pago/nuevo-pago.component';
 
 @Component({
   selector: 'app-monitor-pago',
@@ -20,71 +19,39 @@ import { AuxiliarTablesService } from '../shared/auxiliar-tables.service';
 export class MonitorPagoComponent implements OnInit {
 
   // Variables
-  public empresaOptions: SelectOption[];
-  public nuevoPagoForm: FormGroup;
   public nuevoPagoModal = false;
   public partidas: MonitorPartidaModel[] = [];
-  public viasPagoOptions: SelectOption[];
 
-  // Triggers
-  public triggerEmpresaId: Subscription;
+  // Varaibles para Nuevo Pago
+  private empresaId = '';
+  private fechaPago: moment.Moment;
+  private viaPago = '';
 
   constructor(
-    private auxiliarTablesService: AuxiliarTablesService,
     public dialog: MatDialog,
-    private fb: FormBuilder,
     private sapService: SapService
-  ) {
+  ) {}
 
-    // Calcular el día jueves de la semana en curso o de la próxima
-    const dowActual = +moment().format('e');  // nro del dia actual (dow: day of week)
-    const daysToJueves = (4 - dowActual) >= 0 ? (4 - dowActual) : (11 - dowActual);
+  ngOnInit(): void {}
 
-    // Form para crear un nuevo pago
-    this.nuevoPagoForm = this.fb.group({
-      empresaId: [{ value: 'XVE1', updateOn: 'blur' }],
-      fechaPago: [moment().add(daysToJueves, 'days')],
-      viaPago: ['1']
-    });
-
-    // Triggers
-    this.triggerEmpresaId = this.nuevoPagoForm.get('empresaId').valueChanges.subscribe(
-      empresa => {
-        // Buscar las vias de pago de la empresa
-        this.viasPagoOptions = [
-          { id: '1', name: 'Via 01' },
-          { id: '2', name: 'Via 02' },
-          { id: '3', name: 'Via 03' },
-        ];
-      }
-    );
-  }
-
-  ngOnInit(): void {
-    // Empresa Options
-    this.auxiliarTablesService.getOptionsFromJsonFile('monitor_pago_empresa_options.json').subscribe(
-      data => {
-        this.empresaOptions = data;
-      }
-    );
-  }
-
+  // Solicitar los datos para crear la nueva solicitud de pago
   public nuevoPagoDialog(): void {
-    const dialogRef = this.dialog.open(NuevoPagoModalComponent, {
-      width: '360px',
-      data: this.nuevoPagoForm
-    });
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {};
+
+    const dialogRef = this.dialog.open(NuevoPagoModalComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       result => {
         console.log('Modal data:', result);
-        //this.nuevoPagoForm = result;
+        this.empresaId = result['empresaId'];
+        this.fechaPago = result['fechaPago'];
+        this.viaPago = result['viaPago'];
       }
     );
-  }
-
-  public nuevoPago() {
-
   }
 
   // Simular pago
@@ -95,25 +62,6 @@ export class MonitorPagoComponent implements OnInit {
   // Pagar
   public pagar() {
 
-  }
-
-}
-
-/*
-  MODAL para el formulario de Nuevo Pago
-*/
-@Component({
-  selector: 'app-nuevo-pago-modal',
-  templateUrl: './nuevo-pago.html',
-})
-class NuevoPagoModalComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<NuevoPagoModalComponent>, @Inject(MAT_DIALOG_DATA) public data: FormGroup
-  ) {}
-
-  onCancelDialog(): void {
-    this.dialogRef.close();
   }
 
 }

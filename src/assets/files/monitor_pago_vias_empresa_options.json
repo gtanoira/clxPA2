@@ -1,0 +1,74 @@
+{
+  "XVE1": [
+    {
+      "id": "B",
+      "name": "Cheque HSBC"
+    },
+    {
+      "id": "C",
+      "name": "Cheque"
+    },
+    {
+      "id": "D",
+      "name": "Cheque diferido HSBC"
+    },
+    {
+      "id": "E",
+      "name": "Efectivo"
+    },
+    {
+      "id": "H",
+      "name": "Cheque HSBC-Nuevo"
+    },
+    {
+      "id": "I",
+      "name": "Cheque Diferido HSBC-Nuevo"
+    },
+    {
+      "id": "J",
+      "name": "Transferencia CBU HSBC-Nuevo"
+    },
+    {
+      "id": "T",
+      "name": "Transferencia Bancaria"
+    },
+    {
+      "id": "U",
+      "name": "Transferencia Bancaria CA HSBC"
+    }
+  ],
+  "XA03": [
+    {
+      "id": "B",
+      "name": "Cheque HSBC"
+    },
+    {
+      "id": "D",
+      "name": "Cheque diferido HSBC"
+    },
+    {
+      "id": "E",
+      "name": "Efectivo"
+    },
+    {
+      "id": "H",
+      "name": "Cheque HSBC-Nuevo"
+    },
+    {
+      "id": "I",
+      "name": "Cheque Diferido HSBC-Nuevo"
+    },
+    {
+      "id": "J",
+      "name": "Transferencia CBU HSBC-Nuevo"
+    },
+    {
+      "id": "T",
+      "name": "Transferencia Bancaria"
+    },
+    {
+      "id": "U",
+      "name": "Transferencia Bancaria CA HSBC"
+    }
+  ]
+}
