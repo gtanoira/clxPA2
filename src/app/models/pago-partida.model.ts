@@ -1,4 +1,4 @@
-export interface MonitorPartidaModel {
+export interface PagoPartidaModel {
   empresaId: string;
   proveedorId: string;
   proveedorDesc: string;

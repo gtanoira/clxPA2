@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { map, catchError, mergeMap, toArray } from 'rxjs/operators';
 
 // MOMENT.JS
-import * as _moment from 'moment';
+import * as moment from 'moment';
 
 // Services
 import { AuxiliarTablesService } from 'src/app/shared/auxiliar-tables.service';
@@ -13,6 +13,7 @@ import { ErrorMessageService } from 'src/app/core/error-message.service';
 // Models
 import { DetalleReciboModel } from 'src/app/models/dealle_recibo.model';
 import { OpenItemModel } from 'src/app/models/open_item.model';
+import { PagoPartidaModel } from 'src/app/models/pago-partida.model';
 import { SapClientModel } from 'src/app/models/sap_client.model';
 
 // Environments
@@ -147,6 +148,105 @@ export class SapService {
 
     // Leer del SAP el subdiario
     return this.http.get<OpenItemModel[]>(`${environment.envData.sapGwServer}/api2/open_items?${qp1}&${qp2}&${qp3}`);
+  }
+
+  // Obtener todas las facturas a pagar (partidas) para el monitor de pagos
+  public getPagoPartidas(empresaId: string, fechaPago: string, viaPago: string ): Observable<PagoPartidaModel[]> {
+    const mockup: PagoPartidaModel[] = [
+      {
+        empresaId: 'XVE1',
+        proveedorId: '0010003023',
+        proveedorDesc: 'Luis Alberto Miranda',
+        estado: 'A',
+        docNro: '00002C00000192  ',
+        ejercicio: '2020',
+        referencia: '2000022219XVE12020',
+        docFecha: '20201103',
+        docFechaCtble: '20201103',
+        claseDoc: 'KR',
+        docMoneda: 'ARS',
+        docImporte: 9480,
+        socMoneda: 'ARS',
+        socImporte: 9480,
+        itemPosicion: 1,
+        itemDesc: 'Motomensajería -09-2020- 2ª quincena',
+        condPago: '',
+        vtoFechaBase: '20201103',
+        vtoDiasAdic: 0,
+        vtoFecha: '20201110',
+        vtoDesc: '10 dias fecha factura',
+        vtoDiasRef: 0,
+        viaPago: 'U',
+        bloqueo: '1'
+      },
+      {
+        empresaId: 'XVE1',
+        proveedorId: '0010002506',
+        proveedorDesc: 'Iron Mountain Argentina S.A.',
+        estado: 'A',
+        docNro: '0003A00058842',
+        ejercicio: '2020',
+        referencia: '2000022235XVE12020',
+        docFecha: '20201001',
+        docFechaCtble: '20201002',
+        claseDoc: 'KR',
+        docMoneda: 'ARS',
+        docImporte: 1198,
+        socMoneda: 'ARS',
+        socImporte: 1198,
+        itemPosicion: 1,
+        itemDesc: 'Alquiler dispenser -2020-10- 2 dispenser F/C',
+        condPago: '',
+        vtoFechaBase: '20201101',
+        vtoDiasAdic: 0,
+        vtoFecha: '20201110',
+        vtoDesc: '30 dias fecha factura',
+        vtoDiasRef: 0,
+        viaPago: 'U',
+        bloqueo: '1'
+      },
+      {
+        empresaId: 'XVE1',
+        proveedorId: '0010003029',
+        proveedorDesc: 'Harteneck y Asociados S.R.L.',
+        estado: 'A',
+        docNro: '00002A00001230',
+        ejercicio: '2020',
+        referencia: '2000022256XVE12020',
+        docFecha: '20201001',
+        docFechaCtble: '20201001',
+        claseDoc: 'KR',
+        docMoneda: 'ARS',
+        docImporte: 157300,
+        socMoneda: 'ARS',
+        socImporte: 157300,
+        itemPosicion: 1,
+        itemDesc: 'Honorarios Profesionales -2019-12- Precios Transfe',
+        condPago: '',
+        vtoFechaBase: '20201101',
+        vtoDiasAdic: 0,
+        vtoFecha: '20201110',
+        vtoDesc: '30 dias fecha factura',
+        vtoDiasRef: 0,
+        viaPago: 'U',
+        bloqueo: '1'
+      }
+    ];
+
+    return of(mockup).pipe(
+      map(
+        data => {
+          const rtnArray: PagoPartidaModel[] = [];
+          if (data.length > 0) {
+            data.forEach((el, i) => {
+              el.vtoFecha = moment(el.vtoFecha, 'YYYYMMDD').format('dd D, MMM');
+              rtnArray.push(el);
+            });
+          }
+          return rtnArray;
+        }
+      )
+    );
   }
 
   // Subdiario de compras

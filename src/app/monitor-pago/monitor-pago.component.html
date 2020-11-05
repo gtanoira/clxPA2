@@ -1,4 +1,4 @@
-<div class="container row">
+<div class="container">
 
   <!-- Area de botones de acción -->
   <div class="buttons-area row">
@@ -19,12 +19,78 @@
       class="btns"
       mat-raised-button
       color="primary"
+      [disabled]="!partidas || partidas.length <= 0"
       (click)="simular()"
       >
       Simular
     </button>
 
     <!-- Pagar -->
-    <button class="btns" mat-raised-button (click)="pagar()">Pagar</button>
+    <button
+      class="btns"
+      mat-raised-button
+      [disabled]="estadoPago !== 'S'"
+      (click)="pagar()"
+      >
+      Pagar
+    </button>
   </div>
+
+  <!-- Tabla de facturas (partidas) a pagar -->
+  <mat-table
+    [dataSource]="partidas"
+    multiTemplateDataRows
+    class="table"
+    >
+
+    // columna Proveedor Desc
+    <ng-container matColumnDef="proveedorDesc">
+      <mat-header-cell class="cell-fecha" *matHeaderCellDef> Proveedor </mat-header-cell>
+      <mat-cell class="cell-fecha" *matCellDef="let element"> {{element.proveedorDesc}} </mat-cell>
+    </ng-container>
+
+    // columna Fecha de vencimeinto
+    <ng-container matColumnDef="vtoFecha">
+      <mat-header-cell class="cell-country" *matHeaderCellDef mat-sort-header> Vto. </mat-header-cell>
+      <mat-cell class="cell-country" *matCellDef="let element"> {{element.vtoFecha}} </mat-cell>
+    </ng-container>
+
+    // columna Nro. de documento AFIP
+    <ng-container matColumnDef="docNro">
+      <mat-header-cell class="cell-duration" *matHeaderCellDef> Nro.Doc. </mat-header-cell>
+      <mat-cell class="cell-duration" *matCellDef="let element"> {{element.docNro}} </mat-cell>
+    </ng-container>
+
+    // columna Moneda
+    <ng-container matColumnDef="docMoneda">
+      <mat-header-cell class="cell-currency" *matHeaderCellDef mat-sort-header> Moneda </mat-header-cell>
+      <mat-cell class="cell-currency" *matCellDef="let element"> {{element.docMoneda}} </mat-cell>
+    </ng-container>
+
+    // columna Importe
+    <ng-container matColumnDef="docImporte">
+      <mat-header-cell class="cell-taxableAmount" *matHeaderCellDef mat-sort-header> Importe </mat-header-cell>
+      <mat-cell class="cell-taxableAmount" *matCellDef="let element"> {{element.docImporte | number:'1.2-2'}} </mat-cell>
+    </ng-container>
+
+    <!-- Expanded Content Column - mat-header-celle detail row is made up of mat-header-cellis one column mat-header-cellat spans across all columns -->
+    <!-- <ng-container matColumnDef="expandedDetail">
+      <mat-cell mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.lengmat-header-cell">
+        <div class="example-element-detail"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <app-local-prices-crud></app-local-prices-crud>
+        </div>
+      </mat-cell>
+    </ng-container> -->
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row
+      *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      matTooltip="Para ver el detalle de la factura, haga click sobre la misma"
+      >
+    </mat-row>
+
+  </mat-table>
+
 </div>
