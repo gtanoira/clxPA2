@@ -65,11 +65,39 @@
   background-color: rgba(170,170,170,0.31);
 }
 
+/*
+  Tabla: Facturas (partidas)
+*/
+
 .table {
   width: 100%;
 }
 
-.mat-header-row,
+.factura {
+  border-bottom-width: 0;
+
+  &:not(.expanded-row):hover {
+    background: whitesmoke;
+  }
+
+  &:not(.expanded-row):active {
+    background: #efefef;
+  }
+
+  &-detalle {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /*  Rows de detalle de factura  */
+  &-detalle-canvas {
+    display: flex;
+  }
+
+}
+
+/* Columnas */
+/* .mat-header-row,
 .mat-row {
   flex-wrap: wrap;
   padding: 0 1em;
@@ -77,6 +105,15 @@
 
 .mat-cell {
   min-height: 1em;
+} */
+
+.mat-column-select {
+  flex: 0 0 50px;
+  overflow: initial;
+}
+
+.mat-column-expandIcon {
+  flex: 0 0 28px;
 }
 
 .mat-column-proveedorDesc {
@@ -98,8 +135,10 @@
 }
 
 .mat-column-docImporte {
-  flex: 0 0 90px;
+  flex: 0 0 110px;
+  justify-content: flex-end;
 }
+
 
 @media (min-width: 360px) {
   .mat-cell {

@@ -19,7 +19,8 @@
       class="btns"
       mat-raised-button
       color="primary"
-      [disabled]="!partidas || partidas.length <= 0"
+      matTooltip="Enviar al SAP las facturas seleccionadas para calcular los impuestos a pagar"
+      [disabled]="!selection.hasValue()"
       (click)="simular()"
       >
       Simular
@@ -38,10 +39,44 @@
 
   <!-- Tabla de facturas (partidas) a pagar -->
   <mat-table
-    [dataSource]="partidas"
+    [dataSource]="dataSource"
     multiTemplateDataRows
+    matSort
     class="table"
     >
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+        (change)="$event ? masterToggle() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          matTooltip="Seleccionar la factura para pagar"
+          >
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    // Expand icon
+    <ng-container matColumnDef="expandIcon">
+      <mat-header-cell *matHeaderCellDef> <mat-icon>expand_more</mat-icon> </mat-header-cell>
+      <mat-cell
+        *matCellDef="let element"
+        matTooltip="Ver detalle de la factura"
+        matTooltipPosition="above"
+        >
+        <mat-icon>expand_more</mat-icon>
+      </mat-cell>
+    </ng-container>
 
     // columna Proveedor Desc
     <ng-container matColumnDef="proveedorDesc">
@@ -51,7 +86,7 @@
 
     // columna Fecha de vencimeinto
     <ng-container matColumnDef="vtoFecha">
-      <mat-header-cell class="cell-country" *matHeaderCellDef mat-sort-header> Vto. </mat-header-cell>
+      <mat-header-cell class="cell-country" *matHeaderCellDef mat-sort-header> Vencimiento </mat-header-cell>
       <mat-cell class="cell-country" *matCellDef="let element"> {{element.vtoFecha}} </mat-cell>
     </ng-container>
 
@@ -63,7 +98,7 @@
 
     // columna Moneda
     <ng-container matColumnDef="docMoneda">
-      <mat-header-cell class="cell-currency" *matHeaderCellDef mat-sort-header> Moneda </mat-header-cell>
+      <mat-header-cell class="cell-currency" *matHeaderCellDef mat-sort-header> Mon </mat-header-cell>
       <mat-cell class="cell-currency" *matCellDef="let element"> {{element.docMoneda}} </mat-cell>
     </ng-container>
 
@@ -73,23 +108,43 @@
       <mat-cell class="cell-taxableAmount" *matCellDef="let element"> {{element.docImporte | number:'1.2-2'}} </mat-cell>
     </ng-container>
 
-    <!-- Expanded Content Column - mat-header-celle detail row is made up of mat-header-cellis one column mat-header-cellat spans across all columns -->
-    <!-- <ng-container matColumnDef="expandedDetail">
-      <mat-cell mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.lengmat-header-cell">
-        <div class="example-element-detail"
-          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <app-local-prices-crud></app-local-prices-crud>
+    <!-- Detalle de la factura (expanded row) -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div
+          class="factura-detalle-canvas"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+          >
+          <table cellspacing="1">
+            <tr>
+              <td><mat-form-field class="">
+                <mat-label>Nro.</mat-label>
+                <input matInput value={{element.docNro}}>
+              </mat-form-field></td>
+              <td><mat-form-field class="">
+                <mat-label>Fecha</mat-label>
+                <input matInput value={{element.docFecha}}>
+              </mat-form-field></td>
+              <td><mat-form-field class="">
+                <mat-label>Cond.Pago</mat-label>
+                <input matInput value={{element.condPago}}>
+              </mat-form-field></td>
+            </tr>
+          </table>
+
         </div>
-      </mat-cell>
-    </ng-container> -->
+      </td>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
     <mat-row
       *matRowDef="let element; columns: columnsToDisplay;"
-      class="example-element-row"
-      matTooltip="Para ver el detalle de la factura, haga click sobre la misma"
+      class="factura"
+      [class.expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
       >
     </mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="factura-detalle"></mat-row>
 
   </mat-table>
 
