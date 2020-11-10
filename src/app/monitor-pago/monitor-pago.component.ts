@@ -39,7 +39,7 @@ export class MonitorPagoComponent implements OnInit, AfterViewInit {
   public columnsToDisplay = ['select', 'expandIcon', 'proveedorDesc', 'vtoFecha', 'docNro', 'docMoneda', 'docImporte'];
   public dataSource = new MatTableDataSource<PagoPartidaModel>([]);
   public expandedElement: PagoPartidaModel | null;  // Indica que row está expandido
-  public selection = new SelectionModel<PagoPartidaModel>(true, []);
+  public selection = new SelectionModel<PagoPartidaModel>(true, []);  // se usa para el multi-check
 
   // Varaibles para filtrar las partidas del Nuevo Pago
   private empresaId = '';
