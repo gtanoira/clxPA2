@@ -66,7 +66,7 @@
       </mat-cell>
     </ng-container>
 
-    // Expand icon
+    <!-- Expand icon -->
     <ng-container matColumnDef="expandIcon">
       <mat-header-cell *matHeaderCellDef> <mat-icon>expand_more</mat-icon> </mat-header-cell>
       <mat-cell
@@ -78,31 +78,31 @@
       </mat-cell>
     </ng-container>
 
-    // columna Proveedor Desc
+    <!-- columna Proveedor Desc -->
     <ng-container matColumnDef="proveedorDesc">
       <mat-header-cell class="cell-fecha" *matHeaderCellDef> Proveedor </mat-header-cell>
       <mat-cell class="cell-fecha" *matCellDef="let element"> {{element.proveedorDesc}} </mat-cell>
     </ng-container>
 
-    // columna Fecha de vencimeinto
+    <!-- columna Fecha de vencimeinto -->
     <ng-container matColumnDef="vtoFecha">
       <mat-header-cell class="cell-country" *matHeaderCellDef mat-sort-header> Vencimiento </mat-header-cell>
       <mat-cell class="cell-country" *matCellDef="let element"> {{element.vtoFecha}} </mat-cell>
     </ng-container>
 
-    // columna Nro. de documento AFIP
+    <!-- columna Nro. de documento AFIP -->
     <ng-container matColumnDef="docNro">
       <mat-header-cell class="cell-duration" *matHeaderCellDef> Nro.Doc. </mat-header-cell>
       <mat-cell class="cell-duration" *matCellDef="let element"> {{element.docNro}} </mat-cell>
     </ng-container>
 
-    // columna Moneda
+    <!-- columna Moneda -->
     <ng-container matColumnDef="docMoneda">
       <mat-header-cell class="cell-currency" *matHeaderCellDef mat-sort-header> Mon </mat-header-cell>
       <mat-cell class="cell-currency" *matCellDef="let element"> {{element.docMoneda}} </mat-cell>
     </ng-container>
 
-    // columna Importe
+    <!-- columna Importe -->
     <ng-container matColumnDef="docImporte">
       <mat-header-cell class="cell-taxableAmount" *matHeaderCellDef mat-sort-header> Importe </mat-header-cell>
       <mat-cell class="cell-taxableAmount" *matCellDef="let element"> {{element.docImporte | number:'1.2-2'}} </mat-cell>
