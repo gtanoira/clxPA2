@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ProcesosBatchsComponent } from './procesos-batchs.component';
 
@@ -6,7 +6,7 @@ describe('ProcesosBatchComponent', () => {
   let component: ProcesosBatchsComponent;
   let fixture: ComponentFixture<ProcesosBatchsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ProcesosBatchsComponent ]
     })

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { getTestScheduler, cold } from 'jasmine-marbles';
@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   let errorMessageService: ErrorMessageService;
   // let httpTestingController: HttpTestingController;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     /* const elementRefStub = () => ({
       nativeElement: {
         ownerDocument: { body: { style: { backgroundColor: {} } } }
