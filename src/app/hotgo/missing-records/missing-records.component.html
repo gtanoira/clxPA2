@@ -37,8 +37,7 @@
           <!-- boton -->
           <button
             class="inline-buttons"
-            appHoldable
-            (holdTime)="holdBtnRegister($event)"
+            (click)="confirmUpload('register')"
             mat-stretch
             [disabled]="!fileRegister || isFetchingRegister"
             mat-raised-button
@@ -49,12 +48,6 @@
             <mat-icon svgIcon="save"></mat-icon>
           </button>
 
-          <!-- Progress bar for button -->
-          <mat-progress-bar
-            [color]="colorBtnRegister"
-            mode="determinate"
-            [value]="holdableBtnRegister">
-          </mat-progress-bar>
         </div>
 
         <!-- Spinner y resultado-->
@@ -111,9 +104,8 @@
           <!-- boton -->
           <button
             class="inline-buttons"
-            appHoldable
-            (holdTime)="holdBtnPyc($event)"
             mat-stretch
+            (click)="confirmUpload('payment_commit')"
             [disabled]="!filePyc || isFetchingPyc"
             mat-raised-button
             color="primary"
@@ -123,12 +115,6 @@
             <mat-icon svgIcon="save"></mat-icon>
           </button>
 
-          <!-- Progress bar for button -->
-          <mat-progress-bar
-            [color]="colorBtnPyc"
-            mode="determinate"
-            [value]="holdableBtnPyc">
-          </mat-progress-bar>
         </div>
 
         <!-- Spinner y resultado-->
@@ -185,8 +171,7 @@
           <!-- boton -->
           <button
             class="inline-buttons"
-            appHoldable
-            (holdTime)="holdBtnCancel($event)"
+            (click)="confirmUpload('cancel')"
             mat-stretch
             [disabled]="!fileCancel || isFetchingCancel"
             mat-raised-button
@@ -197,12 +182,6 @@
             <mat-icon svgIcon="save"></mat-icon>
           </button>
 
-          <!-- Progress bar for button -->
-          <mat-progress-bar
-            [color]="colorBtnCancel"
-            mode="determinate"
-            [value]="holdableBtnCancel">
-          </mat-progress-bar>
         </div>
 
         <!-- Spinner y resultado-->

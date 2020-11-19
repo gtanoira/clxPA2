@@ -1,4 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+// Dialog Modal Component
+import { DialogModalComponent } from 'src/app/shared/dialog/dialog.component';
 
 // Services
 import { ErrorMessageService } from 'src/app/core/error-message.service';
@@ -47,11 +51,12 @@ export class MissingRecordsComponent implements OnInit {
   // Variables para Holdable Button bar
   public colorBtnCancel = 'warn';
   public holdableBtnCancel = 0;
-public isFetchingCancel = false;  // se utiliza para mostrar el spinner
+  public isFetchingCancel = false;  // se utiliza para mostrar el spinner
 
   constructor(
     private errorMessageService: ErrorMessageService,
-    private hotgoService: HotgoService
+    private hotgoService: HotgoService,
+    private modalDialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -71,47 +76,34 @@ public isFetchingCancel = false;  // se utiliza para mostrar el spinner
     }
   }
 
-  // Confirmar botón ACTUALIZAR
-  holdBtnRegister(e) {
-
-    // Chequear si hay que actualizar la cotización al mantener apretado el botón por más de 1 segundo
-    this.holdableBtnRegister = e;
-    if (e > 100) {
-      // Mas de 1 segundo apretado el botón
-      this.colorBtnRegister = 'primary';
-
-      // Enviar el archivo a procesar
-      if (!this.isFetchingRegister) {
-        this.isFetchingRegister = true;  // spinner & button Hold Handler
-        this.msgProcesoRegister = ''; // inicializo el mensaje de error
-        // Preparar el body
-        const formData = new FormData();
-        formData.append('uploadRegister', this.fileRegister, this.fileRegister.name);  // File
-        this.hotgoService.uploadRegister(formData).subscribe(
-          data => {
-            // Stop spinner
-            this.isFetchingRegister = false;
-            // Mostrar resultado
-            this.cssResultadoRegister = 'resultado resultado-ok';
-            this.iconResultadoRegister = 'done';
-            this.msgProcesoRegister = data['message'];
-          },
-          err => {
-            this.cssResultadoRegister = 'resultado resultado-notOk';
-            this.iconResultadoRegister = 'clear';
-            this.msgProcesoRegister = '0 registro/s grabados';
-            this.errorMessageService.changeErrorMessage(err);
-            this.isFetchingRegister = false;
-          }
-        );
-      }
-
-    } else {
-      // No se llegó al segundo
-      this.colorBtnRegister = 'warn';
+  // Enviar el archivo a procesar
+  private sendRegister() {
+    // Enviar el archivo a procesar
+    if (!this.isFetchingRegister) {
+      this.isFetchingRegister = true;  // spinner
+      this.msgProcesoRegister = ''; // inicializo el mensaje de error
+      // Preparar el body
+      const formData = new FormData();
+      formData.append('uploadRegister', this.fileRegister, this.fileRegister.name);  // File
+      this.hotgoService.uploadRegister(formData).subscribe(
+        data => {
+          // Stop spinner
+          this.isFetchingRegister = false;
+          // Mostrar resultado
+          this.cssResultadoRegister = 'resultado resultado-ok';
+          this.iconResultadoRegister = 'done';
+          this.msgProcesoRegister = data['message'];
+        },
+        err => {
+          this.cssResultadoRegister = 'resultado resultado-notOk';
+          this.iconResultadoRegister = 'clear';
+          this.msgProcesoRegister = '0 registro/s grabados';
+          this.errorMessageService.changeErrorMessage(err);
+          this.isFetchingRegister = false;
+        }
+      );
     }
   }
-
   /*
     PAYMENT_COMMIT
   */
@@ -126,47 +118,34 @@ public isFetchingCancel = false;  // se utiliza para mostrar el spinner
     }
   }
 
-  // Confirmar botón ACTUALIZAR
-  holdBtnPyc(e) {
-
-    // Chequear si hay que actualizar la cotización al mantener apretado el botón por más de 1 segundo
-    this.holdableBtnPyc = e;
-    if (e > 100) {
-      // Mas de 1 segundo apretado el botón
-      this.colorBtnPyc = 'primary';
-
-      // Enviar el archivo a procesar
-      if (!this.isFetchingPyc) {
-        this.isFetchingPyc = true;  // spinner & button Hold Handler
-        this.msgProcesoPyc = ''; // inicializo el mensaje de error
-        // Preparar el body
-        const formData = new FormData();
-        formData.append('uploadPyc', this.filePyc, this.filePyc.name);  // File
-        this.hotgoService.uploadPyc(formData).subscribe(
-          data => {
-            // Stop spinner
-            this.isFetchingPyc = false;
-            // Mostrar resultado
-            this.cssResultadoPyc = 'resultado resultado-ok';
-            this.iconResultadoPyc = 'done';
-            this.msgProcesoPyc = data['message'];
-          },
-          err => {
-            this.cssResultadoPyc = 'resultado resultado-notOk';
-            this.iconResultadoPyc = 'clear';
-            this.msgProcesoPyc = '0 registro/s grabados';
-            this.errorMessageService.changeErrorMessage(err);
-            this.isFetchingPyc = false;
-          }
-        );
-      }
-
-    } else {
-      // No se llegó al segundo
-      this.colorBtnPyc = 'warn';
+  // Enviar el archivo a procesar
+  private sendPyC() {
+    // Enviar el archivo a procesar
+    if (!this.isFetchingPyc) {
+      this.isFetchingPyc = true;  // spinner
+      this.msgProcesoPyc = ''; // inicializo el mensaje de error
+      // Preparar el body
+      const formData = new FormData();
+      formData.append('uploadPyc', this.filePyc, this.filePyc.name);  // File
+      this.hotgoService.uploadPyc(formData).subscribe(
+        data => {
+          // Stop spinner
+          this.isFetchingPyc = false;
+          // Mostrar resultado
+          this.cssResultadoPyc = 'resultado resultado-ok';
+          this.iconResultadoPyc = 'done';
+          this.msgProcesoPyc = data['message'];
+        },
+        err => {
+          this.cssResultadoPyc = 'resultado resultado-notOk';
+          this.iconResultadoPyc = 'clear';
+          this.msgProcesoPyc = '0 registro/s grabados';
+          this.errorMessageService.changeErrorMessage(err);
+          this.isFetchingPyc = false;
+        }
+      );
     }
   }
-
   /*
     CANCEL
   */
@@ -181,44 +160,69 @@ public isFetchingCancel = false;  // se utiliza para mostrar el spinner
     }
   }
 
-  // Confirmar botón ACTUALIZAR
-  holdBtnCancel(e) {
-
-    // Chequear si hay que actualizar la cotización al mantener apretado el botón por más de 1 segundo
-    this.holdableBtnCancel = e;
-    if (e > 100) {
-      // Mas de 1 segundo apretado el botón
-      this.colorBtnCancel = 'primary';
-
-      // Enviar el archivo a procesar
-      if (!this.isFetchingCancel) {
-        this.isFetchingCancel = true;  // spinner & button Hold Handler
-        this.msgProcesoCancel = ''; // inicializo el mensaje de error
-        // Preparar el body
-        const formData = new FormData();
-        formData.append('uploadCancel', this.fileCancel, this.fileCancel.name);  // File
-        this.hotgoService.uploadCancel(formData).subscribe(
-          data => {
-            // Stop spinner
-            this.isFetchingCancel = false;
-            // Mostrar resultado
-            this.cssResultadoCancel = 'resultado resultado-ok';
-            this.iconResultadoCancel = 'done';
-            this.msgProcesoCancel = data['message'];
-          },
-          err => {
-            this.cssResultadoCancel = 'resultado resultado-notOk';
-            this.iconResultadoCancel = 'clear';
-            this.msgProcesoCancel = '0 registro/s grabados';
-            this.errorMessageService.changeErrorMessage(err);
-            this.isFetchingCancel = false;
-          }
-        );
-      }
-
-    } else {
-      // No se llegó al segundo
-      this.colorBtnCancel = 'warn';
+  // Enviar el archivo a procesar
+  private sendCancel() {
+    // Enviar el archivo a procesar
+    if (!this.isFetchingCancel) {
+      this.isFetchingCancel = true;  // spinner & button Hold Handler
+      this.msgProcesoCancel = ''; // inicializo el mensaje de error
+      // Preparar el body
+      const formData = new FormData();
+      formData.append('uploadCancel', this.fileCancel, this.fileCancel.name);  // File
+      this.hotgoService.uploadCancel(formData).subscribe(
+        data => {
+          // Stop spinner
+          this.isFetchingCancel = false;
+          // Mostrar resultado
+          this.cssResultadoCancel = 'resultado resultado-ok';
+          this.iconResultadoCancel = 'done';
+          this.msgProcesoCancel = data['message'];
+        },
+        err => {
+          this.cssResultadoCancel = 'resultado resultado-notOk';
+          this.iconResultadoCancel = 'clear';
+          this.msgProcesoCancel = '0 registro/s grabados';
+          this.errorMessageService.changeErrorMessage(err);
+          this.isFetchingCancel = false;
+        }
+      );
     }
   }
+
+  // Delete an Item of the order
+  public confirmUpload(tipoRegistro: string) {
+    // Open a Dialog Modal
+    const dialogRef = this.modalDialog.open(DialogModalComponent, {
+      width: '320px',
+      data: {
+        title: `Missing ${tipoRegistro}`,
+        dialogType: 'Normal',
+        body: 'Confirma el upload de los nuevos registros?',
+        btn1Text: 'Cancelar',
+        btn2Text: 'Ok'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+     btnClick => {
+        if (btnClick === 2) {
+          switch (tipoRegistro) {
+            case 'payment_commit':
+              this.sendPyC();
+              break;
+            case 'cancel':
+              this.sendCancel();
+              break;
+            case 'register':
+              this.sendRegister();
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    );
+  }
+
+
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Observable, from, concat, of } from 'rxjs';
-import { map, startWith, catchError, merge, mergeMap, toArray } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 // External libraries
 import * as moment from 'moment';

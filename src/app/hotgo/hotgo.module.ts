@@ -22,7 +22,6 @@ import { AgGridModule } from 'ag-grid-angular';
 
 // Modules
 import { AggridAddonsModule } from 'src/app/shared/aggrid_addons.module';
-import { DirectivesModule } from '../shared/directives.module';
 import { HotgoRoutingModule } from './hotgo.routing.module';
 
 // Services
@@ -63,7 +62,6 @@ import { GaComponent } from './ga/ga.component';
   imports: [
     AggridAddonsModule,
     AgGridModule.withComponents([AgGridLoadingComponent, AggridTooltipComponent, PbatchsBtnActionsComponent, MktExpButtonsComponent]),
-    DirectivesModule,
     HotgoRoutingModule,
     // Angular Modules
     CommonModule,
