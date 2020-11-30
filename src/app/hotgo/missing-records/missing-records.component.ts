@@ -41,6 +41,18 @@ export class MissingRecordsComponent implements OnInit {
   public holdableBtnPyc = 0;
   public isFetchingPyc = false;  // se utiliza para mostrar el spinner
   /*
+  REBILL
+  */
+  public cssClassRebill = 'notok-class';  // se usa para el campo fileRegister
+  public cssResultadoRebill = 'resultado'; // css para formatear el mensaje de respuesta
+  public fileRebill: File = null;
+  public iconResultadoRebill = ''; // icono de OK o ERROR
+  public msgProcesoRebill = '';
+  // Variables para Holdable Button bar
+  public colorBtnRebill = 'warn';
+  public holdableBtnRebill = 0;
+  public isFetchingRebill = false;  // se utiliza para mostrar el spinner
+  /*
   CANCEL
   */
   public cssClassCancel = 'notok-class';  // se usa para el campo fileRegister
@@ -147,6 +159,48 @@ export class MissingRecordsComponent implements OnInit {
     }
   }
   /*
+    REBILL
+  */
+  // Validar el archivo a subir
+  public uploadRebill(event) {
+    this.fileRebill = event.target.files[0];
+    if (!this.fileRebill) {
+      this.errorMessageService.changeErrorMessage('API-0039(E): debe elegir un archivo');
+      this.cssClassRebill = 'notok-class';
+    } else {
+      this.cssClassRebill = 'ok-class';
+    }
+  }
+
+  // Enviar el archivo a procesar
+  private sendRebill() {
+    // Enviar el archivo a procesar
+    if (!this.isFetchingRebill) {
+      this.isFetchingRebill = true;  // spinner
+      this.msgProcesoRebill = ''; // inicializo el mensaje de error
+      // Preparar el body
+      const formData = new FormData();
+      formData.append('uploadRebill', this.fileRebill, this.fileRebill.name);  // File
+      this.hotgoService.uploadRebill(formData).subscribe(
+        data => {
+          // Stop spinner
+          this.isFetchingRebill = false;
+          // Mostrar resultado
+          this.cssResultadoRebill = 'resultado resultado-ok';
+          this.iconResultadoRebill = 'done';
+          this.msgProcesoRebill = data['message'];
+        },
+        err => {
+          this.cssResultadoRebill = 'resultado resultado-notOk';
+          this.iconResultadoRebill = 'clear';
+          this.msgProcesoRebill = '0 registro/s grabados';
+          this.errorMessageService.changeErrorMessage(err);
+          this.isFetchingRebill = false;
+        }
+      );
+    }
+  }
+  /*
     CANCEL
   */
   // Validar el archivo a subir
@@ -209,6 +263,9 @@ export class MissingRecordsComponent implements OnInit {
           switch (tipoRegistro) {
             case 'payment_commit':
               this.sendPyC();
+              break;
+            case 'rebill':
+              this.sendRebill();
               break;
             case 'cancel':
               this.sendCancel();

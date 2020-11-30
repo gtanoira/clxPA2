@@ -190,6 +190,11 @@ export class HotgoService {
     return this.http.post<any>(`${environment.envData.hotgoBackendServer}/api2/payment_commit/missing`, formData);
   }
 
+  // Procesar los missing PAYMENT COMMITS y cargarlos en el Datalake.
+  public uploadRebill(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${environment.envData.hotgoBackendServer}/api2/rebill/missing`, formData);
+  }
+
   // Procesar los missing REGISTER y cargarlos en el Datalake.
   public uploadRegister(formData: FormData): Observable<any> {
     return this.http.post<any>(`${environment.envData.hotgoBackendServer}/api2/register/missing`, formData);

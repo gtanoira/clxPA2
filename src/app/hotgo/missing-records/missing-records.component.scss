@@ -133,6 +133,50 @@
 }
 
 /*
+  Rebill
+*/
+.rebill {
+  $bg-color: #DCB2F0;
+  $border-color: #8739AC;
+
+  &-section {
+    width: calc(50% - 2em);
+    margin-right: 2em;
+    margin-bottom: 2em;
+  }
+
+  &-body {
+    background-color: $bg-color;
+    padding: 0 1em 1em 1em;
+    border: 2px solid $border-color;
+    border-bottom: 5px solid $border-color;
+    /* margin-top: -2px; */
+  }
+
+  &-description {
+    font-size: 0.8em;
+    font-weight: lighter;
+    color: #444343;
+  }
+
+  &-title {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: $border-color;
+    color: white;
+    border: 2px solid $border-color;
+    border-bottom: 2px solid $border-color;
+    border-top-left-radius: 6%;
+    border-top-right-radius: 6%;
+  }
+
+  &-model-download {
+    margin: auto 0.5em;
+    color: $border-color;
+  }
+}
+
+/*
   Cancel
 */
 .cancel {

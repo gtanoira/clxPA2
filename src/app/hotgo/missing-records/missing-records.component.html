@@ -134,6 +134,73 @@
 
   </section>
 
+  <!-- Missing Rebills -->
+  <section class="rebill-section">
+
+    <div class="rebill-title">&nbsp;Missing Rebills&nbsp;</div>
+
+    <div class="rebill-body">
+      <div class="row">
+        <p class="rebill-description">
+          Este proceso sube al Datalake registros faltantes del tipo <strong>REBILL</strong>
+          que por diversos motivos no pudieron subirse a través del proceso normal de actualización
+        </p>
+        <a class="rebill-model-download" href="/assets/files/rebill_missing_modelo.xlsx" download>
+          <mat-icon
+            svgIcon="download-file-cloud"
+            matTooltip="Descargar excel modelo">
+          </mat-icon>
+        </a>
+      </div>
+
+      <!-- Archivo XLS -->
+      <p class="file-upload">Archivo Excel:</p>
+      <input
+        [ngClass]="cssClassRebill"
+        type="file"
+        (change)="uploadRebill($event)"
+        required
+      >
+
+      <!-- Area botones -->
+      <div class="row">
+
+        <!-- Boton Procesar -->
+        <div class="btn btn-col">
+
+          <!-- boton -->
+          <button
+            class="inline-buttons"
+            mat-stretch
+            (click)="confirmUpload('rebill')"
+            [disabled]="!fileRebill || isFetchingRebill"
+            mat-raised-button
+            color="primary"
+            title="Subir y procesar los rebills al Datalake"
+            color=primary>
+            Subir Rebill&nbsp;
+            <mat-icon svgIcon="save"></mat-icon>
+          </button>
+
+        </div>
+
+        <!-- Spinner y resultado-->
+        <div class="row">
+          <!-- Spinner -->
+          <div class="spinner" *ngIf="isFetchingRebill">
+            <img src="/assets/images/spinner01.svg" style="z-index: 50;" />
+          </div>
+          <!-- Resultado -->
+          <div [ngClass]="cssResultadoRebill" *ngIf="!isFetchingRebill && msgProcesoRebill !== ''">
+            {{msgProcesoRebill}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
   <!-- Missing Cancel -->
   <section class="cancel-section">
 
