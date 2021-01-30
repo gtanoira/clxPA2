@@ -19,16 +19,18 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
+    // Angular
     BrowserModule,
     BrowserAnimationsModule,
-    // Angular
+    // Angular Material
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
     MatTooltipModule,
     // Modules
-    AppRoutingModule,
-    MainModule
+    MainModule,
+    // Routes
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })

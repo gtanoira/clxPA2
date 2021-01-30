@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container--center">
 
   <!-- Area de botones de acción -->
   <div class="buttons-area row">
@@ -11,65 +11,107 @@
       (click)="nuevoLocalPrice()"
       >
       <mat-icon>add</mat-icon>
-      &nbsp;Nuevo pago
+      &nbsp;Nuevo Product Local Price
     </button>
   </div>
 
-  <!-- Tabla de facturas (partidas) a pagar -->
-  <mat-table
-    [dataSource]="dataSource"
-    multiTemplateDataRows
-    matSort
-    class="table"
-    >
+  <!-- Tabla  -->
+  <div class="table-container mat-elevation-z4">
+    <!-- Spinner -->
+    <div class="loading-spinner" *ngIf="dataSource && dataSource.loading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
 
-    <!-- columna FECHA -->
-    <ng-container matColumnDef="fecha">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.fecha | date:'fullDate'}} </mat-cell>
-    </ng-container>
+    <mat-table
+      [dataSource]="dataSource"
+      multiTemplateDataRows
+      matSort
+      (matSortChange)="changeSort($event)"
+      class="table"
+      >
 
-    <!-- columna COUNTRY -->
-    <ng-container matColumnDef="country" mat-sort-header>
-      <mat-header-cell *matHeaderCellDef> País </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
-    </ng-container>
+      <!-- columna FECHA -->
+      <ng-container matColumnDef="fecha">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fecha | date: 'y, MMM d'}} </mat-cell>
+      </ng-container>
 
-    <!-- columna DURATION -->
-    <ng-container matColumnDef="duration" mat-sort-header>
-      <mat-header-cell *matHeaderCellDef> Producto </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.duration}} </mat-cell>
-    </ng-container>
+      <!-- columna COUNTRY -->
+      <ng-container matColumnDef="country" mat-sort-header>
+        <mat-header-cell *matHeaderCellDef> País </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
+      </ng-container>
 
-    <!-- columna CURRENCY -->
-    <ng-container matColumnDef="currency">
-      <mat-header-cell *matHeaderCellDef> Moneda </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.currency}} </mat-cell>
-    </ng-container>
+      <!-- columna DURATION -->
+      <ng-container matColumnDef="duration" mat-sort-header>
+        <mat-header-cell *matHeaderCellDef> Producto </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.duration}} </mat-cell>
+      </ng-container>
 
-    <!-- columna TAXABLEAMOUNT -->
-    <ng-container matColumnDef="taxableAmount">
-      <mat-header-cell *matHeaderCellDef> Importe </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.taxableAmount | number:'1.2-2'}} </mat-cell>
-    </ng-container>
+      <!-- columna CURRENCY -->
+      <ng-container matColumnDef="currency">
+        <mat-header-cell *matHeaderCellDef> Moneda </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.currency}} </mat-cell>
+      </ng-container>
 
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-      <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-        <div class="example-element-detail"
-          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <app-local-prices-crud></app-local-prices-crud>
-        </div>
-      </mat-cell>
-    </ng-container>
+      <!-- columna TAXABLEAMOUNT -->
+      <ng-container matColumnDef="taxableAmount">
+        <mat-header-cell *matHeaderCellDef> Importe </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.taxableAmount | number:'1.2-2'}} </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-    <mat-row *matRowDef="let element; columns: columnsToDisplay;"
-        class="example-element-row"
-        matTooltip="Hacer un click para editar el registro"
-        [class.example-expanded-row]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element">
-    </mat-row>
-    <mat-row mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
-  </mat-table>
+      <!-- Delete Button -->
+      <ng-container matColumnDef="btnDelete">
+        <mat-header-cell *matHeaderCellDef> Acción </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            class="table-btn-delete"
+            (click)="deleteRecord(element.id)"
+          >Eliminar
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Update Button -->
+      <ng-container matColumnDef="btnUpdate">
+        <mat-header-cell *matHeaderCellDef> Acción </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="updateRecord(element.id)"
+          >Editar
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <!-- <ng-container matColumnDef="expandedDetail">
+        <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+          <div class="example-element-detail"
+            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <app-local-prices-crud></app-local-prices-crud>
+          </div>
+        </mat-cell>
+      </ng-container> -->
+
+      <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+      <!-- <mat-row *matRowDef="let element; columns: columnsToDisplay;"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element">
+      </mat-row>
+      <mat-row mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>  -->
+      <mat-row mat-row *matRowDef="let row; columns: columnsToDisplay" class="example-detail-row"></mat-row>
+    </mat-table>
+    <mat-paginator *ngIf="dataSource.page$ | async as page"
+      [length]="page.totalElements"
+      [pageSize]="page.size"
+      [pageIndex]="page.number"
+      [pageSizeOptions]="[5, 7, 10, 20]"
+      showFirstLastButtons
+      (page)="changePage($event)">
+    </mat-paginator>
+  </div>
 </div>

@@ -9,8 +9,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -26,6 +29,7 @@ import { HotgoRoutingModule } from './hotgo.routing.module';
 
 // Services
 import { HotgoService } from 'src/app/shared/hotgo.service';
+import { LocalPricesService } from '../shared/local-prices.service';
 import { SapService } from 'src/app/shared/sap.service';
 
 // Shared Components
@@ -74,7 +78,9 @@ import { GaComponent } from './ga/ga.component';
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatPaginatorModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatTableModule,
     MatTabsModule,
@@ -84,6 +90,7 @@ import { GaComponent } from './ga/ga.component';
   ],
   providers: [
     HotgoService,
+    LocalPricesService,
     SapService
   ]
 })
