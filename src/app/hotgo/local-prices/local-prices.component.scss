@@ -113,31 +113,38 @@ $width-table: 90%;
 .mat-column {
 
   &-fecha {
-    flex: 0 0 210px;
+    flex: 0 0 160px;
+    justify-content: center;
   }
 
   &-country {
     flex: 0 0 60px;
+    justify-content: center;
   }
 
   &-duration {
     flex: 0 0 90px;
+    justify-content: center;
   }
 
   &-currency {
     flex: 0 0 90px;
+    justify-content: center;
   }
 
   &-taxableAmount {
     flex: 0 0 110px;
+    justify-content: flex-end;
   }
 
   &-btnDelete {
     flex: 0 0 120px;
+    justify-content: center;
   }
 
   &-btnUpdate {
     flex: 0 0 100px;
+    justify-content: center;
   }
 }
 
@@ -150,6 +157,11 @@ $width-table: 90%;
 /* ****************************
    Angular Material elements
  */
+.mat-header-row,
+.mat-row {
+  gap: 1em;
+}
+
 .mat-raised-button {
   line-height: 1rem;
   padding: 0.175em 0.525em;

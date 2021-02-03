@@ -1,10 +1,13 @@
-<div class="container">
-  <div class="row row--wrap" [formGroup]="localPriceRecord">
+<div class="form__container">
+
+  <h2 class="form__title" mat-dialog-title>
+    Product Local Price
+  </h2>
+
+  <div class="form__content" [formGroup]="localPriceRecord">
 
     <!-- Fecha -->
-    <!-- <mat-form-field
-      class="maximize"
-      appearance="fill">
+    <mat-form-field class="form__row form__field" appearance="fill">
       <mat-label>Fecha</mat-label>
       <input
         required
@@ -14,6 +17,54 @@
         formControlName="fecha">
       <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
       <mat-datepicker #mesAnio></mat-datepicker>
-    </mat-form-field> -->
+    </mat-form-field>
+
+    <div class="form__row">
+
+      <!-- Country -->
+      <mat-form-field class="form__field" appearance="fill">
+        <mat-label>País</mat-label>
+        <mat-select
+          formControlName="country"
+          required>
+          <mat-option
+            *ngFor="let country of countryOptions"
+            [value]="country.country">
+            {{ country.descripcion }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Currency -->
+      <mat-form-field class="form__field" appearance="fill">
+        <mat-label>Moneda</mat-label>
+        <input
+          matInput
+          formControlName="currency">
+      </mat-form-field>
+    </div>
+
+    <div class="form__row">
+      <!-- Producto -->
+      <mat-form-field class="form__field" appearance="fill">
+        <mat-label>Producto</mat-label>
+        <input
+          matInput
+          formControlName="duration"
+          appOnlyNumbers
+          required>
+      </mat-form-field>
+
+      <!-- Taxable_amount -->
+      <mat-form-field class="form__field" appearance="fill">
+        <mat-label>Precio</mat-label>
+        <input
+          matInput
+          placeholder="precio producto"
+          formControlName="taxableAmount"
+          appOnlyNumbers
+          required>
+      </mat-form-field>
+    </div>
   </div>
 </div>

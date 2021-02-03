@@ -1,7 +1,7 @@
 /* *******************
    LAYOUT
  */
- .container {
+.container {
   width: 100%;
   /* max-width: 1280px; */
   padding: 1em 1em;
@@ -29,6 +29,13 @@
   flex-direction: column;
 }
 
-.col-mobile {
-  width: 360px;
+.width-mobile {
+  width: 340px;
+}
+
+.form {
+  &-line {
+    flex-basis: 100%;
+    gap: 1em;
+  }
 }

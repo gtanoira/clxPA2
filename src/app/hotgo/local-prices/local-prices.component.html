@@ -32,8 +32,8 @@
 
       <!-- columna FECHA -->
       <ng-container matColumnDef="fecha">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.fecha | date: 'y, MMM d'}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha (UTC) </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fecha | date: 'y, MMM d' : 'z'}} </mat-cell>
       </ng-container>
 
       <!-- columna COUNTRY -->
@@ -80,7 +80,7 @@
           <button
             mat-raised-button
             color="primary"
-            (click)="updateRecord(element.id)"
+            (click)="updateRecord(element)"
           >Editar
           </button>
         </mat-cell>

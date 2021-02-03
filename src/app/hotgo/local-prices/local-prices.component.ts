@@ -1,12 +1,14 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { takeWhile } from 'rxjs/operators';
 
 // Models
 import { ProductLocalPriceModel } from 'src/app/models/product-local-price.model';
-
+// Components
+import { LocalPricesCrudComponent } from './crud/crud.component';
 // Services
 import { AuthorizationService } from 'src/app/core/authorization.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
@@ -47,7 +49,8 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   constructor(
     private authorizationService: AuthorizationService,
     private errorMessageService: ErrorMessageService,
-    private localPricesService: LocalPricesService
+    private localPricesService: LocalPricesService,
+    private modalDialog: MatDialog
   ) { }
 
   // tslint:disable-next-line: use-lifecycle-interface
@@ -101,8 +104,11 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   }
 
   // Editar un registro
-  public updateRecord(id: number): void {
-    return;
+  public updateRecord(record: ProductLocalPriceModel): void {
+    // Open a Dialog Modal
+    const dialogRef = this.modalDialog.open(LocalPricesCrudComponent, { data: record });
+
+    dialogRef.afterClosed().subscribe();
   }
 
   // Alta de un nuevo local price

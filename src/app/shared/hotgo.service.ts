@@ -12,6 +12,7 @@ import { AuxiliarTablesService } from 'src/app/shared/auxiliar-tables.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
 
 // Models
+import { CountryModel } from '../models/country.model';
 import { HgErrorLogModel } from '../models/hg-error-log.model';
 import { HgScheduleModel } from '../models/hg-schedule.model';
 import { MktExpenditureModel } from 'src/app/models/mkt_expenditure.model';
@@ -57,6 +58,18 @@ export class HotgoService {
   // Borrar un registro de la tabla procesos_batchs
   public delProcesoBatch(recordId: number): Observable<{}> {
     return this.http.delete<{}>(`${environment.envData.hotgoBackendServer}/api2/procesos_batchs/${recordId}`);
+  }
+
+  // Procesos Batchs
+  public getCountries(): Observable<CountryModel[]>  {
+    return this.http.get<CountryModel[]>(
+      `${environment.envData.hotgoBackendServer}/api2/countries`
+    ).pipe(map(
+      data => data,
+      catchError(
+        err => { console.log('*** err: ', err); return err; }
+      )
+    ));
   }
 
   // Procesos Batchs
