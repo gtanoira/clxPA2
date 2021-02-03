@@ -1,27 +1,40 @@
 <div class="form__container">
 
-  <h2 class="form__title" mat-dialog-title>
+  <h2 mat-dialog-title class="form__title">
     Product Local Price
   </h2>
 
   <div class="form__content" [formGroup]="localPriceRecord">
 
     <!-- Fecha -->
-    <mat-form-field class="form__row form__field" appearance="fill">
-      <mat-label>Fecha</mat-label>
-      <input
-        required
-        matInput
-        matTootltip="Fecha inicio de vigencia del precio"
-        [matDatepicker]="fecha"
-        formControlName="fecha">
-      <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
-      <mat-datepicker #mesAnio></mat-datepicker>
-    </mat-form-field>
-
     <div class="form__row">
+      <mat-form-field class="form__field" appearance="fill">
+        <mat-label>Fecha</mat-label>
+        <input
+          required
+          matInput
+          matTootltip="Fecha inicio de vigencia del precio"
+          [matDatepicker]="fecha"
+          formControlName="fecha">
+        <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
+        <mat-datepicker #fecha></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-      <!-- Country -->
+    <!-- Producto -->
+    <div class="form__row">
+      <mat-form-field class="form__field" appearance="fill">
+        <mat-label>Producto</mat-label>
+        <input
+          matInput
+          formControlName="duration"
+          appOnlyNumbers
+          required>
+      </mat-form-field>
+    </div>
+
+    <!-- Country -->
+    <div class="form__row">
       <mat-form-field class="form__field" appearance="fill">
         <mat-label>País</mat-label>
         <mat-select
@@ -34,30 +47,12 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <!-- Currency -->
-      <mat-form-field class="form__field" appearance="fill">
-        <mat-label>Moneda</mat-label>
-        <input
-          matInput
-          formControlName="currency">
-      </mat-form-field>
     </div>
 
+    <!-- Taxable_amount -->
     <div class="form__row">
-      <!-- Producto -->
       <mat-form-field class="form__field" appearance="fill">
-        <mat-label>Producto</mat-label>
-        <input
-          matInput
-          formControlName="duration"
-          appOnlyNumbers
-          required>
-      </mat-form-field>
-
-      <!-- Taxable_amount -->
-      <mat-form-field class="form__field" appearance="fill">
-        <mat-label>Precio</mat-label>
+        <mat-label>Precio <b>{{currency.value}}</b></mat-label>
         <input
           matInput
           placeholder="precio producto"
@@ -66,5 +61,32 @@
           required>
       </mat-form-field>
     </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="form__actions">
+    <!-- Grabar -->
+    <button
+      mat-stretch
+      [disabled]="!localPriceRecord.dirty || localPriceRecord.invalid"
+      mat-raised-button
+      (click)="saveRecord()"
+      color="primary"
+      title="Grabar los datos"
+      color=primary>
+      Grabar&nbsp;
+      <mat-icon>save_alt</mat-icon>
+    </button>
+
+    <!-- Cancelar -->
+    <button
+      mat-stretch
+      mat-raised-button
+      (click)="cancelAndExit()"
+      color="accent"
+      title="Salir sin grabar">
+      Cancelar&nbsp;
+      <mat-icon>logout</mat-icon>
+    </button>
   </div>
 </div>

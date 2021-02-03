@@ -12,7 +12,7 @@ export const MY_FORMATS = {
     dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'DD-MMM-YYYY Z',
+    dateInput: 'DD-MMM-YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'lll',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -52,7 +52,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
       this.localPriceRecord = this.fb.group({
         id: [data.id],
         fecha: [data.fecha],
-        country: [data.fecha, {updateOn: 'blur'}],
+        country: [data.country, {updateOn: 'blur'}],
         currency: [{value: data.currency, disabled: true}],
         duration: [data.duration],
         taxableAmount: [data.taxableAmount]
@@ -67,6 +67,8 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         taxableAmount: [0]
       });
     }
+    this.localPriceRecord.markAsUntouched();
+    this.localPriceRecord.markAsPristine();
   }
 
   // GETTERS
@@ -96,12 +98,23 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
 
   // Validador del campo COUNTRY
   private subscribeCountry() {
+    console.log('*** validar country');
     // Update para fecha
     this.subsCountry = this.country.valueChanges.subscribe(
       () => this.currency.setValue(
-        this.countryOptions.find(el => el.country = this.country.value).currency
+        this.countryOptions.find(el => el.country === this.country.value).currency
       )
     );
+  }
+
+  // Grabar los datos en la BDatos
+  public saveRecord(): void {
+    console.log(this.localPriceRecord);
+  }
+
+  // Cancelar el form y salir sin grabar
+  public cancelAndExit(): void {
+    this.dialogRef.close();
   }
 
 }
