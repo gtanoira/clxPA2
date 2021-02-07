@@ -153,5 +153,16 @@ export class LocalPricesService {
       data => data.total
     ));
   }
+
+  // Update record in database
+  public updateRecord(data: ProductLocalPriceModel): {[key: string]: any} {
+    const id = data.id;
+    return this.http.put<{[key: string]: any}>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices/${id}`, data);
+  }
+
+  // Delete record in database
+  public deleteRecord(id: number): {[key: string]: any} {
+    return this.http.delete<{[key: string]: any}>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices/${id}`);
+  }
 }
 

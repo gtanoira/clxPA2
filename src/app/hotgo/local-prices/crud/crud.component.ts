@@ -19,7 +19,9 @@ export const MY_FORMATS = {
   },
 };
 // Service
+import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { HotgoService } from 'src/app/shared/hotgo.service';
+import { LocalPricesService } from 'src/app/shared/local-prices.service';
 // Models & Interfaces
 import { CountryModel } from 'src/app/models/country.model';
 import { ProductLocalPriceModel } from 'src/app/models/product-local-price.model';
@@ -42,10 +44,12 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
   subsCountry: Subscription;
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private hotgoService: HotgoService,
     public dialogRef: MatDialogRef<LocalPricesCrudComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductLocalPriceModel,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private localPricesService: LocalPricesService
   ) {
     if (data) {
       // Definir el formulario
@@ -109,7 +113,18 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
 
   // Grabar los datos en la BDatos
   public saveRecord(): void {
-    console.log(this.localPriceRecord);
+    const newRecord: ProductLocalPriceModel = {
+      id: +this.localPriceRecord.get('id').value,
+      fecha: this.fecha.value,
+      country: this.country.value,
+      currency: this.currency.value,
+      duration: +this.duration.value,
+      taxableAmount: +this.localPriceRecord.get('taxableAmount').value
+    };
+    this.localPricesService.updateRecord(newRecord).subscribe(
+      () => this.dialogRef.close('refresh'),
+      error => this.errorMessageService.changeErrorMessage(error)
+    );
   }
 
   // Cancelar el form y salir sin grabar

@@ -14,6 +14,7 @@ import { AuthorizationService } from 'src/app/core/authorization.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { LocalPricesService, SearchQuery } from 'src/app/shared/local-prices.service';
 import { PaginatedDataSource } from 'src/app/shared/datasource/datasource.component';
+import { DialogModalComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-local-prices',
@@ -66,7 +67,11 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Get and cache all batchs
+    this.cacheData();
+  }
+
+  // Get and cache all batchs
+  private cacheData() {
     this.localPricesService.getAll()
     .pipe(takeWhile(total => total >= 0))
     .subscribe(
@@ -80,6 +85,7 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
         this.errorMessageService.changeErrorMessage(msg);
       }
     );
+
   }
 
   public changeSort(sort: Sort): void {
@@ -95,20 +101,45 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   }
 
   // Delete a Record
-  public deleteRecord(id: number): void {
+  public deleteRecord(record: ProductLocalPriceModel): void {
 
     // Confirmar borrado
+    // Open a Dialog Modal
+    const dialogRef = this.modalDialog.open(DialogModalComponent, {
+      width: '320px',
+      data: {
+        title: `Eliminar Precio`,
+        dialogType: 'Alert',
+        body: 'Confirma la eliminación del precio?',
+        btn1Text: 'Cancelar',
+        btn2Text: 'Ok'
+      }
+    });
 
-    // Reimprimir los registros en la pantalla
-    this.dataSource.fetch(0);
+    dialogRef.afterClosed().subscribe(
+     btnClick => {
+        if (btnClick === 2) {
+          // Eliminar el registro
+          this.localPricesService.deleteRecord(record.id).subscribe(
+            data => {
+              this.errorMessageService.changeErrorMessage(data.message);
+              // Reimprimir los registros en la pantalla
+              this.cacheData();
+            },
+            error => this.errorMessageService.changeErrorMessage(error.message)
+          );
+        }
+      }
+    );
   }
 
   // Editar un registro
   public updateRecord(record: ProductLocalPriceModel): void {
     // Open a Dialog Modal
     const dialogRef = this.modalDialog.open(LocalPricesCrudComponent, { data: record });
-
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe(
+      () => this.cacheData()  // Reimprimir los registros en la pantalla
+    );
   }
 
   // Alta de un nuevo local price
