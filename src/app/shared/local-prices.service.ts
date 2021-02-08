@@ -31,26 +31,14 @@ export class LocalPricesService {
     private http: HttpClient
   ) {}
 
-  // Delete a batch
-  /* public deleteBatch(id: number): Observable<{[key: string]: any}> {
-    return this.http.delete<ProductLocalPriceModel>(`${environment.envData.hotgoBackendServer}/api/batchs/${id}`);
+  // Create a new record in database
+  public createRecord(data: ProductLocalPriceModel): {[key: string]: any} {
+    return this.http.post<{[key: string]: any}>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices`, data);
   }
- */
-  // Select all batchs to delete
-  /* public filterBatchsForDeletion(id: number): boolean {
-    try {
-      // Find batchs to delete
-      const batchSelected = this.allRecords.find(batch => batch.id === id);
-      const filteredBatchs = this.allRecords.filter(
-        (batch) => batch.channelName === batchSelected.channelName && batch.firstEvent >= batchSelected.firstEvent
-      );
-      this.allRecords = filteredBatchs;
-      return true;
-    } catch (error) {
-      return false;
-    }
-  } */
-
+  // Delete record in database
+  public deleteRecord(id: number): {[key: string]: any} {
+    return this.http.delete<{[key: string]: any}>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices/${id}`);
+  }
   // Get all Batchs
   public getAll(): Observable<number> {
     return this.http.get<ProductLocalPriceModel[]>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices`)
@@ -160,9 +148,5 @@ export class LocalPricesService {
     return this.http.put<{[key: string]: any}>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices/${id}`, data);
   }
 
-  // Delete record in database
-  public deleteRecord(id: number): {[key: string]: any} {
-    return this.http.delete<{[key: string]: any}>(`${environment.envData.hotgoBackendServer}/api2/product_local_prices/${id}`);
-  }
 }
 

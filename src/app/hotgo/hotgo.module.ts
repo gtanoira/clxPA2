@@ -82,6 +82,7 @@ import { GaComponent } from './ga/ga.component';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,

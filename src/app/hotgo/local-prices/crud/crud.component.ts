@@ -19,11 +19,13 @@ export const MY_FORMATS = {
   },
 };
 // Service
+import { AuxiliarTablesService } from 'src/app/shared/auxiliar-tables.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { HotgoService } from 'src/app/shared/hotgo.service';
 import { LocalPricesService } from 'src/app/shared/local-prices.service';
 // Models & Interfaces
 import { CountryModel } from 'src/app/models/country.model';
+import { HotgoProductModel } from 'src/app/models/hotgo_product.model';
 import { ProductLocalPriceModel } from 'src/app/models/product-local-price.model';
 
 @Component({
@@ -39,11 +41,13 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
   // Variables
   public localPriceRecord: FormGroup;
   public countryOptions: CountryModel[] = [];
+  public productOptions: HotgoProductModel[] = [];
 
   // Form validations
   subsCountry: Subscription;
 
   constructor(
+    private auxiliarTablesService: AuxiliarTablesService,
     private errorMessageService: ErrorMessageService,
     private hotgoService: HotgoService,
     public dialogRef: MatDialogRef<LocalPricesCrudComponent>,
@@ -58,7 +62,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         fecha: [data.fecha],
         country: [data.country, {updateOn: 'blur'}],
         currency: [{value: data.currency, disabled: true}],
-        duration: [data.duration],
+        duration: [data.duration.toString()],
         taxableAmount: [data.taxableAmount]
       });
     } else {
@@ -67,7 +71,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         fecha: [''],
         country: ['', {updateOn: 'blur'}],
         currency: [{value: 'USD', disabled: true}],
-        duration: [0],
+        duration: ['30'],
         taxableAmount: [0]
       });
     }
@@ -86,6 +90,11 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
     this.hotgoService.getCountries().subscribe(
       data => this.countryOptions = data,
       () => this.countryOptions = []
+    );
+
+    // Product Options
+    this.auxiliarTablesService.getOptionsFromJsonFile('local_prices_product_options.json').subscribe(
+      data => this.productOptions = data
     );
 
     // Subscribir a validadores de campos del form
@@ -121,10 +130,20 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
       duration: +this.duration.value,
       taxableAmount: +this.localPriceRecord.get('taxableAmount').value
     };
-    this.localPricesService.updateRecord(newRecord).subscribe(
-      () => this.dialogRef.close('refresh'),
-      error => this.errorMessageService.changeErrorMessage(error)
-    );
+
+    if (newRecord.id === 0) {
+      // Alta de un nuevo precio
+      this.localPricesService.createRecord(newRecord).subscribe(
+        () => this.dialogRef.close(),
+        error => this.errorMessageService.changeErrorMessage(error)
+      );
+    } else {
+      // Update de un precio
+      this.localPricesService.updateRecord(newRecord).subscribe(
+        () => this.dialogRef.close(),
+        error => this.errorMessageService.changeErrorMessage(error)
+      );
+    }
   }
 
   // Cancelar el form y salir sin grabar

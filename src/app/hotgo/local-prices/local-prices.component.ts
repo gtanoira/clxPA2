@@ -15,6 +15,7 @@ import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { LocalPricesService, SearchQuery } from 'src/app/shared/local-prices.service';
 import { PaginatedDataSource } from 'src/app/shared/datasource/datasource.component';
 import { DialogModalComponent } from 'src/app/shared/dialog/dialog.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-local-prices',
@@ -56,6 +57,7 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
+    console.log('*** dataSource:', this.dataSource);
     // Add button EDIT if the user has the role
     if (this.authorizationService.componentPropertyValue('pgmHotGo', 'cptProductLocalPrices', 'btnUpdate') !== 'off') {
       this.columnsToDisplay.push('btnUpdate');
@@ -143,5 +145,14 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   }
 
   // Alta de un nuevo local price
-  public nuevoLocalPrice() {}
+  public nuevoLocalPrice() {
+    this.updateRecord({
+      id: 0,  // = 0 -> fuerza el alta
+      fecha: moment().format('YYYY-MM-DD'),
+      country: 'AR',
+      currency: 'ARS',
+      duration: 30,
+      taxableAmount: 0
+    });
+  }
 }

@@ -25,11 +25,15 @@
     <div class="form__row">
       <mat-form-field class="form__field" appearance="fill">
         <mat-label>Producto</mat-label>
-        <input
-          matInput
+        <mat-select
           formControlName="duration"
-          appOnlyNumbers
           required>
+          <mat-option
+            *ngFor="let option of productOptions"
+            [value]="option.id">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 

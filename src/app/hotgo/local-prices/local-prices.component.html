@@ -24,7 +24,6 @@
 
     <mat-table
       [dataSource]="dataSource"
-      multiTemplateDataRows
       matSort
       (matSortChange)="changeSort($event)"
       class="table"
@@ -37,14 +36,14 @@
       </ng-container>
 
       <!-- columna COUNTRY -->
-      <ng-container matColumnDef="country" mat-sort-header>
-        <mat-header-cell *matHeaderCellDef> País </mat-header-cell>
+      <ng-container matColumnDef="country">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> País </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
       </ng-container>
 
       <!-- columna DURATION -->
-      <ng-container matColumnDef="duration" mat-sort-header>
-        <mat-header-cell *matHeaderCellDef> Producto </mat-header-cell>
+      <ng-container matColumnDef="duration">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Producto </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.duration}} </mat-cell>
       </ng-container>
 
@@ -109,7 +108,7 @@
       [length]="page.totalElements"
       [pageSize]="page.size"
       [pageIndex]="page.number"
-      [pageSizeOptions]="[5, 7, 10, 20]"
+      [pageSizeOptions]="[7, 9, 20]"
       showFirstLastButtons
       (page)="changePage($event)">
     </mat-paginator>
