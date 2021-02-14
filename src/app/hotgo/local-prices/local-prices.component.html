@@ -35,6 +35,12 @@
         <mat-cell *matCellDef="let element"> {{element.fecha | date: 'y, MMM d' : 'z'}} </mat-cell>
       </ng-container>
 
+      <!-- columna PAYMPROCESSOR -->
+      <ng-container matColumnDef="paymProcessor">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Procesador Pago </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.paymProcessor}} </mat-cell>
+      </ng-container>
+
       <!-- columna COUNTRY -->
       <ng-container matColumnDef="country">
         <mat-header-cell *matHeaderCellDef mat-sort-header> País </mat-header-cell>

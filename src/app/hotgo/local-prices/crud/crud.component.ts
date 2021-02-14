@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -23,10 +23,13 @@ import { AuxiliarTablesService } from 'src/app/shared/auxiliar-tables.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { HotgoService } from 'src/app/shared/hotgo.service';
 import { LocalPricesService } from 'src/app/shared/local-prices.service';
+import { PaymentMethodsService } from 'src/app/shared/payment_methods.service';
 // Models & Interfaces
 import { CountryModel } from 'src/app/models/country.model';
 import { HotgoProductModel } from 'src/app/models/hotgo_product.model';
 import { ProductLocalPriceModel } from 'src/app/models/product-local-price.model';
+import { SelectOption } from 'src/app/models/select-option';
+import { PaymentMethodModel } from 'src/app/models/payment-method.model';
 
 @Component({
   selector: 'app-local-prices-crud',
@@ -40,11 +43,15 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
 
   // Variables
   public localPriceRecord: FormGroup;
+  public paymentMethodOptions: PaymentMethodModel[] = [];
   public countryOptions: CountryModel[] = [];
+  public paymProcessorOptions: PaymentMethodModel[] = [];
+  public currencyOptions: PaymentMethodModel[] = [];
   public productOptions: HotgoProductModel[] = [];
 
   // Form validations
   subsCountry: Subscription;
+  subsPaymProcessor: Subscription;
 
   constructor(
     private auxiliarTablesService: AuxiliarTablesService,
@@ -53,7 +60,8 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<LocalPricesCrudComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductLocalPriceModel,
     private fb: FormBuilder,
-    private localPricesService: LocalPricesService
+    private localPricesService: LocalPricesService,
+    private paymentMethodsService: PaymentMethodsService
   ) {
     if (data) {
       // Definir el formulario
@@ -61,7 +69,8 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         id: [data.id],
         fecha: [data.fecha],
         country: [data.country, {updateOn: 'blur'}],
-        currency: [{value: data.currency, disabled: true}],
+        paymProcessor: [data.paymProcessor, {updateOn: 'blur'}],
+        currency: [{value: data.currency}],
         duration: [data.duration.toString()],
         taxableAmount: [data.taxableAmount]
       });
@@ -70,6 +79,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         id: 0,
         fecha: [''],
         country: ['', {updateOn: 'blur'}],
+        paymProcessor: ['', {updateOn: 'blur'}],
         currency: [{value: 'USD', disabled: true}],
         duration: ['30'],
         taxableAmount: [0]
@@ -82,10 +92,20 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
   // GETTERS
   get fecha() { return this.localPriceRecord.get('fecha'); }
   get country() { return this.localPriceRecord.get('country'); }
+  get paymProcessor() { return this.localPriceRecord.get('paymProcessor'); }
   get currency() { return this.localPriceRecord.get('currency'); }
   get duration() { return this.localPriceRecord.get('duration'); }
 
   ngOnInit(): void {
+    // Payment Method Options
+    this.paymentMethodsService.getRecords({}).subscribe(
+      data => {
+        this.paymentMethodOptions = data;
+        this.country.updateValueAndValidity();
+      },
+      () => this.paymentMethodOptions = []
+    );
+
     // Country Options
     this.hotgoService.getCountries().subscribe(
       data => this.countryOptions = data,
@@ -99,10 +119,12 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
 
     // Subscribir a validadores de campos del form
     this.subscribeCountry();
+    this.subscribePaymProcessor();
   }
 
   ngOnDestroy() {
     this.subsCountry.unsubscribe();
+    this.subsPaymProcessor.unsubscribe();
   }
 
   public onBtnClick(btnNo: number): void {
@@ -111,12 +133,25 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
 
   // Validador del campo COUNTRY
   private subscribeCountry() {
-    console.log('*** validar country');
-    // Update para fecha
     this.subsCountry = this.country.valueChanges.subscribe(
-      () => this.currency.setValue(
-        this.countryOptions.find(el => el.country === this.country.value).currency
-      )
+      () => {
+        // Re-armar el Options para paymProcessor
+        this.paymProcessorOptions = this.paymentMethodOptions.filter(el => el.country === this.country.value);
+        // Establecer nuevo valor
+        this.paymProcessor.setValue(this.paymProcessorOptions[0].paymProcessor);
+        console.log('*** country', this.paymentMethodOptions, this.paymProcessorOptions, this.paymProcessor.value);
+      }
+    );
+  }
+
+  // Validador del campo PAYMPROCESSOR
+  private subscribePaymProcessor() {
+    this.subsPaymProcessor = this.paymProcessor.valueChanges.subscribe(
+      () => {
+        console.log('*** payment processor');
+        this.currencyOptions = this.paymProcessorOptions.filter(el => el.paymProcessor === this.paymProcessor.value);
+        this.currency.setValue(this.currencyOptions[0].currency);
+      }
     );
   }
 
@@ -126,6 +161,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
       id: +this.localPriceRecord.get('id').value,
       fecha: this.fecha.value,
       country: this.country.value,
+      paymProcessor: this.paymProcessor.value,
       currency: this.currency.value,
       duration: +this.duration.value,
       taxableAmount: +this.localPriceRecord.get('taxableAmount').value

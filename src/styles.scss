@@ -48,6 +48,31 @@ p {
   margin-top: 0;
 }
 
+/* ROW setup with FLEX technology */
+.row {
+  display: flex;
+  flex-direction: row;
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--hcenter {
+    justify-content: center;
+  }
+
+  &--vcenter {
+    align-items: center;
+  }
+}
+
+/* COLUMN setup with FLEX technology */
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 /* *************************************************************************************
     Angular Material customizations
 */
@@ -84,20 +109,7 @@ p {
     flex-direction: row;
     flex-wrap: wrap;
     padding: 0 0.5em;
-    width: 100%;
-  }
-
-  &__content {
-    margin-top: 0;
-  }
-
-  &__field {
-    width: 300px;
-  }
-
-  &__row {
-    flex-basis: 100%;
-    gap: 1em;
+    width: 360px;
   }
 
   &__title {
@@ -113,4 +125,36 @@ p {
     gap: 1em;
   }
 
+  &__content {
+    margin-top: 0;
+  }
+
+  &__field {
+    width: 220px;  // for mobile
+
+    &--max {
+      flex-basis: 100%;
+      gap: 1em;
+    }
+  }
+}
+
+
+/* *************************************************************************************
+    Responsiveness
+*/
+@media (min-width: 720px) {
+  .form__container {
+    width: 90%;
+  }
+
+  .row {
+    gap: 1em;
+  }
+}
+
+@media (min-width: 940px) {
+  .form__field {
+    width: 300px;
+  }
 }

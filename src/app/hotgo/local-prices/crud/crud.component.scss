@@ -7,47 +7,6 @@
   padding: 1em 1em;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-
-  &--wrap {
-    flex-wrap: wrap;
-  }
-
-  &--hcenter {
-    justify-content: center;
-  }
-
-  &--vcenter {
-    align-items: center;
-  }
-}
-
-.col {
-  display: flex;
-  flex-direction: column;
-}
-
 .width-mobile {
   width: 340px;
-}
-
-.form {
-  &-line {
-    flex-basis: 100%;
-    gap: 1em;
-  }
-}
-/* *******************
-  Form modifications
-*/
-// .form__container::-webkit-scrollbar {
-//   width: 8px;     /* Tamaño del scroll en vertical */
-//   height: 8px;    /* Tamaño del scroll en horizontal */
-//   display: none;  /* Ocultar scroll */
-// }
-
-.form__field {
-  width: 220px;
 }

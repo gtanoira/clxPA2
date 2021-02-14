@@ -30,6 +30,7 @@ import { HotgoRoutingModule } from './hotgo.routing.module';
 // Services
 import { HotgoService } from 'src/app/shared/hotgo.service';
 import { LocalPricesService } from '../shared/local-prices.service';
+import { PaymentMethodsService } from '../shared/payment_methods.service';
 import { SapService } from 'src/app/shared/sap.service';
 
 // Shared Components
@@ -92,6 +93,7 @@ import { GaComponent } from './ga/ga.component';
   providers: [
     HotgoService,
     LocalPricesService,
+    PaymentMethodsService,
     SapService
   ]
 })

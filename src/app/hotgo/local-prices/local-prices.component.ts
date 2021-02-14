@@ -35,8 +35,9 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   // localPricesData: ProductLocalPriceModel[];
   public columnsToDisplay = [
     'fecha',
-    'country',
     'duration',
+    'country',
+    'paymProcessor',
     'currency',
     'taxableAmount'
   ];
@@ -57,7 +58,6 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
-    console.log('*** dataSource:', this.dataSource);
     // Add button EDIT if the user has the role
     if (this.authorizationService.componentPropertyValue('pgmHotGo', 'cptProductLocalPrices', 'btnUpdate') !== 'off') {
       this.columnsToDisplay.push('btnUpdate');
@@ -149,6 +149,7 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
     this.updateRecord({
       id: 0,  // = 0 -> fuerza el alta
       fecha: moment().format('YYYY-MM-DD'),
+      paymProcessor: 'mercado_pago',
       country: 'AR',
       currency: 'ARS',
       duration: 30,
