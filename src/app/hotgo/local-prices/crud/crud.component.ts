@@ -70,7 +70,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         fecha: [data.fecha],
         country: [data.country, {updateOn: 'blur'}],
         paymProcessor: [data.paymProcessor, {updateOn: 'blur'}],
-        currency: [{value: data.currency}],
+        currency: [data.currency],
         duration: [data.duration.toString()],
         taxableAmount: [data.taxableAmount]
       });
@@ -80,7 +80,7 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         fecha: [''],
         country: ['', {updateOn: 'blur'}],
         paymProcessor: ['', {updateOn: 'blur'}],
-        currency: [{value: 'USD', disabled: true}],
+        currency: ['USD'],
         duration: ['30'],
         taxableAmount: [0]
       });
@@ -101,7 +101,10 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
     this.paymentMethodsService.getRecords({}).subscribe(
       data => {
         this.paymentMethodOptions = data;
-        this.country.updateValueAndValidity();
+        // Armar los Options para paymProcessor y currency
+        this.paymProcessorOptions = this.paymentMethodOptions.filter(el => el.country === this.country.value);
+        this.currencyOptions = this.paymProcessorOptions.filter(el => el.paymProcessor === this.paymProcessor.value);
+        console.log('***', this.paymProcessorOptions, this.currencyOptions, this.localPriceRecord);
       },
       () => this.paymentMethodOptions = []
     );
@@ -139,7 +142,6 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         this.paymProcessorOptions = this.paymentMethodOptions.filter(el => el.country === this.country.value);
         // Establecer nuevo valor
         this.paymProcessor.setValue(this.paymProcessorOptions[0].paymProcessor);
-        console.log('*** country', this.paymentMethodOptions, this.paymProcessorOptions, this.paymProcessor.value);
       }
     );
   }
@@ -148,7 +150,6 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
   private subscribePaymProcessor() {
     this.subsPaymProcessor = this.paymProcessor.valueChanges.subscribe(
       () => {
-        console.log('*** payment processor');
         this.currencyOptions = this.paymProcessorOptions.filter(el => el.paymProcessor === this.paymProcessor.value);
         this.currency.setValue(this.currencyOptions[0].currency);
       }

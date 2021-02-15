@@ -66,18 +66,20 @@
       </mat-form-field>
 
       <!-- Currency -->
+      <ng-container *ngIf="currencyOptions.length > 0">
       <mat-form-field class="form__field form__field--max" appearance="fill">
         <mat-label>Moneda</mat-label>
         <mat-select
           formControlName="currency"
           required>
           <mat-option
-            *ngFor="let currency of currencyOptions"
-            [value]="currency.currency">
-            {{ currency.currency }}
+            *ngFor="let element of currencyOptions"
+            [value]="element.currency">
+            {{ element.currency }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      </ng-container>
 
       <!-- Taxable_amount -->
       <mat-form-field class="form__field form__field--max" appearance="fill">
