@@ -1,9 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AsyncValidatorFn, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { takeWhile } from 'rxjs/operators';
+import * as moment from 'moment';
 
 // Models
 import { ProductLocalPriceModel } from 'src/app/models/product-local-price.model';
@@ -15,7 +17,6 @@ import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { LocalPricesService, SearchQuery } from 'src/app/shared/local-prices.service';
 import { PaginatedDataSource } from 'src/app/shared/datasource/datasource.component';
 import { DialogModalComponent } from 'src/app/shared/dialog/dialog.component';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-local-prices',
@@ -44,10 +45,11 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
   public dataSource = new PaginatedDataSource<ProductLocalPriceModel, SearchQuery>(
     (request, query) => this.localPricesService.getPage(request, query),
     {property: 'fecha', order: 'desc'},  // initial sort
-    {search: undefined},  // initial query: no query
+    {search: undefined},  // initial search: no search
     7  // initial pageSize
   );
-  public expandedElement: ProductLocalPriceModel | null;    // Indica que row está expandido
+  // tslint:disable-next-line: max-line-length
+  public searchKeys: FormControl = new FormControl('', [ this.searchKeysValidator.bind(this) ]); // variable para reliazar searches a la tabla
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -155,5 +157,15 @@ export class LocalPricesComponent implements OnInit, AfterViewInit {
       duration: 30,
       taxableAmount: 0
     });
+  }
+
+  // Search records
+  public searchKeysValidator(control: FormControl): AsyncValidatorFn {
+    if (control && control.value !== null && control.value !== undefined) {
+      setTimeout(() => {
+        console.log(control.value);
+      }, 500);
+    }
+    return null;
   }
 }

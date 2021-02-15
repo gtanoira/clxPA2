@@ -9,10 +9,22 @@
       mat-stroked-button
       color="primary"
       (click)="nuevoLocalPrice()"
-      >
+    >
       <mat-icon>add</mat-icon>
       &nbsp;Nuevo Product Local Price
     </button>
+
+    <!-- Search area -->
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input #in
+        (input)="dataSource.queryBy({search: in.value})"
+        type="text"
+        matInput
+      >
+    </mat-form-field>
+
   </div>
 
   <!-- Tabla  -->
@@ -91,23 +103,7 @@
         </mat-cell>
       </ng-container>
 
-      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-      <!-- <ng-container matColumnDef="expandedDetail">
-        <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-          <div class="example-element-detail"
-            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <app-local-prices-crud></app-local-prices-crud>
-          </div>
-        </mat-cell>
-      </ng-container> -->
-
       <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-      <!-- <mat-row *matRowDef="let element; columns: columnsToDisplay;"
-          class="example-element-row"
-          [class.example-expanded-row]="expandedElement === element"
-          (click)="expandedElement = expandedElement === element ? null : element">
-      </mat-row>
-      <mat-row mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>  -->
       <mat-row mat-row *matRowDef="let row; columns: columnsToDisplay" class="example-detail-row"></mat-row>
     </mat-table>
     <mat-paginator *ngIf="dataSource.page$ | async as page"

@@ -91,9 +91,11 @@ export class LocalPricesService {
       if (search) {
         search = search.toLowerCase();
         filteredBatchs = filteredBatchs.filter(
-          ({ country, duration }) =>
+          ({ country, duration, paymProcessor, currency }) =>
             country.toLowerCase().includes(search) ||
-            duration.toString().toLowerCase().includes(search)
+            duration.toString().toLowerCase().includes(search) ||
+            paymProcessor.toLowerCase().includes(search) ||
+            currency.toLowerCase().includes(search)
         );
       }
 
