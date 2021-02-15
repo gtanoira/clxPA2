@@ -104,7 +104,6 @@ export class LocalPricesCrudComponent implements OnInit, OnDestroy {
         // Armar los Options para paymProcessor y currency
         this.paymProcessorOptions = this.paymentMethodOptions.filter(el => el.country === this.country.value);
         this.currencyOptions = this.paymProcessorOptions.filter(el => el.paymProcessor === this.paymProcessor.value);
-        console.log('***', this.paymProcessorOptions, this.currencyOptions, this.localPriceRecord);
       },
       () => this.paymentMethodOptions = []
     );
