@@ -241,7 +241,7 @@ export class OpenItemsComponent implements OnInit {
 
     concat(sapAllItems, sapOpenItems).subscribe(
       data => {
-        this.errorMessageService.changeErrorMessage('Reporte generado con éxito');
+        this.errorMessageService.changeErrorMessage('Reporte generado con éxito', 'info');
         return data;
       },
       err => {

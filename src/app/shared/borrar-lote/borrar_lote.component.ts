@@ -115,7 +115,7 @@ export class BorrarLoteComponent implements OnInit, OnDestroy {
         this.isFetching = true;  // spinner & button Hold Handler
         this.lotesBatchService.deleteLote(this.loteId.value, this.area).subscribe(
           data => {
-            this.errorMessageService.changeErrorMessage('Lote borrado.');
+            this.errorMessageService.changeErrorMessage('Lote borrado.', 'info');
             // Actualizar la lista de lotes
             this.lotesBatchService.actualizarLotes.next(true);
             // Actualizar el VOD Maestro de Titulos de ser necesario

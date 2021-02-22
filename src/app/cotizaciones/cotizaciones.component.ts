@@ -44,7 +44,7 @@ export class CotizacionesComponent implements OnInit {
     this.currentUser = this.authenticationService.currentUserValue;
 
     // Borrar la linea de mensaje de error
-    this.errorMessageService.changeErrorMessage(null);
+    this.errorMessageService.changeErrorMessage('');
   }
 
   ngOnInit() {
