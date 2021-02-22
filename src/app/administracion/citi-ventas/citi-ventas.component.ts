@@ -136,7 +136,7 @@ export class CitiVentasComponent implements OnInit {
           this.errorMessageService.changeErrorMessage('API-0004(E): no se encontró ningun registro que cumpla con los filtros establecidos.');
         } else {
           this.dataToExcel = data;
-          this.errorMessageService.changeErrorMessage('Reporte generado con éxito');
+          this.errorMessageService.changeErrorMessage('Reporte generado con éxito', 'info');
         }
         this.hideBtnReporteSAP = false;
         this.isFetching = false;

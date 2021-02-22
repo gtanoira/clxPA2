@@ -118,7 +118,7 @@ export class AggingFacturacionComponent implements OnInit {
 
         // Guardar los datos
         this.dataToExcel = data;
-        this.errorMessageService.changeErrorMessage('Se obtuvo del Sap correctamente los datos');
+        this.errorMessageService.changeErrorMessage('Se obtuvo del Sap correctamente los datos', 'info');
       },
       err => {
         this.errorMessageService.changeErrorMessage(err);
@@ -189,7 +189,7 @@ Mes de corte: ${this.reportMonth.value.format('YYYY-MMM')}`;
     };
     this.admVentasService.uploadAggingFacturacionToMySql(messageBody).subscribe(
       todoOk => {
-        this.errorMessageService.changeErrorMessage(todoOk['message']);
+        this.errorMessageService.changeErrorMessage(todoOk['message'], 'info');
         // Desactivar el spinner
         this.isUploadingMySql = false;
         // Actualizar la lista de lotes

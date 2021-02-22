@@ -17,7 +17,7 @@ import { environment } from '../environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -165,7 +165,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/warning.svg')
     );
     // Subscribir a los errores del módulo, para que sean mostrados en la pantalla
-    this.errorLine = this.errorMessageService.formCurrentMessage.subscribe(
+    /* this.errorLine = this.errorMessageService.errorMessage.subscribe(
       message => {
         if (message === null || message.trim() === '') {
 
@@ -191,7 +191,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       }
-    );
+    ); */
 
     // Subscribe to the currentProgramTitle, to show program's title on the screen
     this.currProgram = this.errorMessageService.currentProgramTitle.subscribe(
@@ -207,7 +207,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     // Borrar posible mensaje de error
-    this.errorMessageService.changeErrorMessage(null);
+    this.errorMessageService.changeErrorMessage('');
 
     // Toolbar
     this.toolbarSapGw  = environment.envData.sapGwServer;

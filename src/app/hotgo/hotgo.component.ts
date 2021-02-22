@@ -56,7 +56,7 @@ export class HotgoComponent implements OnInit {
     this.ynLocalPrices = this.authorizationService.componentAccess('pgmHotGo', 'cptLocalPrices');
 
     // Borrar la linea de mensaje de error
-    this.errorMessageService.changeErrorMessage(null);
+    this.errorMessageService.changeErrorMessage('');
   }
 
 }

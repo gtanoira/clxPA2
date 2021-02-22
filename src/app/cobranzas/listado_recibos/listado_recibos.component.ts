@@ -206,7 +206,7 @@ export class ListadoRecibosComponent implements OnInit {
         } else {
           this.dataToExcel = data;
           this.sortJsonArray(this.dataToExcel);
-          this.errorMessageService.changeErrorMessage('Reporte generado con éxito');
+          this.errorMessageService.changeErrorMessage('Reporte generado con éxito', 'info');
         }
         this.hideBtnReporteSAP = false;
         this.isFetching = false;

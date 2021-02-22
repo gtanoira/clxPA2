@@ -311,7 +311,7 @@ export class ActualizarCotizacionComponent implements OnInit, OnDestroy {
         Number(this.formData.get('directExchange').value)
       ).subscribe(
         data  => {
-          this.errorMessageService.changeErrorMessage(data['message']);
+          this.errorMessageService.changeErrorMessage(data['message'], 'info');
           this.isFetching = false;
         },
         error => {

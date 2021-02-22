@@ -1,0 +1,9 @@
+<ng-container *ngIf="state === 'appear'">
+  <div class="error-message container" [ngClass]="messageTypeClass" [@errorMessage]="state">
+    <p class="multi-line">{{errorMessage}}</p>
+    <a class="btn-close"
+      (click)="onClose()"
+    >close</a>
+  </div>
+</ng-container>
+

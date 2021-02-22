@@ -13,10 +13,12 @@ import { MainModule } from 'src/app/main/main.module';
 
 // Componentes
 import { AppComponent } from './app.component';
+import { ErrorMessagesComponent } from './core/error-messages/error-messages.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorMessagesComponent
   ],
   imports: [
     // Angular
