@@ -207,7 +207,7 @@ export class CotizacionesService {
   }
 
   // Obtener las cotizaciones de una moneda entre ciertas fechas desde-hasta
-  getEntreFechas(deMoneda: string, aMoneda: string, fechaDesde: string, fechaHasta: string, tipoCotizacion: string): Observable<any[]> {
+  getEntreFechas(deMoneda: string, aMoneda: string, fechaDesde: string, fechaHasta: string): Observable<{[key: string]: any}[]> {
 
     // Generar el Array con las fechas a obtener cotizaciones
     const datesToSearch = [];
@@ -217,18 +217,38 @@ export class CotizacionesService {
       dia = dia.add(1, 'd');
     }
 
+    // Determinar la moneda origen y destino y el tipo de cotización
+    let invertirCotizacion = false;
+    let tipoCotizacion = 'M';  // dato específico del SAP
+    if (deMoneda === 'EUR' || aMoneda === 'EUR') {
+      // EUR: euro
+      tipoCotizacion = 'EURX';
+      invertirCotizacion = (deMoneda === 'EUR');
+
+    } else if (deMoneda === 'USD' || aMoneda === 'USD') {
+      // USD: dólar
+      invertirCotizacion = (deMoneda === 'USD');
+    }
+    const monedaOrigen = invertirCotizacion ? aMoneda : deMoneda;
+    const monedaDestino = invertirCotizacion ? deMoneda : aMoneda;
+
     // Obtener tipo de cambio vendedor
     const valoresDias = from(datesToSearch);
     const valoresArray = valoresDias.pipe(
       concatMap(
         data => {
-          return this.getCotizacion(tipoCotizacion, deMoneda, aMoneda, data).pipe(
+          return this.getCotizacion(tipoCotizacion, monedaOrigen, monedaDestino, data).pipe(
             map(
               data2 => {
+                let cotizacion = 1;
+                if (monedaOrigen !== monedaDestino) {
+                  cotizacion = invertirCotizacion ? data2.inDirectExchange : data2.directExchange;
+                }
+
                 return {
                   fecha: moment(data, 'YYYYMMDD'),
                   fechaSap: moment(data2.validFromDate, 'YYYY-MM-DD'),
-                  valorCotizacion: data2.directExchange
+                  valorCotizacion: cotizacion
                 };
               }
             )

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 // External libraries
 import * as moment from 'moment';
@@ -31,6 +32,7 @@ import { AgGridLoadingComponent } from 'src/app/shared/ag-grid/ag-grid_loading.c
 import { CotizacionesService } from 'src/app/shared/cotizaciones.service';
 import { ErrorMessageService } from 'src/app/core/error-message.service';
 import { ExcelExporterService } from 'src/app/shared/excel_exporter.service';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-cotizacion-entre-fechas',
@@ -65,6 +67,10 @@ export class CotizacionEntreFechasComponent implements OnInit {
   // Otras variables
   private initComponent = true;
 
+  // Form validators (triggers)
+  subsCurrencies: Subscription;
+  subsRateType: Subscription;
+
   constructor(
     private auxiliarTablesService: AuxiliarTablesService,
     private cotizacionesDiaria: CotizacionesService,
@@ -75,10 +81,12 @@ export class CotizacionEntreFechasComponent implements OnInit {
     // Inicializar el FORM
     this.formData = this.fb.group({
       deMoneda: [
-        'ARS'
+        'ARS',
+        this.validateCurrencies.bind(this)
       ],
       aMoneda: [
-        'USD'
+        'USD',
+        this.validateCurrencies.bind(this)
       ],
       fechaDesde: [
         moment().subtract(15, 'd')
@@ -87,7 +95,8 @@ export class CotizacionEntreFechasComponent implements OnInit {
         moment()
       ],
       rateType: [
-        'venta'
+        'venta',
+        this.validateRateType.bind(this)
       ]
     });
 
@@ -149,10 +158,14 @@ export class CotizacionEntreFechasComponent implements OnInit {
   ngOnInit() {
     // Definir valores para moneda
     this.auxiliarTablesService.getTableFromJson('currencies.json')
-      .subscribe(
-        data  => { this.currencyOptions = data; },
-        error => { this.errorMessageService.changeErrorMessage('Error al leer el archivo currencies.json'); }
-      );
+    .subscribe(
+      data  => { this.currencyOptions = data; },
+      error => { this.errorMessageService.changeErrorMessage('Error al leer el archivo currencies.json'); }
+    );
+
+    // Validador (trigger) de los campos Moneda
+    // this.validateCurrencies();
+    // this.validateRateType();
   }
 
   // Ejecutar una vez inicializado el AG-GRID
@@ -186,7 +199,7 @@ export class CotizacionEntreFechasComponent implements OnInit {
     this.gridApi.showLoadingOverlay();
 
     // Calcular el rate type
-    if (this.aMoneda.value === 'EUR') {
+    if (this.aMoneda.value === 'EUR' || this.deMoneda.value === 'EUR') {
       tipoCotizacion = 'EURX';
       this.rateType.setValue('venta');
     } else {
@@ -201,8 +214,7 @@ export class CotizacionEntreFechasComponent implements OnInit {
       this.deMoneda.value,
       this.aMoneda.value,
       this.fechaDesde.value.format('YYYYMMDD'),
-      this.fechaHasta.value.format('YYYYMMDD'),
-      tipoCotizacion
+      this.fechaHasta.value.format('YYYYMMDD')
     ).subscribe(
       data => {
         // Cargo el grid con datos
@@ -240,4 +252,25 @@ export class CotizacionEntreFechasComponent implements OnInit {
       `cotizacion_entreFechas_`);
   }
 
+  // Validador de los campos Moneda
+  public validateCurrencies(control: FormControl): {[key: string]: any} {
+    if (control.parent && (control.parent.get('deMoneda').value !== 'ARS' || control.parent.get('aMoneda').value !== 'USD')) {
+      this.rateType.setValue('venta');
+    }
+    return null;
+  }
+
+  // Validador del campo Tipo de Cambio
+  public validateRateType(control: FormControl): {[key: string]: any} {
+    if (control && control.value === 'compra') {
+      this.deMoneda.clearValidators()
+      this.deMoneda.setValue('ARS');
+      this.deMoneda.setValidators(this.validateCurrencies.bind(this));
+
+      this.aMoneda.clearValidators();
+      this.aMoneda.setValue('USD');
+      this.aMoneda.setValidators(this.validateCurrencies.bind(this));
+    }
+    return null;
+  }
 }
