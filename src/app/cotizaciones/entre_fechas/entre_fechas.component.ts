@@ -214,7 +214,8 @@ export class CotizacionEntreFechasComponent implements OnInit {
       this.deMoneda.value,
       this.aMoneda.value,
       this.fechaDesde.value.format('YYYYMMDD'),
-      this.fechaHasta.value.format('YYYYMMDD')
+      this.fechaHasta.value.format('YYYYMMDD'),
+      this.rateType.value
     ).subscribe(
       data => {
         // Cargo el grid con datos

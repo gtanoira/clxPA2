@@ -207,7 +207,7 @@ export class CotizacionesService {
   }
 
   // Obtener las cotizaciones de una moneda entre ciertas fechas desde-hasta
-  getEntreFechas(deMoneda: string, aMoneda: string, fechaDesde: string, fechaHasta: string): Observable<{[key: string]: any}[]> {
+  getEntreFechas(deMoneda: string, aMoneda: string, fechaDesde: string, fechaHasta: string, tipoCotizacion: string): Observable<{[key: string]: any}[]> {
 
     // Generar el Array con las fechas a obtener cotizaciones
     const datesToSearch = [];
@@ -219,10 +219,10 @@ export class CotizacionesService {
 
     // Determinar la moneda origen y destino y el tipo de cotización
     let invertirCotizacion = false;
-    let tipoCotizacion = 'M';  // dato específico del SAP
+    let rateType = tipoCotizacion === 'compra' ? 'G' : 'M';  // dato específico del SAP
     if (deMoneda === 'EUR' || aMoneda === 'EUR') {
       // EUR: euro
-      tipoCotizacion = 'EURX';
+      rateType = 'EURX';
       invertirCotizacion = (deMoneda === 'EUR');
 
     } else if (deMoneda === 'USD' || aMoneda === 'USD') {
@@ -237,7 +237,7 @@ export class CotizacionesService {
     const valoresArray = valoresDias.pipe(
       concatMap(
         data => {
-          return this.getCotizacion(tipoCotizacion, monedaOrigen, monedaDestino, data).pipe(
+          return this.getCotizacion(rateType, monedaOrigen, monedaDestino, data).pipe(
             map(
               data2 => {
                 let cotizacion = 1;
